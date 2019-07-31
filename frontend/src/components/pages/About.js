@@ -3,11 +3,13 @@ import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 
 
-const About = ({loadUser}) => {
+const About = ({login: {isAuthenticated}, loadUser}) => {
   useEffect(() => {
-    loadUser();
+    if(isAuthenticated) {
+      loadUser();
+    }
     //eslint-disable-next-line
-  }, []);
+  }, [isAuthenticated]);
   
   return (
     <div className="container about">
@@ -18,4 +20,7 @@ const About = ({loadUser}) => {
   )
 }
 
-export default connect(null, {loadUser})(About)
+const mapStateToProps = state => ({
+  login: state.login
+})
+export default connect(mapStateToProps, {loadUser})(About)

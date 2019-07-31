@@ -2,11 +2,14 @@ import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 
-const Dashboard = ({loadUser}) => {
+const Dashboard = ({login: {isAuthenticated}, loadUser}) => {
+
   useEffect(() => {
-    loadUser();
+    if(isAuthenticated) {
+      loadUser();
+    }
     //eslint-disable-next-line
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div>
@@ -15,4 +18,7 @@ const Dashboard = ({loadUser}) => {
   )
 }
 
-export default connect(null, {loadUser})(Dashboard)
+const mapStateToProps = state => ({
+  login: state.login
+})
+export default connect(mapStateToProps, {loadUser})(Dashboard)
