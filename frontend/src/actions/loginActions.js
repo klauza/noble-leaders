@@ -1,4 +1,4 @@
-import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR } from './types';
+import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -45,8 +45,31 @@ export const userRegister = (user) => async dispatch => {
   }
 } 
 
-export const userLogin = () => {
+export const userLogin = (user) => async dispatch => {
 
+  try{
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data
+    });
+
+    loadUser();
+
+  } catch(err){
+    dispatch({
+      type: LOGIN_FAIL,
+      payload: err.response.data.msg
+    })
+  }
 }
 
 

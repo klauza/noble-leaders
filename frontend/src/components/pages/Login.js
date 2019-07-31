@@ -1,6 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import history from '../../history';
+import {connect} from 'react-redux';
+import {userLogin} from '../../actions/loginActions';
 
-const Login = () => {
+const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
+
+  useEffect(() => {
+    if(isAuthenticated){
+      history.push('/');  //redirect to dashboard
+    }
+
+    if(error === 'Invalid Credentials'){
+      console.log('invalid credentials');
+    }
+  }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
     email: '',
@@ -19,6 +32,14 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log('Login submit');
+    if(email === '' || password === ''){
+      console.log("Inputs can't be empty");
+    } else {
+      userLogin({
+        email,
+        password
+      })
+    }
   }
 
   return (
@@ -29,12 +50,12 @@ const Login = () => {
 
         <div className="input-field">
           <label htmlFor="email">Email address</label>
-          <input id="email" type="email" name="email" value={email} placeholder="email" onChange={onChange} />
+          <input id="email" type="email" name="email" value={email} placeholder="email" onChange={onChange} required />
         </div>
 
         <div className="input-field">
         <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password" value={password} placeholder="password" onChange={onChange} />
+          <input id="password" type="password" name="password" value={password} placeholder="password" onChange={onChange} required />
         </div>
 
         <div className="input-field">
@@ -46,5 +67,7 @@ const Login = () => {
     </div>
   )
 }
-
-export default Login
+const mapStateToProps = state => ({
+  login: state.login
+})
+export default connect(mapStateToProps, {userLogin})(Login)
