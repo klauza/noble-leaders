@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import history from '../../history';
 import {connect} from 'react-redux';
-import {userRegister} from '../../actions/loginActions';
+import {loadUser, userRegister} from '../../actions/loginActions';
 
-const Register = ({ userRegister }) => {
+const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
 
   const [user, setUser] = useState({
     name: '',
@@ -10,6 +11,16 @@ const Register = ({ userRegister }) => {
     password: '',
     password2: ''
   });
+
+  useEffect(() => {
+    if(isAuthenticated){
+      history.push('/');  //redirect to dashboard
+    }
+
+    if(error === 'User already exists'){
+      console.log('user already exists');
+    }
+  }, [error, isAuthenticated]);
 
   const {name, email, password, password2} = user;
 
@@ -65,5 +76,7 @@ const Register = ({ userRegister }) => {
         </div>
   )
 }
-
-export default connect(null, {userRegister})(Register)
+const mapStateToProps = state => ({
+  login: state.login
+})
+export default connect(mapStateToProps, {loadUser, userRegister})(Register)

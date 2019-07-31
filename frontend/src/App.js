@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
+import history from './history';
 import { Provider } from 'react-redux';
 import store from './store';
 
@@ -12,11 +13,16 @@ import Leaderboard from './components/pages/Leaderboard';
 
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
+import setAuthToken from './utils/setAuthToken';
+
+if(localStorage.token){
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Fragment>
           <Navbar />
           <div className="App">
