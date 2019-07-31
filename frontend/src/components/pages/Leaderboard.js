@@ -1,6 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {loadUser} from '../../actions/loginActions';
 
-const Leaderboard = () => {
+const Leaderboard = ({loadUser}) => {
+  useEffect(() => {
+    loadUser();
+    //eslint-disable-next-line
+  }, []);
+
   return (
     <div className="leaderboard container mt-5">
       <h2 className="leaderboard__title">LEADERBOARD</h2>
@@ -17,4 +24,4 @@ const Leaderboard = () => {
   )
 }
 
-export default Leaderboard;
+export default connect(null, {loadUser})(Leaderboard)

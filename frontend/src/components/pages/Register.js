@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import history from '../../history';
 import {connect} from 'react-redux';
-import {loadUser, userRegister} from '../../actions/loginActions';
+import {userRegister} from '../../actions/loginActions';
 
 const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
 
@@ -79,4 +79,4 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
 const mapStateToProps = state => ({
   login: state.login
 })
-export default connect(mapStateToProps, {loadUser, userRegister})(Register)
+export default connect(mapStateToProps, {userRegister})(Register)
