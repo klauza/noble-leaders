@@ -8,7 +8,7 @@ const Login = () => {
         <h2 className="mt-5">Sign In</h2>
 
         <div className="input-field">
-          <input type="text" id="email" placeholder="user name"/>
+          <input type="email" id="email" placeholder="email"/>
         </div>
 
         <div className="input-field">

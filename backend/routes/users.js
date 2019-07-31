@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
+const jwt = require('jsonwebtoken');
+const config = require('config');
  
 const User = require('../models/User');
 
@@ -41,13 +42,25 @@ async (req, res) => {
 
     // enctrypting the password
     const salt = await bcrypt.genSalt(10);
-
     // hashing the password
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
 
-    res.send('New user added');
+    // JWT +++
+    // get unique ID of created user created by mongoose 
+    const payload = {
+      user: { 
+        id: user.id 
+      }
+    }
+
+    jwt.sign(payload, config.get('jwtSecret'), {
+      expiresIn: 36000 // 3600 = 1h
+    }, (err, token) => {
+      if(err) throw err;
+      res.json({ token });
+    })
 
   } catch(err){
     console.error(err.message);
