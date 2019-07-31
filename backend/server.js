@@ -6,6 +6,9 @@ const app = express();
 // connect to database
 connectDB();
 
+// middleware
+app.use(express.json({ extended: false })); // body data can be accepted
+
 // router endpoint
 app.get('/', (request, response) => response.send('<p>a</p>'));
 
