@@ -1,0 +1,20 @@
+.leaderboard{
+  &__title{
+    text-align: center;
+  }
+  &__search{
+    margin: 20px auto;
+    display: block;
+  }
+  .leaderboard-ul{
+    width: 100%;
+    margin: 0 auto;
+    &__li{
+      list-style: none;
+      &:nth-child(odd){
+        background: #e0e0e0;
+      }
+    }
+  }
+
+}

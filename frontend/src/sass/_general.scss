@@ -2,3 +2,18 @@
   box-sizing: border-box;
   margin: 0;padding: 0;
 }
+
+.container{
+  width: 80%;
+  margin: 0 auto;
+  @media(max-width: 768px){
+    width: 95%;
+  }
+}
+
+.mt-2{
+  margin-top: 20px;
+}
+.mt-5{
+  margin-top: 50px;
+}

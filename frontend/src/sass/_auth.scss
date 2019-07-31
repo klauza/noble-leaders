@@ -1,0 +1,22 @@
+.auth{
+  &__sign-form{
+    display: grid;
+    justify-content: center;
+    
+    h2{
+      text-align: center;
+    }
+
+    .input-field{
+      padding: 5px 0;
+      
+      input{
+       
+      }
+      .btn-sign{
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+}
