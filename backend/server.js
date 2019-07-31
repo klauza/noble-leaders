@@ -10,7 +10,7 @@ connectDB();
 app.use(express.json({ extended: false })); // body data can be accepted
 
 // router endpoint
-app.get('/', (request, response) => response.send('<p>a</p>'));
+// app.get('/', (request, response) => response.send('<p>a</p>'));
 
 // define routes
 app.use('/api/users', require('./routes/users'));

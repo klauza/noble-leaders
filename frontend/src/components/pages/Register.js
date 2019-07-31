@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
+import {userRegister} from '../../actions/loginActions';
 
-const Register = () => {
+const Register = ({ userRegister }) => {
 
   const [user, setUser] = useState({
     name: '',
@@ -20,6 +22,11 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    userRegister({
+      name, 
+      email, 
+      password
+    });
     console.log('Register submitted');
   }
 
@@ -59,4 +66,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default connect(null, {userRegister})(Register)
