@@ -1,0 +1,19 @@
+.navigation-bar{
+  height: 50px;
+  width: 100%;
+  background: black;
+  &__ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    li{
+      list-style: none;
+    }
+    li>*{
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+    }
+    
+  }
+}
