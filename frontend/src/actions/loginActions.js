@@ -1,4 +1,4 @@
-import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL } from './types';
+import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -71,7 +71,9 @@ export const userLogin = (user) => async dispatch => {
     })
   }
 }
-
+export const logout = () => async dispatch => {
+  dispatch({type: LOGOUT})
+}
 
 
 export const setLoading = () => {
