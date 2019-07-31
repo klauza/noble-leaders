@@ -1,6 +1,9 @@
 import { SET_LOADING } from '../actions/types';
 
 const initialState= {
+  token: localStorage.getItem('token'),
+  isAuthenticated: null,
+  user: null,
   loading: false,
   error: null
 }
