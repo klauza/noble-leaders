@@ -14,11 +14,14 @@ const Alert = (alert) => {
     alert.alert.length > 0 && alert.alert.map(alert => (
       <div key={alert.id} className={`alert alert-${alert.type}`}>
         <span>{alert.msg}</span>
+
       </div>
     ))
     
   )
 }
+
+
 
 const mapStateToProps = state => ({
   alert: state.alert
