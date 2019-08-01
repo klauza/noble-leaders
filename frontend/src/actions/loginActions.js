@@ -28,7 +28,7 @@ export const userRegister = (user) => async dispatch => {
       'Content-Type': 'application/json'
     }
   }
-  
+
   try{
     const res = await axios.post('/api/users', user, config);
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
@@ -57,10 +57,19 @@ export const userLogin = (user) => async dispatch => {
     loadUser();
 
   } catch(err){
-    dispatch({
-      type: LOGIN_FAIL,
-      payload: err.response.data.msg
-    })
+    // console.log(err.response.data);
+    if(err.response.data.errors){
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err.response.data.errors
+      })
+    } else {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: "Invalid Password"
+      })
+    }
+    
   }
 }
 export const logout = () => async dispatch => {

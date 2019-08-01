@@ -10,10 +10,18 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
     if(localStorage.token && localStorage.token !== 'undefined'){
       history.push('/profile');  //redirect to profile
     }
-    
-    if(error === 'Invalid Credentials'){
-      setAlert("Invalid Credentials", "danger");
-      clearError();
+    // console.log(error);
+    if(error !== null){
+      
+      if(error === 'Invalid Password'){
+        setAlert("Invalid Password", "danger");
+        clearError();
+      } else {
+        if(error[0].msg === 'Please include a valid email'){
+          setAlert("Please include a valid email", "danger");
+          clearError();
+        }
+      }
     }
     //eslint-disable-next-line
   }, [error, isAuthenticated]);
@@ -54,7 +62,7 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
         <h2 className="">Sign In</h2>
 
         <div className="input-field">
-          <input id="email" type="email" name="email" value={email} placeholder="Email" onChange={onChange} required />
+          <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} required />
         </div>
 
         <div className="input-field">

@@ -22,7 +22,13 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
       console.log('user already exists');
       setAlert("User already exists", "danger");
       clearError();
+    } else 
+      if (error === 'Email already exists'){
+        console.log('Email already exists');
+        setAlert("Email already exists", "danger");
+        clearError();
     }
+    //eslint-disable-next-line
   }, [error, isAuthenticated]);
 
   const {name, email, password, password2} = user;
