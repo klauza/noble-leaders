@@ -1,4 +1,4 @@
-import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
+import { CLEAR_ERROR, SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -21,24 +21,18 @@ export const loadUser = () => async dispatch => {
 
 // REGISTER NEW USER
 export const userRegister = (user) => async dispatch => {
-  console.log(user);
+ 
   setLoading();
-
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  
   try{
-    const res = await fetch('/api/users', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await res.json();
-
-    dispatch({
-      type: REGISTER_SUCCESS,
-      payload: data
-    });
-
+    const res = await axios.post('/api/users', user, config);
+    dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+    console.log('registered');
     loadUser();
 
   } catch(err){
@@ -74,8 +68,10 @@ export const logout = () => async dispatch => {
 }
 
 
-export const setLoading = () => {
-  return{
-    type: SET_LOADING
-  }
+export const setLoading = () => async dispatch => {
+  dispatch({type: SET_LOADING})
+}
+
+export const clearError = () => async dispatch => {
+  dispatch({type: CLEAR_ERROR})
 }

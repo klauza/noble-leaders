@@ -1,19 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import history from '../../history';
 import {connect} from 'react-redux';
-import {userLogin} from '../../actions/loginActions';
+import {userLogin, clearError} from '../../actions/loginActions';
+import {setAlert} from '../../actions/alertActions';
 
-const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
+const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAlert }) => {
 
   useEffect(() => {
     if(localStorage.token && localStorage.token !== 'undefined'){
       history.push('/profile');  //redirect to profile
     }
-    console.log(error);
+    
     if(error === 'Invalid Credentials'){
-      console.log('invalid credentials');
+      setAlert("Invalid Credentials", "danger");
+      clearError();
     }
-   
+    //eslint-disable-next-line
   }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
@@ -34,7 +36,7 @@ const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
     e.preventDefault();
     console.log('Login submit');
     if(email === '' || password === ''){
-      console.log("Inputs can't be empty");
+      setAlert("Inputs cant be empty", "danger");
     } else {
       
       userLogin({
@@ -69,6 +71,7 @@ const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
   )
 }
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  alert: state.alert
 })
-export default connect(mapStateToProps, {userLogin})(Login)
+export default connect(mapStateToProps, {userLogin, clearError, setAlert})(Login)

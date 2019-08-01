@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import history from '../../history';
 import {connect} from 'react-redux';
-import {userRegister} from '../../actions/loginActions';
+import {userRegister, clearError} from '../../actions/loginActions';
+import {setAlert} from '../../actions/alertActions';
 
-const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
+const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, setAlert }) => {
 
   const [user, setUser] = useState({
     name: '',
@@ -13,12 +14,14 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
   });
 
   useEffect(() => {
-    if(localStorage.token){
+    if(localStorage.token && localStorage.token !== 'undefined'){
       history.push('/profile');  //redirect to profile
     }
 
     if(error === 'User already exists'){
       console.log('user already exists');
+      setAlert("User already exists", "danger");
+      clearError();
     }
   }, [error, isAuthenticated]);
 
@@ -34,8 +37,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if(user.password !== user.password2){
-      
-      console.log('passwords must be equal');
+      setAlert("Passwords must be equal", "danger");
 
     } else{
       userRegister({
@@ -81,6 +83,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
   )
 }
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  alert: state.alert
 })
-export default connect(mapStateToProps, {userRegister})(Register)
+export default connect(mapStateToProps, {userRegister, clearError, setAlert})(Register)
