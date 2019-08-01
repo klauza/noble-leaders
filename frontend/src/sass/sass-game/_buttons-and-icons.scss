@@ -1,0 +1,173 @@
+.fill-background-top{
+
+  /* ICONS */
+  .social-icons-block{
+    margin-right: 20px;
+    margin-top: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  
+
+    
+     
+   
+    i{ margin-left: 10px; font-size: 2em;}
+  }
+}
+
+/* Main operative button */
+.local-storage-reset{
+  border: 1px solid black;
+  width: 100px;
+  height: 30px;
+  position: fixed;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  background-color: white;
+  transition: 250ms all ease;
+  border-radius: 2px;
+  box-shadow: 0px 10px 17px -5px rgba(0,0,0,0.75);
+}
+.local-storage-reset:hover{
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  transition: 250ms all ease;
+  box-shadow: 0px 10px 17px 1px rgba(0,0,0,0.75);
+}
+
+
+/* Main button */
+.next-question-container{
+  width: 80px; height: 40px;
+  position: absolute;
+  top: 135%; left: 50%;
+  transform: translate(-50%);
+  perspective: 600px; 
+  opacity: 0; transition: all 1s ease;
+  display: none;
+
+  .merge-buttons{
+    transform-style: preserve-3d;
+    // transform: rotateX(0deg) rotateY(20deg) rotateZ(0);   // WAIT
+    // transform: rotateX(180deg) rotateY(0deg) rotateZ(0deg);   // CONTINUE
+    // transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg) translateZ(10px);   // START
+
+    transition: 500ms all ease;
+    width: 100%;
+    height: 100%;
+
+    .button-front{    // WAIT
+      transform-style: preserve-3d;
+      position: absolute; top: 0; left: 0;
+      transform: rotateX(0deg) rotateY(0deg) rotateZ(0);
+      width: 100%;
+      height: 100%;
+      background: rgb(228, 13, 13);
+      border: 0;
+      &::after{     // START
+        content: 'START';
+        display: block;
+        line-height: 40px; color: white; font-size: 18px;
+        position: absolute; top: 0; left: 0;
+        width: 80px; height: 40px;
+        background: rgb(209, 173, 11);
+        transform: translateY(20px) translateZ(-20px) rotateX(-90deg);
+      }
+      &::before{  // SIDE
+        content: '';
+        display: block;
+        position: absolute; top: 0; left: 0;
+        width: 40px; height: 40px;
+        background: rgb(136, 13, 13);
+        transform: translateX(-20px) translateZ(-20px) rotateY(90deg);
+      }
+      i{
+        font-size: 26px; color: white;
+        line-height: 40px;
+      }
+    }
+    .button-top{    // NEXT
+      transform-style: preserve-3d;
+      position: absolute; top: 0; left: 0;
+      line-height: 40px;
+      transform: rotateX(-270deg) rotateY(0deg) rotateZ(0) translateY(-20px) translateZ(20px);
+      background: lightgreen;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      &::after{   // CONTINUE
+        content: 'CONTINUE';
+        display: block;
+        color: white;
+        line-height: 40px; font-size: 0.85rem;
+        position: absolute; top: 0; right: 0;
+        width: 80px; height: 40px;
+        background: rgb(2, 15, 190);
+        transform: rotateX(90deg) translateY(-20px) translateZ(20px);
+        transform-origin: center center;
+      }
+      &::before{
+        content: '';
+        display: block;
+        position: absolute; top: 0; right: 0;
+        width: 40px; height: 40px;
+        background: rgb(0, 102, 0);
+        transform: translateX(20px) translateZ(-20px) rotateY(90deg);
+      }
+      i{
+        font-size: 17px;
+      }
+    }
+
+    .button-front,
+    .button-top{
+      cursor: pointer;
+      border: 0;
+      transition: all 500ms ease;
+      
+      &:checked{
+
+        border: 0;
+      }
+    }
+    &:hover{
+      transition: 500ms all ease;
+      // transform: translateY(20px) rotateX(-90deg) rotateY(0deg) rotateZ(-20deg);  // NEXT
+    }
+  }
+}
+
+// falling dollar
+.dollar{
+  transform: translateX(50%);
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  // left: 100px;
+  display: block;
+  font-size: 2em;
+}
+
+
+/* Score counter */
+.scoreDiv{
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.add-score{
+  opacity: 0;
+  position: fixed;
+  bottom: 50px;
+  left: 52%;
+  transform: translateX(-50%);
+  color: green;
+  font-size: 2rem;
+}
+
+

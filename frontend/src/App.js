@@ -15,6 +15,8 @@ import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import setAuthToken from './utils/setAuthToken';
 
+import ActorGame from './components/games/ActorGame';
+
 if(localStorage.token){
   setAuthToken(localStorage.token);
 }
@@ -34,6 +36,7 @@ const App = () => {
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/actor-game" component={ActorGame} />
             </Switch>
             
           </div>
