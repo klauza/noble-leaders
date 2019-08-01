@@ -40,12 +40,12 @@ const UICtrl = (function(){
           return this.indexOf(e.id) < 0;
         }, idsFromLS
       );
-      console.log(filtered);
+      
       let output = '';
 
       // check if game is completed     ------------------------------ GAME COMPLETED ---------------------------------
-      
-      if(filtered === ''){
+      //eslint-disable-next-line
+      if(filtered == ''){
         alert("Congratulations, you have completed all tasks, click reset button to start over xD");
 
       } else {
@@ -194,7 +194,8 @@ const UICtrl = (function(){
       UICtrl.fallingDollars();
 
       let totalScore = LevelCtrl.getScore();
-      if(totalScore === ''){
+      //eslint-disable-next-line
+      if(totalScore == ''){
         totalScore = 0;
       }
       if(totalScore===1){

@@ -12,8 +12,11 @@ body{
 
 }
 .container{
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
+  @media(max-width: 868px){
+    width: 85%;
+  }
   @media(max-width: 768px){
     width: 95%;
   }

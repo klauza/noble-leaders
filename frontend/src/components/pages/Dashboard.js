@@ -15,7 +15,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser}) => {
   return (
     <div className="container dashboard">
       <div className="grid">
-        <div><Link to='/actor-game'>asdasd</Link></div>
+        <div className="dashboard-actor-game-cover"><Link to='/actor-game' className="grid-link"></Link></div>
         <div></div>
         <div></div>
         <div></div>

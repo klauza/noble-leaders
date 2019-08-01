@@ -34,14 +34,13 @@ const ActorGame = ({login: {isAuthenticated}, loadUser}) => {
       // get API from local file
       function displayDataFromAPI(){
         LevelCtrl.setLevelZero();
-        console.log('fetch');
+        
         fetch('./actor-game')
           .then(res => res.json())
           .then(data => {
             UICtrl.showScore();
             UICtrl.renderPeople(data);    // render actors on screen
-            console.log(data);
-            console.log('kloc');
+            
           })
           .then(()=>{
             UICtrl.getItemClickEvents(); //animations and stuff apply to each block of person
