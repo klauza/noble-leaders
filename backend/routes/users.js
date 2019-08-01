@@ -28,11 +28,15 @@ async (req, res) => {
 
   try{      
     let user = await User.findOne({ email: email });
-    // checking for user duplicate
+    // checking with email for user duplicate
+    if(user){ 
+      return res.status(400).json({ msg: 'Email already exists'})
+    }
+    user = await User.findOne({ name: name });
     if(user){ 
       return res.status(400).json({ msg: 'User already exists'})
     }
-
+    
     // create new user
     user = new User({
       name: name,
