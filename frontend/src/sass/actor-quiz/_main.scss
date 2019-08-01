@@ -1,5 +1,3 @@
-@import './animations.scss';
-@import './buttons-and-icons.scss';
 @import url('https://fonts.googleapis.com/css?family=Geostar|Roboto+Condensed&display=swap');
 $ff-geostar: 'Geostar', cursive;
 $ff-roboto: 'Roboto Condensed', sans-serif;
@@ -10,7 +8,7 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
   padding: 0; margin: 0;
 }
 .actor-game{
-  background: url('./sass/img/bg.jpg');
+  background: url('./media/games/actor-game-bg.jpg');
   background-size: cover;
   min-height: calc(100vh - 50px);
 }

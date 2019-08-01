@@ -15,7 +15,7 @@ import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import setAuthToken from './utils/setAuthToken';
 
-import ActorGame from './components/games/ActorGame';
+import ActorGame from './components/games/actor-quiz/ActorGame';
 
 if(localStorage.token){
   setAuthToken(localStorage.token);
