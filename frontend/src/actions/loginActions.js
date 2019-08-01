@@ -5,6 +5,8 @@ import setAuthToken from '../utils/setAuthToken';
 // LOAD USER IF(TOKEN)
 export const loadUser = () => async dispatch => {
   // load token
+  setLoading();
+
   if(localStorage.token){
     setAuthToken(localStorage.token);
   }
@@ -20,6 +22,8 @@ export const loadUser = () => async dispatch => {
 // REGISTER NEW USER
 export const userRegister = (user) => async dispatch => {
   console.log(user);
+  setLoading();
+
   try{
     const res = await fetch('/api/users', {
       method: 'POST',
@@ -46,22 +50,16 @@ export const userRegister = (user) => async dispatch => {
 } 
 
 export const userLogin = (user) => async dispatch => {
-
+  setLoading();
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
   try{
-    const res = await fetch('/api/auth', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await res.json();
+    const res = await axios.post('/api/auth', user, config);
 
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: data
-    });
-
+    dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     loadUser();
 
   } catch(err){

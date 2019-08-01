@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
+import laurelsImg from '../../media/laurels.png';
 
 const Leaderboard = ({login: {isAuthenticated}, loadUser}) => {
   useEffect(() => {
@@ -14,6 +15,7 @@ const Leaderboard = ({login: {isAuthenticated}, loadUser}) => {
   return (
     <div className="leaderboard container mt-5">
       <h2 className="leaderboard__title">LEADERBOARD</h2>
+      <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
       <input className="leaderboard__search" type="text" placeholder="search user" />
 
       <ul className="leaderboard-ul">

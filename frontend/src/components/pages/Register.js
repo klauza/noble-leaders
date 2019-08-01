@@ -14,7 +14,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
 
   useEffect(() => {
     if(localStorage.token){
-      history.push('/');  //redirect to dashboard
+      history.push('/profile');  //redirect to profile
     }
 
     if(error === 'User already exists'){
@@ -33,39 +33,42 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    userRegister({
-      name, 
-      email, 
-      password
-    });
-    console.log('Register submitted');
+    if(user.password !== user.password2){
+      
+      console.log('passwords must be equal');
+
+    } else{
+      userRegister({
+        name, 
+        email, 
+        password
+      });
+
+      console.log('Register submitted');
+    }
   }
 
   return (
        <div className="container auth">
 
           <form className="auth__sign-form" onSubmit={onSubmit}>
-            <h2 className="mt-5">Dear Dignified Sir/Lady</h2>
-            <h2 className="">register yourself</h2>
+            <h2 className="">Dear Dignified Sir/Lady <br/>
+            register yourself</h2>
 
             <div className="input-field">
-              <label htmlFor="name">Name</label>
-              <input id="name" type="text" name="name" value={name} placeholder="name" onChange={onChange} required />
+              <input id="name" type="text" name="name" value={name} placeholder="Name" onChange={onChange} required />
             </div>
 
             <div className="input-field">
-              <label htmlFor="email">Email</label>
-              <input id="email" type="email" name="email" value={email} placeholder="email" onChange={onChange} required />
+              <input id="email" type="email" name="email" value={email} placeholder="Email" onChange={onChange} required />
             </div>
 
             <div className="input-field">
-              <label htmlFor="password">password</label>
-              <input id="password" type="password" name="password" value={password} placeholder="password" onChange={onChange} required />
+              <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} required minLength="6"/>
             </div>
 
             <div className="input-field">
-              <label htmlFor="password2">repeat password</label>
-              <input id="password2" type="password" name="password2" value={password2} placeholder="repeat password" onChange={onChange} required />
+              <input id="password2" type="password" name="password2" value={password2} placeholder="Repeat password" onChange={onChange} required />
             </div>
 
             <div className="input-field">

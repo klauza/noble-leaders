@@ -6,13 +6,14 @@ import {userLogin} from '../../actions/loginActions';
 const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
 
   useEffect(() => {
-    if(localStorage.token){
-      history.push('/');  //redirect to dashboard
+    if(localStorage.token && localStorage.token !== 'undefined'){
+      history.push('/profile');  //redirect to profile
     }
-
+    console.log(error);
     if(error === 'Invalid Credentials'){
       console.log('invalid credentials');
     }
+   
   }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
@@ -35,27 +36,27 @@ const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
     if(email === '' || password === ''){
       console.log("Inputs can't be empty");
     } else {
+      
       userLogin({
         email,
         password
       })
     }
+    
   }
 
   return (
     <div className="container auth">
 
       <form className="auth__sign-form" onSubmit={onSubmit}>
-        <h2 className="mt-5">Sign In</h2>
+        <h2 className="">Sign In</h2>
 
         <div className="input-field">
-          <label htmlFor="email">Email address</label>
-          <input id="email" type="email" name="email" value={email} placeholder="email" onChange={onChange} required />
+          <input id="email" type="email" name="email" value={email} placeholder="Email" onChange={onChange} required />
         </div>
 
         <div className="input-field">
-        <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password" value={password} placeholder="password" onChange={onChange} required />
+          <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} required />
         </div>
 
         <div className="input-field">
