@@ -5,11 +5,11 @@ import {loadUser} from '../../actions/loginActions';
 
 const About = ({login: {isAuthenticated}, loadUser}) => {
   useEffect(() => {
-    if(isAuthenticated) {
+    if(localStorage.token) {
       loadUser();
     }
     //eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, []);
   
   return (
     <div className="container about">

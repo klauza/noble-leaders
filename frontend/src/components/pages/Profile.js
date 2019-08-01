@@ -5,14 +5,13 @@ import history from '../../history';
 
 const Profile = ({login: {isAuthenticated, user}, loadUser}) => {
   useEffect(() => {
-    if(!isAuthenticated) {
-      history.push('/');
-    } else {
-      
+    if(localStorage.token){
       loadUser();
+    } else {
+      history.push('/');
     }
     //eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, []);
 
  
   return (

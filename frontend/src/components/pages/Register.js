@@ -13,7 +13,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
   });
 
   useEffect(() => {
-    if(isAuthenticated){
+    if(localStorage.token){
       history.push('/');  //redirect to dashboard
     }
 

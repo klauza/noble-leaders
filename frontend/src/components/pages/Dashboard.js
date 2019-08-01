@@ -1,20 +1,21 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
+import {Link} from 'react-router-dom';
 
 const Dashboard = ({login: {isAuthenticated}, loadUser}) => {
 
   useEffect(() => {
-    if(isAuthenticated) {
+    if(localStorage.token) {
       loadUser();
     }
     //eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <div className="container dashboard">
       <div className="grid">
-        <div>1</div>
+        <div><Link to='/actor-game'>asdasd</Link></div>
         <div></div>
         <div></div>
         <div></div>

@@ -4,11 +4,12 @@ import {loadUser} from '../../actions/loginActions';
 
 const Leaderboard = ({login: {isAuthenticated}, loadUser}) => {
   useEffect(() => {
-    if(isAuthenticated) {
+    if(localStorage.token){
       loadUser();
     }
+   
     //eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, []);
 
   return (
     <div className="leaderboard container mt-5">

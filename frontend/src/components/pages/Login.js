@@ -6,7 +6,7 @@ import {userLogin} from '../../actions/loginActions';
 const Login = ({ login: {error, isAuthenticated}, userLogin }) => {
 
   useEffect(() => {
-    if(isAuthenticated){
+    if(localStorage.token){
       history.push('/');  //redirect to dashboard
     }
 
