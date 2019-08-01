@@ -45,11 +45,12 @@ const Register = ({ login: {error, isAuthenticated}, userRegister }) => {
        <div className="container auth">
 
           <form className="auth__sign-form" onSubmit={onSubmit}>
-            <h2 className="mt-5">Register</h2>
+            <h2 className="mt-5">Dear Dignified Sir/Lady</h2>
+            <h2 className="">register yourself</h2>
 
             <div className="input-field">
-              <label htmlFor="name">User name</label>
-              <input type="text" name="name" value={name} placeholder="user name" onChange={onChange} required />
+              <label htmlFor="name">Name</label>
+              <input id="name" type="text" name="name" value={name} placeholder="name" onChange={onChange} required />
             </div>
 
             <div className="input-field">

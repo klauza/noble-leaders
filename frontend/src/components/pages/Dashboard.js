@@ -12,8 +12,19 @@ const Dashboard = ({login: {isAuthenticated}, loadUser}) => {
   }, [isAuthenticated]);
 
   return (
-    <div>
-      dashboard
+    <div className="container dashboard">
+      <div className="grid">
+        <div>1</div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
   )
 }

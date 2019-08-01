@@ -1,4 +1,5 @@
 .auth{
+  background: grey;
   &__sign-form{
     display: grid;
     justify-content: center;
@@ -8,10 +9,13 @@
     }
 
     .input-field{
+      margin: 0 auto;
       padding: 5px 0;
-      
+      label{ 
+        display: block;
+      }
       input{
-       
+       display: block;
       }
       .btn-sign{
         display: block;
