@@ -5,7 +5,10 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import './App.scss';
+
 import Navbar from './components/layout/Navbar';
+import Alert from './components/layout/Alert';
+
 import Dashboard from './components/pages/Dashboard';
 import About from './components/pages/About';
 import Profile from './components/pages/Profile';
@@ -22,11 +25,14 @@ if(localStorage.token){
 }
 
 const App = () => {
+
+
   return (
     <Provider store={store}>
       <Router history={history}>
         <Fragment>
           <Navbar />
+          <Alert />
           <div className="App">
       
             <Switch>
