@@ -17,17 +17,25 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
     if(localStorage.token && localStorage.token !== 'undefined'){
       history.push('/profile');  //redirect to profile
     }
+    console.log('error is now: ',error);
+    if(error !== null){
 
-    if(error === 'User already exists'){
-      console.log('user already exists');
-      setAlert("User already exists", "danger");
-      clearError();
-    } else 
-      if (error === 'Email already exists'){
-        console.log('Email already exists');
-        setAlert("Email already exists", "danger");
+      if(error === 'User already exists'){
+        console.log('user already exists');
+        setAlert("User already exists", "danger");
         clearError();
-    }
+      } else 
+        if (error === 'Email already exists'){
+          console.log('Email already exists');
+          setAlert("Email already exists", "danger");
+          clearError();
+      } else 
+      if(error[0].msg){
+        console.log(error[0].msg);
+        setAlert(error[0].msg, "danger");
+        clearError();
+      } 
+  }
     //eslint-disable-next-line
   }, [error, isAuthenticated]);
 
@@ -42,6 +50,8 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
   const onSubmit = (e) => {
     e.preventDefault();
+    // here we can make use name REGEX validation on front end side
+
     if(user.password !== user.password2){
       setAlert("Passwords must be equal", "danger");
 
@@ -68,7 +78,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
             </div>
 
             <div className="input-field">
-              <input id="email" type="email" name="email" value={email} placeholder="Email" onChange={onChange} required />
+              <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} required />
             </div>
 
             <div className="input-field">

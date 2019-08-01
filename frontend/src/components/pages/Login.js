@@ -17,8 +17,8 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
         setAlert("Invalid Password", "danger");
         clearError();
       } else {
-        if(error[0].msg === 'Please include a valid email'){
-          setAlert("Please include a valid email", "danger");
+        if(error[0].msg){
+          setAlert(error[0].msg, "danger");
           clearError();
         }
       }
