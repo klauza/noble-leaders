@@ -23,6 +23,7 @@ app.get("/actor-game", function(req, res, next) {
 
 // define routes
 app.use('/api/users', require('./routes/users'));
+app.use('/api/allusers', require('./routes/allusers'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/games', require('./routes/games'));
 
