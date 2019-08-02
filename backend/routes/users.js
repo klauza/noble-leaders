@@ -41,7 +41,8 @@ async (req, res) => {
     user = new User({
       name: name,
       email: email,
-      password: password
+      password: password,
+      highscore: "0"
     })
 
     // enctrypting the password
@@ -71,5 +72,6 @@ async (req, res) => {
     res.status(500).send('server error');
   }
 });
+
 
 module.exports = router;

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const { check, validationResult } = require('express-validator');
+// const { check, validationResult } = require('express-validator');
 
-const User = require('../models/User');
+// const User = require('../models/User');
 const Game = require("../models/Game");
+const User = require("../models/User");
 
 
 // @route GET api/games
@@ -37,6 +38,12 @@ router.post('/', auth, async (req, res) => {
 
     const game = await newGame.save();
     res.json(game);
+
+    // update the highscore in User 
+    // current_highscore + score
+
+  
+
   } catch(err){
     console.error(err.message);
     res.status(500).send('server error');
@@ -94,7 +101,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     await Game.findByIdAndRemove(req.params.id);  // removes the whole game object
 
-    res.json({ msg: 'Contact removed' });
+    res.json({ msg: 'Game removed' });
     
   } catch(err){
     console.error(err.message);

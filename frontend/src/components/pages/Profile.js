@@ -17,6 +17,7 @@ const Profile = ({login: {isAuthenticated, user}, loadUser}) => {
   return (
     <div className="container profile">
       <h2 className="mt-5">you are logged in as {user && user.name}</h2>
+      <p>your total score: {user && user.highscore}</p>
     </div>
   )
 }
