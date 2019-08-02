@@ -2,19 +2,41 @@
   transition: all 250ms ease;
 
   position: absolute;
-  top: 25%;
+  top: 15%;
   left: 50%;
   transform: translateX(-50%);
-  width: 500px;
+  width: 400px;
   height: 50px;
   border: 0px solid black;
   border-radius: 5px;
   background: rgb(255, 0, 0);
   text-align: center;
   animation: alert-animation 2500ms forwards;
+
   &-danger{
     color: white;
     transition: all 250ms ease;
+  }
+
+  span{
+    width: 100%;
+    left: 0;
+    font-size: 1.4em;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  &::before{
+    content:'';
+    display: block;
+    position: absolute;
+    bottom: -15px; left: 50%; transform: translateX(-50%);
+    width: 0px;
+    height: 0px;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #f00; 
   }
 
   @keyframes alert-animation{

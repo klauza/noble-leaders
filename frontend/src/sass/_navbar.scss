@@ -24,7 +24,9 @@
       }
 
       &>*{
-        color: white;
+        font-family: $ff-oswald;
+        font-size: 1.05rem;
+        color: black;
         text-decoration: none;
       }
     }
@@ -59,8 +61,8 @@
     .nav-profile, .nav-login{
       grid-area: logout;
     }
-    .nav-profile{
-      font-size: 1.6em;
+    .nav-profile i{
+      font-size: 1.25em;
     }
 
      

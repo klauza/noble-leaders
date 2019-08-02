@@ -44,7 +44,7 @@
       text-align: center;
       margin-bottom: 25px;
       letter-spacing: 1px;
-     
+      font-family: $ff-oswald;
     }
 
     .input-field{
@@ -70,7 +70,7 @@
         // border: 2px solid #ddd;
         // border-radius: 5px;
         margin: 5px auto;
-        font-size: 1.15em;
+        font-size: 1.05rem;
         outline: none;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
 
@@ -86,6 +86,7 @@
           // color: rgb(219, 219, 219);
           color: rgb(189, 189, 189);
           transition: all 250ms ease;
+          font-size: 1rem;
           
         }
         &:focus::placeholder{
