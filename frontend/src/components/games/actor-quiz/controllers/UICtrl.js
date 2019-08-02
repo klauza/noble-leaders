@@ -8,6 +8,9 @@ const UICtrl = (function(){
   const person = {
     items: []   // stores all characters from renderPeople
   }
+  const database = {
+    game: null
+  }
 
   return {
 
@@ -200,7 +203,9 @@ const UICtrl = (function(){
       }
       if(totalScore===1){
         totalScore = totalScore+' point';
-      } else { totalScore = totalScore+' points'}
+      } else { 
+        totalScore = totalScore+' points';
+      }
 
       let level = LevelCtrl.getLevel();    // get level
       UICtrl.setIndicator(level, 'red'); // set red indicator
@@ -216,28 +221,60 @@ const UICtrl = (function(){
       document.querySelector('.local-storage-reset').style.display = "none";
 
       document.querySelector('.game-over').style.display = "grid";
+
+      // Save score to database
+      let highscore = database.game.score;     // Overall highscore
+      console.log('your highscore is: ', highscore);
+
+      if(totalScore > highscore){
+        console.log('your new highscore is: ', totalScore);
+        // update highscore in DB
+      }
+      
+
+      // let actorGamehighscore = getActorGameHighscore(); 
+      // let gameCurrentScore = 10;
+
+      
+     
+
     },
-    
+
     fallingDollars: function(){
 
-    for(let i =0; i<40; i++){
-      document.querySelector('body').style.overflow = "hidden";
-      let randomTime = Math.random()*6+1;
-      let delay = Math.floor(Math.random()*5);
-      let leftDistance = Math.random()*1600;    // 200px
-      let rotate = Math.random()*100;
-      
-      
-      const dollar = document.createElement('i');
-      dollar.className = "dollar fa fa-money";
-      dollar.style.left = `${leftDistance}px`;
-      dollar.style.transform = `translateX(50%) translateY(0) rotateZ(${rotate}deg)`;
-      dollar.style.animation = `falling-dollar-animation ${randomTime}s infinite`;
-      dollar.style.animationDelay = `${delay}s`;
+      for(let i =0; i<40; i++){
+        document.querySelector('body').style.overflow = "hidden";
+        let randomTime = Math.random()*6+1;
+        let delay = Math.floor(Math.random()*5);
+        let leftDistance = Math.random()*1600;    // 200px
+        let rotate = Math.random()*100;
+        
+        
+        const dollar = document.createElement('i');
+        dollar.className = "dollar fa fa-money";
+        dollar.style.left = `${leftDistance}px`;
+        dollar.style.transform = `translateX(50%) translateY(0) rotateZ(${rotate}deg)`;
+        dollar.style.animation = `falling-dollar-animation ${randomTime}s infinite`;
+        dollar.style.animationDelay = `${delay}s`;
 
-      document.querySelector('body').appendChild(dollar);
-    }
+        document.querySelector('body').appendChild(dollar);
+      }
+    },
     
+    passPropsToUIController: function(props){
+      // it gets game prop here YOU CAN STORE IT IN PRIVATE OBJECT
+      props !== null ? 
+        (
+          props.forEach(prop => { 
+            if(prop.name === "actor-game"){
+              database.game = prop; // storeProp
+            } 
+          })  
+        ) 
+        : 
+        (
+          console.log('no props')
+        )
     }
    
   }

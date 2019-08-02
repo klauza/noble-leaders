@@ -19,3 +19,4 @@ export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const GET_GAMES_ERROR = 'GET_GAMES_ERROR';

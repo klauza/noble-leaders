@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadUser } from '../../../actions/loginActions';
+import { getUserGames } from '../../../actions/gameActions';
 
 import LocalStorageCtrl from './controllers/LocalStorage.js';
 import UICtrl from './controllers/UICtrl.js';
@@ -8,12 +9,13 @@ import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 import Questions from './controllers/Questions.js';
 
-const ActorGame = ({login: {isAuthenticated}, loadUser}) => {
+const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, game: { games }}) => {
   
   useEffect(() => {
     if(localStorage.token) {
       loadUser();
-      App.init();
+      getUserGames();
+      App.init(games);
     } else{
       App.init();
     }
@@ -21,10 +23,10 @@ const ActorGame = ({login: {isAuthenticated}, loadUser}) => {
   }, []);
 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, Questions){
+        UICtrl.passPropsToUIController(games);    // PROPS
 
-      // Event Listeners
-      const loadEventListeners = function(){
-        // window.location.reload(true);
+        // Event Listeners
+        const loadEventListeners = function(){
         displayDataFromAPI();
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
       }
@@ -34,6 +36,7 @@ const ActorGame = ({login: {isAuthenticated}, loadUser}) => {
       // get API from local file
       function displayDataFromAPI(){
         LevelCtrl.setLevelZero();
+        
         
         fetch('./actor-game')
           .then(res => res.json())
@@ -138,6 +141,7 @@ const ActorGame = ({login: {isAuthenticated}, loadUser}) => {
 }
 
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  game: state.game
 })
-export default connect(mapStateToProps, {loadUser})(ActorGame);
+export default connect(mapStateToProps, {loadUser, getUserGames})(ActorGame);
