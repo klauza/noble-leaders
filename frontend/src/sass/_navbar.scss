@@ -1,22 +1,71 @@
 .navigation-bar{
-  h3{
-    color: white;
-  }
   height: 50px;
   width: 100%;
-  background: black;
+  background: rgb(126, 184, 136);
+
   &__ul{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: auto auto auto 1fr auto auto;
+    grid-template-areas: "logo leaderboard about . profile logout";
+
     li{
+      text-align: center;
+      height: 50px;
+      line-height: 50px;
       list-style: none;
+      width: auto;
+      &:hover{
+        background: rgb(102, 146, 110);
+      }
+      
+      a{
+        padding: 0 10px;
+        display: block;
+      }
+
+      &>*{
+        color: white;
+        text-decoration: none;
+      }
     }
-    li>*{
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
+
+    .nav-logo{
+      grid-area: logo;
+      height: 50px;
+      a{
+        display: grid;
+        height: 50px;
+        align-content: center;
+        .logo-img{
+          width: 100px;
+          height: 50px;
+          img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
     }
+    .nav-about{
+      grid-area: leaderboard;
+    }
+    .nav-leaderboard{
+      grid-area: about;
+    }
+    .nav-logout, .nav-register{
+      grid-area: profile;
+    }
+    .nav-profile, .nav-login{
+      grid-area: logout;
+    }
+    .nav-profile{
+      font-size: 1.6em;
+    }
+
+     
     
+   
+
   }
 }
