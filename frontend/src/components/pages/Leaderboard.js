@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
+import {getAllUsers} from '../../actions/gameActions';
+
 import laurelsImg from '../../media/laurels.png';
 
-const Leaderboard = ({login: {isAuthenticated}, loadUser}) => {
+const Leaderboard = ({login: {isAuthenticated, loading}, getAllUsers, loadUser, game: {users}}) => {
   useEffect(() => {
+    getAllUsers();
+    
     if(localStorage.token){
       loadUser();
     }
@@ -19,17 +23,24 @@ const Leaderboard = ({login: {isAuthenticated}, loadUser}) => {
       <input className="leaderboard__search" type="text" placeholder="search user" />
 
       <ul className="leaderboard-ul">
-        <li className="leaderboard-ul__li">Bob</li>
-        <li className="leaderboard-ul__li">Xaviery</li>
-        <li className="leaderboard-ul__li">Sarah</li>
-        <li className="leaderboard-ul__li">Elizabeth</li>
-        <li className="leaderboard-ul__li">Michael</li>
+        {users !== null ? 
+        (
+          (users.map(user => <li key={user._id} className="leaderboard-ul__li" >{user.name} {user.highscore}</li>))
+        ) 
+        : 
+        (
+          <p>no user in database</p>
+        )
+        }
       </ul>
+
     </div>
+      
   )
 }
 
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,   // state.login -> reducer
+  game: state.game
 })
-export default connect(mapStateToProps, {loadUser})(Leaderboard)
+export default connect(mapStateToProps, {getAllUsers, loadUser})(Leaderboard)

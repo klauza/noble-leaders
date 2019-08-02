@@ -56,7 +56,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
       setAlert("Passwords must be equal", "danger");
 
     } else{
-      let highscore = "0";
+      let highscore = 0;
       userRegister({
         name, 
         email, 

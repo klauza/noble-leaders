@@ -11,7 +11,7 @@ const User = require('../models/User');
 // @access Public
 router.get('/', async (req, res) => {
   try{
-    const users = await User.find(); 
+    const users = await User.find().sort({highscore:-1}); 
     res.json(users);
 
   } catch(err){
