@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadUser } from '../../../actions/loginActions';
+import { loadUser, userUpdateHighscore } from '../../../actions/loginActions';
 import { getUserGames, updateGameScore, setCurrent } from '../../../actions/gameActions';
 
 import LocalStorageCtrl from './controllers/LocalStorage.js';
@@ -9,7 +9,7 @@ import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 import Questions from './controllers/Questions.js';
 
-const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGameScore, setCurrent, game: { games, current }}) => {
+const ActorGame = ({login: {isAuthenticated, user}, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current }}) => {
   // const [name, setName] = useState('');
   // const [score, setScore] = useState('');
   
@@ -28,40 +28,40 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGame
         function getGames(){
           return new Promise((resolve, reject) => {
 
-            setTimeout(()=>{
-              getUserGames("actor-game");
-            },250)
+            getUserGames("actor-game");
+          
             resolve();
           });
         }
         // 3
         function loadGame(){
           App.init();
+          
         }
 
         getUser() 
         .then(() => getGames())
         .then(() => loadGame())
         .catch(reason => console.log(reason));
-  
-      
-      // loadUser();
 
-      // getUserGames();
-      
-       
-        
-    
-     
-      
-      
-
-      
     } else{
       App.init();
     }
     //eslint-disable-next-line
   }, []);
+
+
+  const showScore = () => {
+
+    
+
+    App.appReset();
+  }
+
+
+
+    
+  // };
 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, Questions){
         
@@ -86,7 +86,7 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGame
         const loadEventListeners = function(){
         displayDataFromAPI();
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
-        document.querySelector('#restart').addEventListener('click', updateScore);
+        // document.querySelector('#restart').addEventListener('click', appReset);
       }
     
         ///////////-GAME INIT-//////////
@@ -137,56 +137,93 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGame
       }
     
 
-      ///////////-UPDATE GAME-//////////
-      const updateScore = function(){
-        // Save score to database
-        // let game = UICtrl.getCurrent();
-        // setCurrent(game);
-        
-        let highscore = UICtrl.getDbScore();     // highscore from before round
-        console.log('your highscore is: ', highscore);
-
-        let totalScore = LevelCtrl.getScore();    // score from current game
-
-        if(totalScore > highscore){
-          console.log('your new highscore is: ', totalScore);
-          const currentGame = { "score": totalScore };
-          updateGameScore(currentGame);
-        // update game highscore in DB
-        
-      }
-
-        UICtrl.resetGame();
-      }
+      
 
 
 
       return {
         // init: function(games){
         init: function(){
+  
+          
+          loadEventListeners();
+        },
 
-          // games !== null ? 
-          //   (
-          //     games.forEach(prop => { 
-                
-          //       console.log(prop);
-          //       if(prop.name === "actor-game"){
-          //         // UICtrl.setCurrentLocally(game);
-          //         console.log(prop);
-          //         setCurrent(prop);
-          //         console.log('current: set');
-          //       } 
-          //     })  
-          //   ) 
-          //   : ( console.log('no games found') )
+        appReset: function(){
+          let entryScore = parseInt(current.score, 10);   
+          let roundScore = parseInt(LevelCtrl.getScore(), 10); 
+          console.log('entryScore: ', entryScore);
+          console.log('roundScore: ', roundScore);
 
-          // console.log('Games from AppInit :', games);
+          async function updateActorGameScore(){
+            if(roundScore > entryScore){
+              if(entryScore === 0){   // if it's user's very first game
+                          console.log("it's my first game!");
+                let userTotalScore = user.highscore;
+                userTotalScore += roundScore;   // just increment total entryScore
+                const updUserHighscore = {
+                  _id: user._id,
+                  highscore: userTotalScore,
+                  date: new Date()
+                }
+                userUpdateHighscore(updUserHighscore);
+              } else {
+                // update score
+                          console.log("you've beaten your score!");
+                let userTotalScore = user.highscore;  //1
+                // console.log('score before update ',userTotalScore);
+            
+                userTotalScore = userTotalScore - entryScore;     // 1 - 1 = 0
+                console.log(userTotalScore+' after decrementing');
+                userTotalScore = userTotalScore + roundScore;   // 2
+                console.log(userTotalScore+' after incrementing');
+                // console.log('score after update ',userTotalScore);
+
+                const updUserHighscore = {
+                  _id: user._id,
+                  highscore: userTotalScore,
+                  date: new Date()
+                }
+                userUpdateHighscore(updUserHighscore);
+
+              }
+
+              // update current game
+              const updScore = {
+                _id: current._id,
+                score: roundScore,
+                date: new Date()
+              }
+              // console.log('score updated is: ',updScore);
+              updateGameScore(updScore);
+                 
+              
+              
+
+              
+            } else {
+              console.log('nothing to update, your score was lower');
+              return
+            }
+            
+          }
+          updateActorGameScore()
+            .then( () => UICtrl.resetGame() );
+          
+          // UICtrl.resetGame();
+
+        }
+            
+            
+            
 
           
 
+         
+          
+          
 
-          loadEventListeners();
-        }
+       
       }
     })(UICtrl, PersonCtrl, LevelCtrl, Questions);
     
@@ -195,12 +232,12 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGame
   return (
     <div className="actor-game">
       <div className="fill-background-top">
+        {isAuthenticated ? <span className="user-logged-score">your current score is: {(current !== null) ? current.score : '-'}</span> : <span className="user-not-logged-score">log in to see your score</span>}
         <span className="welcome-text">Welcome, pick an actor/actress to begin.<br/>
           Also feel free to come back later - your progress is being saved.</span>
           
         <div className="social-icons-block">
-          <a href="https://www.linkedin.com/in/michal-klauza-b22318186/"><i className="fa fa-linkedin-square"></i></a>
-          <a href="https://github.com/klauza/actorDiscovery"><i className="fa fa-github-square"></i></a>
+          <a href="https://github.com/klauza/actorDiscovery">see code: <i className="fa fa-github-square"></i></a>
         </div>
       
 
@@ -233,7 +270,7 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGame
       <div className="game-over">
         <h3>The game is over!</h3>
         <p>you have scored <span id="game-over-points"></span></p>
-        <button id="restart">ok</button>
+        <button id="restart" onClick={showScore}>ok - update score</button>
       </div>
     
       <div className="add-score"><i className="fa fa-plus"></i></div>
@@ -247,4 +284,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, getUserGames, updateGameScore, setCurrent})(ActorGame);
+export default connect(mapStateToProps, {loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent})(ActorGame);
