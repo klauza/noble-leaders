@@ -1,13 +1,15 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
+import { getUserGames } from '../../actions/gameActions';
 import {Link} from 'react-router-dom';
 
-const Dashboard = ({login: {isAuthenticated}, loadUser}) => {
+const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
 
   useEffect(() => {
     if(localStorage.token) {
       loadUser();
+      getUserGames(null);
     }
     //eslint-disable-next-line
   }, []);
@@ -33,4 +35,4 @@ const Dashboard = ({login: {isAuthenticated}, loadUser}) => {
 const mapStateToProps = state => ({
   login: state.login
 })
-export default connect(mapStateToProps, {loadUser})(Dashboard)
+export default connect(mapStateToProps, {loadUser, getUserGames})(Dashboard)

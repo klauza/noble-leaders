@@ -6,8 +6,8 @@ const Alert = (alert) => {
   
   useEffect(() => {
 
-    console.log(alert);
-    console.log(alert.alert.length);
+    // console.log(alert);
+    // console.log(alert.alert.length);
 
   }, [alert])
   return (

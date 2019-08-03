@@ -183,8 +183,7 @@ const UICtrl = (function(){
       document.querySelector('.content').style.display = "none";
     },
 
-    resetGame: function(e){
-      e.preventDefault();
+    resetGame: function(){
       // empty local storage
       LocalStorageCtrl.deletePersonFromLocalStorage();
       LocalStorageCtrl.deleteIdFromLS();
@@ -213,31 +212,18 @@ const UICtrl = (function(){
       document.querySelector('#game-over-points').textContent = totalScore;
       
       document.querySelector('.next-question-container').style.display = "none";
-      document.querySelector('#restart').addEventListener('click', UICtrl.resetGame);
+      
       document.querySelector('.content').style.display = "none";
       document.querySelector('.answers').style.display = "none";
       document.querySelector('.welcome-text').style.display = "none";
       document.querySelector('.scoreDiv').style.display = "none";
       document.querySelector('.local-storage-reset').style.display = "none";
-
       document.querySelector('.game-over').style.display = "grid";
 
-      // Save score to database
-      let highscore = database.game.score;     // Overall highscore
-      console.log('your highscore is: ', highscore);
+    },
 
-      if(totalScore > highscore){
-        console.log('your new highscore is: ', totalScore);
-        // update highscore in DB
-      }
-      
-
-      // let actorGamehighscore = getActorGameHighscore(); 
-      // let gameCurrentScore = 10;
-
-      
-     
-
+    getDbScore: function(){
+      return database.game.score;
     },
 
     fallingDollars: function(){
@@ -261,20 +247,12 @@ const UICtrl = (function(){
       }
     },
     
-    passPropsToUIController: function(props){
+    setCurrentLocally: function(current){
       // it gets game prop here YOU CAN STORE IT IN PRIVATE OBJECT
-      props !== null ? 
-        (
-          props.forEach(prop => { 
-            if(prop.name === "actor-game"){
-              database.game = prop; // storeProp
-            } 
-          })  
-        ) 
-        : 
-        (
-          console.log('no props')
-        )
+              database.game = current; // storeProp
+    },
+    getCurrent: function(){
+      return database.game
     }
    
   }

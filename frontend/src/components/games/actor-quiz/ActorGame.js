@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadUser } from '../../../actions/loginActions';
-import { getUserGames } from '../../../actions/gameActions';
+import { getUserGames, updateGameScore, setCurrent } from '../../../actions/gameActions';
 
 import LocalStorageCtrl from './controllers/LocalStorage.js';
 import UICtrl from './controllers/UICtrl.js';
@@ -9,13 +9,54 @@ import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 import Questions from './controllers/Questions.js';
 
-const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, game: { games }}) => {
+const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, updateGameScore, setCurrent, game: { games, current }}) => {
+  // const [name, setName] = useState('');
+  // const [score, setScore] = useState('');
   
   useEffect(() => {
+
+
     if(localStorage.token) {
-      loadUser();
-      getUserGames();
-      App.init(games);
+        // 1
+        function getUser(){
+          return new Promise((resolve, reject) => {
+            loadUser();
+            resolve();
+          });
+        }
+        // 2
+        function getGames(){
+          return new Promise((resolve, reject) => {
+
+            setTimeout(()=>{
+              getUserGames("actor-game");
+            },250)
+            resolve();
+          });
+        }
+        // 3
+        function loadGame(){
+          App.init();
+        }
+
+        getUser() 
+        .then(() => getGames())
+        .then(() => loadGame())
+        .catch(reason => console.log(reason));
+  
+      
+      // loadUser();
+
+      // getUserGames();
+      
+       
+        
+    
+     
+      
+      
+
+      
     } else{
       App.init();
     }
@@ -23,12 +64,29 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, game: { ga
   }, []);
 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, Questions){
-        UICtrl.passPropsToUIController(games);    // PROPS
+        
+        // UICtrl.passPropsToUIController(games);    // PROPS
+        // games !== null ? 
+        // (
+        //   games.forEach(game => { 
+        //     if(game.name === "actor-game"){
+        //       UICtrl.setCurrentLocally(game);
+        //       console.log(game);
+        //       // setCurrent(game);
+        //     } 
+        //   })  
+        // ) 
+        // : 
+        // (
+        //   console.log('no props')
+        // )
 
+        
         // Event Listeners
         const loadEventListeners = function(){
         displayDataFromAPI();
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
+        document.querySelector('#restart').addEventListener('click', updateScore);
       }
     
         ///////////-GAME INIT-//////////
@@ -78,10 +136,55 @@ const ActorGame = ({login: {isAuthenticated}, loadUser, getUserGames, game: { ga
         pickActor.click();  // auto-click on actor with random id
       }
     
-    
+
+      ///////////-UPDATE GAME-//////////
+      const updateScore = function(){
+        // Save score to database
+        // let game = UICtrl.getCurrent();
+        // setCurrent(game);
+        
+        let highscore = UICtrl.getDbScore();     // highscore from before round
+        console.log('your highscore is: ', highscore);
+
+        let totalScore = LevelCtrl.getScore();    // score from current game
+
+        if(totalScore > highscore){
+          console.log('your new highscore is: ', totalScore);
+          const currentGame = { "score": totalScore };
+          updateGameScore(currentGame);
+        // update game highscore in DB
+        
+      }
+
+        UICtrl.resetGame();
+      }
+
+
+
       return {
+        // init: function(games){
         init: function(){
+
+          // games !== null ? 
+          //   (
+          //     games.forEach(prop => { 
+                
+          //       console.log(prop);
+          //       if(prop.name === "actor-game"){
+          //         // UICtrl.setCurrentLocally(game);
+          //         console.log(prop);
+          //         setCurrent(prop);
+          //         console.log('current: set');
+          //       } 
+          //     })  
+          //   ) 
+          //   : ( console.log('no games found') )
+
+          // console.log('Games from AppInit :', games);
+
           
+
+
           loadEventListeners();
         }
       }
@@ -144,4 +247,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, getUserGames})(ActorGame);
+export default connect(mapStateToProps, {loadUser, getUserGames, updateGameScore, setCurrent})(ActorGame);
