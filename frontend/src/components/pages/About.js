@@ -16,6 +16,8 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
       <h2 className="mt-5">About project</h2>
       <p>version 1.0</p>
       <p>Author: github-link</p>
+      <a href="https://www.linkedin.com/in/michal-klauza-b22318186/"><i className="fa fa-linkedin-square"></i></a>
+      <a href="https://github.com/klauza/noble-leaders"><i className="fa fa-github-square"></i></a>
     </div>
   )
 }

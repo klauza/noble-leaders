@@ -26,6 +26,9 @@
       background: url("./media/games/actor-quiz-cover.jpg");
       background-size: cover;
     }
+    .dashboard-snake-cover{
+      background: yellow;
+    }
   }
   .grid > *:first-child {
     grid-row: 1 / 1;

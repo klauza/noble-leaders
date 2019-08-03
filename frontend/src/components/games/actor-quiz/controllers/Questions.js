@@ -32,7 +32,7 @@ const QuestionsCtrl = (function(){
       // let allAnswers = document.querySelector('.answers');
       // let answers = Array.from(allAnswers.children);
       let answers = document.querySelectorAll('.test-text');
-      console.log(answers);
+      // console.log(answers);
       // get chosen actor's data
       let actor = PersonCtrl.getPerson();
       

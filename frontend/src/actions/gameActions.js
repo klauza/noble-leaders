@@ -19,16 +19,15 @@ export const getAllUsers = () => async dispatch => {
 
 export const getUserGames = (game) => async dispatch => {
  
-  console.log('chosen game in string: ',game);
+  // console.log('chosen game in string: ',game);
   try{
     const res = await axios.get('/api/games');
 
-      
+        // SET CURRENT
         if(game !== null){
           
           res.data.forEach(prop => { 
           
-            console.log(prop);
             if(prop.name === game){
               const chosen = prop;
               dispatch({ 
@@ -37,12 +36,12 @@ export const getUserGames = (game) => async dispatch => {
                 currentGame: chosen
               });
             
-              console.log(prop);
-              console.log('current: set');
+              // console.log('prop is: ',prop);
+              // console.log('current: set');
             }
           })  
         } else {
-          console.log('No game found');
+          console.log('No chosen game');
           dispatch({ 
             type: GET_GAMES,
             payload: res.data,
@@ -65,6 +64,8 @@ export const getUserGames = (game) => async dispatch => {
 }
 
 export const updateGameScore = (game) => async dispatch => {
+  console.log('Update Actor game Action', game);
+  
   const config = {
     headers: {
       'Content-Type': 'application/json'

@@ -27,7 +27,7 @@ const ActorGame = ({login: {isAuthenticated, user}, loadUser, getUserGames, upda
         // 2
         function getGames(){
           return new Promise((resolve, reject) => {
-
+            // game needs to be created for new user
             getUserGames("actor-game");
           
             resolve();

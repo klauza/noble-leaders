@@ -39,7 +39,7 @@ const LevelCtrl = (function(){
     initText: function(){
       document.querySelector('.next-question-container').addEventListener('click', LevelCtrl.showLevel); // puts first question
       let level = LevelCtrl.getLevel();
-      console.log(level);
+      // console.log(level);
       if(level === 0){
         LevelCtrl.startButton();
       } else {
