@@ -19,6 +19,7 @@ import Login from './components/pages/Login';
 import setAuthToken from './utils/setAuthToken';
 
 import ActorGame from './components/games/actor-quiz/ActorGame';
+import Snake from './components/games/snake/Snake';
 
 if(localStorage.token){
   setAuthToken(localStorage.token);
@@ -43,6 +44,7 @@ const App = () => {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/actor-game" component={ActorGame} />
+              <Route exact path="/snake" component={Snake} />
             </Switch>
             
           </div>
