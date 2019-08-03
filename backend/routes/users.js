@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const auth = require('../middleware/auth');
 
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -67,6 +68,39 @@ async (req, res) => {
       res.json({ token });
     })
 
+  } catch(err){
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+});
+
+
+// UPDATE USER
+router.put('/:id', auth, async (req, res) => {
+  const { name, highscore } = req.body;
+
+  // game object based on submitted fields
+  const userFields = {};
+  if(name) userFields.name = name;
+  if(highscore) userFields.highscore = highscore;
+
+  try{
+    let user = await User.findById(req.params.id);  // find user by ID
+
+    if(!user) return res.status(404).json({ msg: 'User ID not found' });
+
+    // assurance that it's .this user
+    // if(game.user.toString() !== req.user.id){
+    //   return res.status(401).json({ msg: 'Not authorized' });
+    // }
+
+    // process the update
+    user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: userFields },
+      { new: true });
+    res.json(user); // send the updated game
+    
   } catch(err){
     console.error(err.message);
     res.status(500).send('server error');
