@@ -15,8 +15,12 @@ export const SET_ALERT = 'SET_ALERT';
 export const CLEAR_ALERT = 'CLEAR_ALERT';
 
 export const GET_GAMES = 'GET_GAMES';
+export const GET_GAMES_ERROR = 'GET_GAMES_ERROR';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const UPDATE_SCORE_ERROR = 'UPDATE_SCORE_ERROR';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-export const GET_GAMES_ERROR = 'GET_GAMES_ERROR';
+
+export const SET_CURRENT = 'SET_CURRENT';
+export const CLEAR_CURRENT = 'CLEAR_CURRENT';
