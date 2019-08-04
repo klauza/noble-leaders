@@ -56,8 +56,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
         
         // Event Listeners
         const loadEventListeners = function(){
-        LevelCtrl.updateScoreFromLS(LocalStorageCtrl.getScore());
-        console.log('current score: !!',LevelCtrl.getScore());
         displayDataFromAPI();
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
         // document.querySelector('#restart').addEventListener('click', appReset);
@@ -115,8 +113,12 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
       return {
         // init: function(games){
         init: function(){
-  
-          
+        if(isAuthenticated){
+          LevelCtrl.updateScoreFromLS(LocalStorageCtrl.getScore());
+            console.log('current storage score because you are logged: !!',LevelCtrl.getScore());
+          } else {
+            console.log('Please log in');
+          }
           loadEventListeners();
         },
         refreshGame: function(){
@@ -124,106 +126,112 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
         },
 
         appUpdate: function(){
-          let entryScore = parseInt(current.score, 10);   
-          let roundScore = parseInt(LevelCtrl.getScore(), 10); 
-          console.log('entry score: ', entryScore);
-          console.log('round score: ', roundScore);
+          // If logged in
+          if(isAuthenticated){
+            let entryScore = parseInt(current.score, 10);   
+            let roundScore = parseInt(LevelCtrl.getScore(), 10); 
+            console.log('entry score: ', entryScore);
+            console.log('round score: ', roundScore);
 
-          async function updateActorGameScore(){
-            if(roundScore > entryScore){
-              loading = true; gLoading = true;
-              if(entryScore === 0){   // if it's user's very first game
-                          console.log("it's my first game!");
-                async function sumScore(){
-                  let userTotalScore = await user.highscore;
-                  userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
+            async function updateActorGameScore(){
+              if(roundScore > entryScore){
+                loading = true; gLoading = true;
+                if(entryScore === 0){   // if it's user's very first game
+                            console.log("it's my first game!");
+                  async function sumScore(){
+                    let userTotalScore = await user.highscore;
+                    userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
 
-                  // update user's highscore
-                  const updUserHighscore = await {
-                    _id: user._id,
-                    highscore: userTotalScore,
-                    date: new Date()
+                    // update user's highscore
+                    const updUserHighscore = await {
+                      _id: user._id,
+                      highscore: userTotalScore,
+                      date: new Date()
+                    }
+                    await userUpdateHighscore(updUserHighscore);
+
                   }
-                  await userUpdateHighscore(updUserHighscore);
+                  sumScore();
 
-                }
-                sumScore();
-
-                try{
-                // update current game
-                const updScore = {
-                  _id: current._id,
-                  score: roundScore,
-                  date: new Date()
-                }
-                
-                updateGameScore(updScore);
-                }catch(err){
-                  console.log('error occured: ', err);
-                }
-               
-                
-
-              } else {
-                // update score if higher than previous
-                          console.log("you've beaten your score!");
-                async function sumScore(){
-                  let userTotalScore = await user.highscore;
-                  userTotalScore = await userTotalScore - entryScore;
-                  userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-
-               
-                  // update user's highscore
-                  const updUserHighscore = await {
-                    _id: user._id,
-                    highscore: userTotalScore,
-                    date: new Date()
-                  }
-                  await userUpdateHighscore(updUserHighscore);
-
-                 
-                }
-                sumScore();
-
-
-                async function sumGameScore(){
+                  try{
                   // update current game
-                  const updScore = await {
+                  const updScore = {
                     _id: current._id,
                     score: roundScore,
                     date: new Date()
                   }
-                  await updateGameScore(updScore);
+                  
+                  updateGameScore(updScore);
+                  }catch(err){
+                    console.log('error occured: ', err);
+                  }
+                
+                  
+
+                } else {
+                  // update score if higher than previous
+                            console.log("you've beaten your score!");
+                  async function sumScore(){
+                    let userTotalScore = await user.highscore;
+                    userTotalScore = await userTotalScore - entryScore;
+                    userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
+
+                
+                    // update user's highscore
+                    const updUserHighscore = await {
+                      _id: user._id,
+                      highscore: userTotalScore,
+                      date: new Date()
+                    }
+                    await userUpdateHighscore(updUserHighscore);
+
+                  
+                  }
+                  sumScore();
+
+
+                  async function sumGameScore(){
+                    // update current game
+                    const updScore = await {
+                      _id: current._id,
+                      score: roundScore,
+                      date: new Date()
+                    }
+                    await updateGameScore(updScore);
+                  }
+                  await sumGameScore();
                 }
-                await sumGameScore();
+
+            
+                  
+                
+                
+
+                
+              } else {
+                console.log('nothing to update, your score was lower');
+                return
               }
+              
+            }
+            console.log('loadings: ');
+            console.log('user loading: ', loading);
+            console.log('game loadings: ', gLoading);
 
-          
-                 
-              
-              
-
-              
-            } else {
-              console.log('nothing to update, your score was lower');
-              return
+            async function updt(){
+              await updateActorGameScore();
             }
             
+            updt();
+          } else {
+            // If not logged in
+            console.log('please log in to update the score');
           }
-          console.log('loadings: ');
-          console.log('user loading: ', loading);
-          console.log('game loadings: ', gLoading);
 
-          async function updt(){
-            await updateActorGameScore();
-          }
-          
-          updt();
-          
           UICtrl.showExitButton();
+
         }
-            
-       
+           
       }
     })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
     
