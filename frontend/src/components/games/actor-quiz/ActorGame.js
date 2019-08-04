@@ -7,7 +7,7 @@ import LocalStorageCtrl from './controllers/LocalStorage.js';
 import UICtrl from './controllers/UICtrl.js';
 import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
-import Questions from './controllers/Questions.js';
+// import Questions from './controllers/Questions.js';
 
 const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current, gLoading }}) => {
 
@@ -17,54 +17,47 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
 
     if(localStorage.token) {
         // 1
-        function getUser(){
-          return new Promise((resolve, reject) => {
-            loadUser();
-            resolve();
-          });
+        async function actorGameInit(){
+         
+          await loadUser();
+          await getUserGames("actor-game");
+          await App.init();
+        
         }
-        // 2
-        function getGames(){
-          return new Promise((resolve, reject) => {
-            getUserGames("actor-game");
-            resolve();
-          });
-        }
-        // 3
-        function loadGame(){
-          App.init();
-          
-        }
+        actorGameInit();
+       
+        
+       
 
-        getUser() 
-        .then(() => getGames())
-        .then(() => loadGame())
-        .catch(reason => console.log(reason));
-
+      
     } else{
       App.init();
     }
     //eslint-disable-next-line
   }, []);
 
+  // const refreshGame = () => {
 
+  // }
 
-  const showScore = () => {
-
-    App.appReset();
-  }
+  // const showScore = () => {
+    
+  //   App.appUpdate();
+  // }
 
 
 
     
   // };
 
-    const App = (function(UICtrl, PersonCtrl, LevelCtrl, Questions){
+    const App = (function(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl){
         
 
         
         // Event Listeners
         const loadEventListeners = function(){
+        LevelCtrl.updateScoreFromLS(LocalStorageCtrl.getScore());
+        console.log('current score: !!',LevelCtrl.getScore());
         displayDataFromAPI();
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
         // document.querySelector('#restart').addEventListener('click', appReset);
@@ -126,50 +119,86 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
           
           loadEventListeners();
         },
+        refreshGame: function(){
+          UICtrl.resetGame();
+        },
 
-        appReset: function(){
+        appUpdate: function(){
           let entryScore = parseInt(current.score, 10);   
           let roundScore = parseInt(LevelCtrl.getScore(), 10); 
+          console.log('entry score: ', entryScore);
+          console.log('round score: ', roundScore);
 
           async function updateActorGameScore(){
             if(roundScore > entryScore){
+              loading = true; gLoading = true;
               if(entryScore === 0){   // if it's user's very first game
                           console.log("it's my first game!");
-                let userTotalScore = user.highscore;
-                userTotalScore = userTotalScore + roundScore;   // just increment total entryScore
-                const updUserHighscore = {
-                  _id: user._id,
-                  highscore: userTotalScore,
+                async function sumScore(){
+                  let userTotalScore = await user.highscore;
+                  userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
+
+                  // update user's highscore
+                  const updUserHighscore = await {
+                    _id: user._id,
+                    highscore: userTotalScore,
+                    date: new Date()
+                  }
+                  await userUpdateHighscore(updUserHighscore);
+
+                }
+                sumScore();
+
+                try{
+                // update current game
+                const updScore = {
+                  _id: current._id,
+                  score: roundScore,
                   date: new Date()
                 }
-                userUpdateHighscore(updUserHighscore);
-              } else {
-                // update score
-                          console.log("you've beaten your score!");
-                let userTotalScore = user.highscore;  
-            
-                userTotalScore = userTotalScore - entryScore;  
                 
-                userTotalScore = userTotalScore + roundScore;   
-          
-
-                const updUserHighscore = {
-                  _id: user._id,
-                  highscore: userTotalScore,
-                  date: new Date()
+                updateGameScore(updScore);
+                }catch(err){
+                  console.log('error occured: ', err);
                 }
-                userUpdateHighscore(updUserHighscore);
+               
+                
 
+              } else {
+                // update score if higher than previous
+                          console.log("you've beaten your score!");
+                async function sumScore(){
+                  let userTotalScore = await user.highscore;
+                  userTotalScore = await userTotalScore - entryScore;
+                  userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
+
+               
+                  // update user's highscore
+                  const updUserHighscore = await {
+                    _id: user._id,
+                    highscore: userTotalScore,
+                    date: new Date()
+                  }
+                  await userUpdateHighscore(updUserHighscore);
+
+                 
+                }
+                sumScore();
+
+
+                async function sumGameScore(){
+                  // update current game
+                  const updScore = await {
+                    _id: current._id,
+                    score: roundScore,
+                    date: new Date()
+                  }
+                  await updateGameScore(updScore);
+                }
+                await sumGameScore();
               }
 
-              // update current game
-              const updScore = {
-                _id: current._id,
-                score: roundScore,
-                date: new Date()
-              }
-              // console.log('score updated is: ',updScore);
-              updateGameScore(updScore);
+          
                  
               
               
@@ -181,18 +210,22 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
             }
             
           }
-          updateActorGameScore()
-            .then( () => {
+          console.log('loadings: ');
+          console.log('user loading: ', loading);
+          console.log('game loadings: ', gLoading);
 
-              // refresh page after updates
-              !loading && !gLoading && UICtrl.resetGame();
-             })
-
+          async function updt(){
+            await updateActorGameScore();
+          }
+          
+          updt();
+          
+          UICtrl.showExitButton();
         }
             
        
       }
-    })(UICtrl, PersonCtrl, LevelCtrl, Questions);
+    })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
     
 
 
@@ -237,7 +270,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
       <div className="game-over">
         <h3>The game is over!</h3>
         <p>you have scored <span id="game-over-points"></span></p>
-        <button id="restart" onClick={showScore}>ok - update score</button>
+        <button id="restart" className="but-updt" onClick={App.appUpdate}>OK - updt</button>
+        <button id="restart" className="but-quit hidden" onClick={App.refreshGame}>EXIT</button>
       </div>
     
       <div className="add-score"><i className="fa fa-plus"></i></div>

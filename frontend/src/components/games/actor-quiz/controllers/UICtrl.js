@@ -191,9 +191,15 @@ const UICtrl = (function(){
   
       window.location.reload(true);
     },
+
+    showExitButton: function(){
+      document.querySelector('.but-quit').classList.remove('hidden');
+      document.querySelector('.but-updt').classList.add('hidden');
+    },
     
     gameOver: function(){
       UICtrl.fallingDollars();
+      
 
       let totalScore = LevelCtrl.getScore();
       //eslint-disable-next-line

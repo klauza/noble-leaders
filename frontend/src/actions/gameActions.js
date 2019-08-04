@@ -97,6 +97,7 @@ export const getUserGames = (game) => async dispatch => {
 }
 
 export const updateGameScore = (game) => async dispatch => {
+  console.log('update game score: ', game);
   gameLoading();
   // console.log('Update Actor game Action', game);
   
