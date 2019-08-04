@@ -69,7 +69,7 @@ export const getUserGames = (game) => async dispatch => {
                 currentGame: chosen
               });
             
-              // console.log('prop is: ',prop);
+              console.log('current game loaded: ',prop);
               // console.log('current: set');
             }
           })  
@@ -98,7 +98,7 @@ export const getUserGames = (game) => async dispatch => {
 
 export const updateGameScore = (game) => async dispatch => {
   gameLoading();
-  console.log('Update Actor game Action', game);
+  // console.log('Update Actor game Action', game);
   
   const config = {
     headers: {

@@ -87,7 +87,7 @@ export const userLogin = (user) => async dispatch => {
 export const userUpdateHighscore = (user) => async dispatch => {
   setLoading();
 
-  console.log('Update user Highscore of user', user);
+  // console.log('Update user Highscore of user', user);
   
   const config = {
     headers: {

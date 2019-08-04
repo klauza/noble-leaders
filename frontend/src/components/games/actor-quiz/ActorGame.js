@@ -10,8 +10,7 @@ import LevelCtrl from './controllers/Level.js';
 import Questions from './controllers/Questions.js';
 
 const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current, gLoading }}) => {
-  // const [name, setName] = useState('');
-  // const [score, setScore] = useState('');
+
   
   useEffect(() => {
 
@@ -27,9 +26,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
         // 2
         function getGames(){
           return new Promise((resolve, reject) => {
-            // game needs to be created for new user
             getUserGames("actor-game");
-          
             resolve();
           });
         }
@@ -51,9 +48,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
   }, []);
 
 
-  const showScore = () => {
 
-    
+  const showScore = () => {
 
     App.appReset();
   }
@@ -65,21 +61,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, Questions){
         
-        // UICtrl.passPropsToUIController(games);    // PROPS
-        // games !== null ? 
-        // (
-        //   games.forEach(game => { 
-        //     if(game.name === "actor-game"){
-        //       UICtrl.setCurrentLocally(game);
-        //       console.log(game);
-        //       // setCurrent(game);
-        //     } 
-        //   })  
-        // ) 
-        // : 
-        // (
-        //   console.log('no props')
-        // )
 
         
         // Event Listeners
@@ -137,9 +118,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
       }
     
 
-      
-
-
 
       return {
         // init: function(games){
@@ -152,15 +130,13 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
         appReset: function(){
           let entryScore = parseInt(current.score, 10);   
           let roundScore = parseInt(LevelCtrl.getScore(), 10); 
-          console.log('entryScore: ', entryScore);
-          console.log('roundScore: ', roundScore);
 
           async function updateActorGameScore(){
             if(roundScore > entryScore){
               if(entryScore === 0){   // if it's user's very first game
                           console.log("it's my first game!");
                 let userTotalScore = user.highscore;
-                userTotalScore += roundScore;   // just increment total entryScore
+                userTotalScore = userTotalScore + roundScore;   // just increment total entryScore
                 const updUserHighscore = {
                   _id: user._id,
                   highscore: userTotalScore,
@@ -170,14 +146,12 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
               } else {
                 // update score
                           console.log("you've beaten your score!");
-                let userTotalScore = user.highscore;  //1
-                // console.log('score before update ',userTotalScore);
+                let userTotalScore = user.highscore;  
             
-                userTotalScore = userTotalScore - entryScore;     // 1 - 1 = 0
-                console.log(userTotalScore+' after decrementing');
-                userTotalScore = userTotalScore + roundScore;   // 2
-                console.log(userTotalScore+' after incrementing');
-                // console.log('score after update ',userTotalScore);
+                userTotalScore = userTotalScore - entryScore;  
+                
+                userTotalScore = userTotalScore + roundScore;   
+          
 
                 const updUserHighscore = {
                   _id: user._id,
@@ -210,25 +184,12 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
           updateActorGameScore()
             .then( () => {
 
-              // set loading true and after updating highscore set to false
+              // refresh page after updates
               !loading && !gLoading && UICtrl.resetGame();
-           
              })
-             
-          
-          // UICtrl.resetGame();
-          
+
         }
             
-            
-            
-
-          
-
-         
-          
-          
-
        
       }
     })(UICtrl, PersonCtrl, LevelCtrl, Questions);

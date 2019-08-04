@@ -31,9 +31,9 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   }, []);
 
 
-  console.log(gLoading);
+  // console.log(gLoading);
       if(gLoading === false){
-        if(games.length === 0){
+        if(games && games.length === 0){
           createTheGame({
             name: 'actor-game',
             score: 0
@@ -49,8 +49,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
          
          
         } else {
-          console.log('games exist');
-          console.log(games);
+          
         }
       } 
 
@@ -59,7 +58,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
 
   return (
     <Fragment>
-      {!loading && !gLoading && games.length === 3 && 
+      {games && !loading && !gLoading && games.length === 3 && 
         <div className="container profile">
           <h2 className="mt-5">you are logged in as {user && user.name}</h2>
           <p>your total score: {user && user.highscore}</p>
