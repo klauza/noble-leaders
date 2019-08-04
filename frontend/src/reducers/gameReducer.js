@@ -1,11 +1,12 @@
-import { GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, CLEAR_ERRORS, SET_CURRENT, CLEAR_CURRENT } from '../actions/types';
+import { SET_GAME_LOADING, CREATE_THE_GAME, CREATE_GAME_FAIL, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, CLEAR_ERRORS, SET_CURRENT, CLEAR_CURRENT } from '../actions/types';
 
 const initialState = {
   users: null, 
   users_error: null,
   games: null,
   games_error: null,
-  current: null
+  current: null,
+  gLoading: true
 };
 
 export default(state = initialState, action) => {
@@ -13,7 +14,8 @@ export default(state = initialState, action) => {
     case GET_ALL_USERS:
       return{
         ...state,
-        users: action.payload
+        users: action.payload,
+        gLoading: false
       }
     case GET_USERS_ERROR:
       return{
@@ -21,12 +23,26 @@ export default(state = initialState, action) => {
         users_error: action.payload
       }
 
-      
+    case CREATE_THE_GAME:
+      console.log('reducer - create game: ', action.payload);
+      return{
+        ...state,
+        games: [action.payload, ...state.games],
+        gLoading: false
+      }
+    case CREATE_GAME_FAIL:
+      console.log('reducer - error create game ,', action.payload);
+      return{
+        ...state,
+        games_error: action.payload
+      }
+
     case GET_GAMES:
       return{
         ...state,
         games: action.payload,
-        current: action.currentGame
+        current: action.currentGame,
+        gLoading: false
       }
     case GET_GAMES_ERROR:
       return{
@@ -38,12 +54,15 @@ export default(state = initialState, action) => {
       return{
         ...state,
         games: state.games.map((game) => 
-          game._id === action.payload._id ? action.payload : game)
+          game._id === action.payload._id ? action.payload : game),
+          gLoading: false
       }
+
     case UPDATE_SCORE_ERROR:
       return{
         ...state,
-        games_error: action.payload
+        games_error: action.payload,
+        gLoading: false
       };
     
       
@@ -64,6 +83,11 @@ export default(state = initialState, action) => {
       return{
         ...state,
         current: null
+      }
+    case SET_GAME_LOADING:
+      return{
+        ...state,
+        gLoading: true
       }
 
     default:

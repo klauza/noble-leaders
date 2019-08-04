@@ -1,9 +1,11 @@
-import { GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, SET_CURRENT, CLEAR_CURRENT } from './types';
+import { CREATE_THE_GAME, CREATE_GAME_FAIL, SET_GAME_LOADING, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, SET_CURRENT, CLEAR_CURRENT } from './types';
 import axios from 'axios';
+
 
 
 // Get all users, sorted descending by highscore
 export const getAllUsers = () => async dispatch => {
+  gameLoading();
  
 
   try{
@@ -16,8 +18,39 @@ export const getAllUsers = () => async dispatch => {
   }
 }
 
+// Create one game
+export const createTheGame = (theGame) => async dispatch => {
+  gameLoading();
+  // if(localStorage.token){
+  //   setAuthToken(localStorage.token);
+  // }
+  
+  // console.log(theGame);
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try{
+    
+    const res = await axios.post('/api/games', theGame, config);
+
+    // create all games for user
+    dispatch({
+      type: CREATE_THE_GAME,
+      payload: res.data
+    })
+  } catch(err){
+    console.log(err.response);
+    dispatch({
+      type: CREATE_GAME_FAIL,
+      payload: err.response.data.errors
+    })
+  }
+}
 
 export const getUserGames = (game) => async dispatch => {
+  gameLoading();
  
   // console.log('chosen game in string: ',game);
   try{
@@ -41,7 +74,7 @@ export const getUserGames = (game) => async dispatch => {
             }
           })  
         } else {
-          console.log('No chosen game');
+          console.log('Loading all games');
           dispatch({ 
             type: GET_GAMES,
             payload: res.data,
@@ -64,6 +97,7 @@ export const getUserGames = (game) => async dispatch => {
 }
 
 export const updateGameScore = (game) => async dispatch => {
+  gameLoading();
   console.log('Update Actor game Action', game);
   
   const config = {
@@ -107,4 +141,8 @@ export const clearCurrent = () => async dispatch =>{
   dispatch({
     type: CLEAR_CURRENT
   })
+}
+
+export const gameLoading = () => async dispatch => {
+  dispatch({type: SET_GAME_LOADING})
 }
