@@ -19,6 +19,9 @@ export const loadUser = () => async dispatch => {
   }
 }
 
+ 
+
+
 // REGISTER NEW USER
 export const userRegister = (user) => async dispatch => {
  
@@ -82,6 +85,7 @@ export const userLogin = (user) => async dispatch => {
 }
 
 export const userUpdateHighscore = (user) => async dispatch => {
+  setLoading();
 
   console.log('Update user Highscore of user', user);
   

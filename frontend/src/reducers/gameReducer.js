@@ -55,7 +55,7 @@ export default(state = initialState, action) => {
         ...state,
         games: state.games.map((game) => 
           game._id === action.payload._id ? action.payload : game),
-          gLoading: false
+        gLoading: false
       }
 
     case UPDATE_SCORE_ERROR:

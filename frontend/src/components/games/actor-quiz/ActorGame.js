@@ -9,7 +9,7 @@ import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 import Questions from './controllers/Questions.js';
 
-const ActorGame = ({login: {isAuthenticated, user}, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current }}) => {
+const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current, gLoading }}) => {
   // const [name, setName] = useState('');
   // const [score, setScore] = useState('');
   
@@ -208,10 +208,16 @@ const ActorGame = ({login: {isAuthenticated, user}, loadUser, getUserGames, upda
             
           }
           updateActorGameScore()
-            .then( () => UICtrl.resetGame() );
+            .then( () => {
+
+              // set loading true and after updating highscore set to false
+              !loading && !gLoading && UICtrl.resetGame();
+           
+             })
+             
           
           // UICtrl.resetGame();
-
+          
         }
             
             

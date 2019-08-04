@@ -65,13 +65,15 @@ export default(state = initialState, action) => {
     case HIGHSCORE_UPDATE:
       return{
         ...state,
-        user: action.payload
+        user: action.payload,
+        loading: false
       }
 
     case HIGHSCORE_UPDATE_ERROR:
       return{
         ...state,
-        error: action.payload
+        error: action.payload,
+        loading: false
       }
 
     default:
