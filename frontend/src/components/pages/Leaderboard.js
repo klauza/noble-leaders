@@ -1,23 +1,60 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 import {getAllUsers} from '../../actions/gameActions';
 
 import laurelsImg from '../../media/laurels.png';
 
-const Leaderboard = ({login: {isAuthenticated, loading}, getAllUsers, loadUser, game: {users}}) => {
+const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, loadUser, game: {users, gLoading}}) => {
+  
+  const [img, setImg] = useState(true);
+
   useEffect(() => {
-    getAllUsers();
+    console.log(gLoading);
+
     
-    if(localStorage.token){
-      loadUser();
+    function loadImageAsync(image){
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.addEventListener('load', event => resolve(img));
+        img.addEventListener('erorr', reason => reject(new Error('error')));
+        img.src = image
+      })
     }
-   
+    
+    async function initLeaderBoard(){
+      if(localStorage.token){
+        await getAllUsers();
+        await loadUser();
+        await loadImageAsync(laurelsImg)
+          .then(() => setImg(false))
+          .catch(reason => console.log(reason));
+
+      } else {
+        console.log('not auth');
+        getAllUsers();
+        await loadImageAsync(laurelsImg)
+          .then(() => setImg(false))
+          .catch(reason => console.log(reason));
+      }
+      
+    }
+
+    initLeaderBoard()
+
+    
     //eslint-disable-next-line
-  }, []);
+  }, [isAuthenticated]);
+
+  if(isAuthenticated){
+    if(loading || gLoading || img){ return <p>loading....</p>} 
+  } else {
+    if(gLoading || img){ return <p>loading....</p>} 
+  }
+
 
   return (
-    <div className="leaderboard container mt-5">
+    <div className="leaderboard">
       <h2 className="leaderboard__title">LEADERBOARD</h2>
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
       <input className="leaderboard__search" type="text" placeholder="search user" />
@@ -25,7 +62,12 @@ const Leaderboard = ({login: {isAuthenticated, loading}, getAllUsers, loadUser, 
       <ul className="leaderboard-ul">
         {users !== null ? 
         (
-          (users.map(user => <li key={user._id} className="leaderboard-ul__li" >{user.name} {user.highscore}</li>))
+          (users.map(item => 
+          <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
+            <span>{item.highscore}</span>
+            <span>{item.name}</span> 
+          </li>
+          ))
         ) 
         : 
         (

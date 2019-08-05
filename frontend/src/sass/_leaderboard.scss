@@ -1,4 +1,7 @@
 .leaderboard{
+  width: 50%;
+  margin: 50px auto 50px;
+  @media(max-width: 768px) {width: 95%; }
   &__title{
     text-align: center;
     margin: 20px 0;
@@ -20,10 +23,18 @@
     width: 100%;
     margin: 0 auto;
     &__li{
+      display: grid;
+      grid-template-columns: minmax(auto, 100px) auto ;
       list-style: none;
       &:nth-child(odd){
         background: #e0e0e0;
       }
+    }
+
+    .selected{
+      background: rgb(146, 243, 0);
+      color: black;
+      font-weight: bold;
     }
   }
 
