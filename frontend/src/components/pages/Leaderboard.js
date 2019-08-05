@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 import {getAllUsers} from '../../actions/gameActions';
+import Loader from '../layout/Loader';
 
 import laurelsImg from '../../media/laurels.png';
 
@@ -10,69 +11,69 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
   const [img, setImg] = useState(true);
 
   useEffect(() => {
-    console.log(gLoading);
 
-    
-    function loadImageAsync(image){
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.addEventListener('load', event => resolve(img));
-        img.addEventListener('erorr', reason => reject(new Error('error')));
-        img.src = image
-      })
-    }
-    
     async function initLeaderBoard(){
       if(localStorage.token){
         await getAllUsers();
         await loadUser();
-        await loadImageAsync(laurelsImg)
-          .then(() => setImg(false))
-          .catch(reason => console.log(reason));
 
       } else {
-        console.log('not auth');
         getAllUsers();
-        await loadImageAsync(laurelsImg)
-          .then(() => setImg(false))
-          .catch(reason => console.log(reason));
       }
-      
     }
 
     initLeaderBoard()
 
-    
     //eslint-disable-next-line
   }, [isAuthenticated]);
 
+
+  function loadImageAsync(image){
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.addEventListener('load', event => resolve(img));
+      img.addEventListener('erorr', reason => reject(new Error('error')));
+      img.src = image
+    })
+  }
+  loadImageAsync(laurelsImg)
+    .then(() => setImg(false))
+    .catch(reason => console.log(reason));
+
+
+
   if(isAuthenticated){
-    if(loading || gLoading || img){ return <p>loading....</p>} 
+    if(loading || gLoading || img){ return <Loader />} 
   } else {
-    if(gLoading || img){ return <p>loading....</p>} 
+    if(gLoading || img){ return <Loader />} 
   }
 
 
   return (
-    <div className="leaderboard">
+    <div className="leaderboard test-animation">
       <h2 className="leaderboard__title">LEADERBOARD</h2>
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
       <input className="leaderboard__search" type="text" placeholder="search user" />
 
       <ul className="leaderboard-ul">
+        <li className="leaderboard-ul__li">
+          <span><strong>Highscore</strong></span>
+          <span><strong>Name</strong></span> 
+        </li>
+
         {users !== null ? 
-        (
-          (users.map(item => 
-          <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
-            <span>{item.highscore}</span>
-            <span>{item.name}</span> 
-          </li>
-          ))
-        ) 
-        : 
-        (
-          <p>no user in database</p>
-        )
+          (
+            (users.map(item => 
+            <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
+              <span>{item.highscore}</span>
+              <span>{item.name}</span> 
+            </li>
+            ))
+          ) 
+          : 
+          (
+            <p>no user in database</p>
+          )
         }
       </ul>
 

@@ -1,4 +1,7 @@
 .leaderboard{
+  transform: translateY(50px);
+  opacity: 0;
+
   width: 50%;
   margin: 50px auto 50px;
   @media(max-width: 768px) {width: 95%; }
@@ -38,4 +41,18 @@
     }
   }
 
+}
+
+.test-animation{
+  animation: anim 1s forwards;
+}
+@keyframes anim{
+  0%{
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
