@@ -1,10 +1,12 @@
-import React, {useEffect, Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import ProfileList from './ProfileList';
 // import {useState} from 'react';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 import { getUserGames, createTheGame } from '../../actions/gameActions';
 import history from '../../history';
+import profile from '../../media/profile.jpg'
+import cup from '../../media/puchar.png'
 
 const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, getUserGames, game: { games, gLoading }}) => {
   // const [block, blockSet] = useState(false)
@@ -23,6 +25,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
       };
 
       profileInit();
+
     }else {
       history.push('/');
     }
@@ -35,7 +38,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
       if(gLoading === false){
         if(games && games.length === 0){
           createTheGame({
-            name: 'actor-game',
+            name: 'tomb-raider',
             score: 0
           });
           createTheGame({
@@ -43,7 +46,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
             score: 0
           });
           createTheGame({
-            name: 'tomb-raider',
+            name: 'actor-game',
             score: 0
           });
          
@@ -58,13 +61,31 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
 
   return (
     <Fragment>
-      {games && !loading && !gLoading && games.length === 3 && 
-        <div className="container profile">
-          <h2 className="mt-5">you are logged in as {user && user.name}</h2>
-          <p>your total score: {user && user.highscore}</p>
-          {games !== null && !gLoading ? games.map((geme) => <ProfileList key={geme._id} geme={geme} />) : null }
+    {games && !loading && !gLoading && games.length === 3 &&
+      <div className="profile">
+
+        <div className="profile__top">
+          <div className="profile__top--score">
+            <div className="score-title">Your total score</div>
+            <div className="score-points">
+              <div className="cup"><img src={cup} alt=""/></div>
+              <div className="points">{user.highscore}</div>
+            </div>
+          </div>
+          <div className="profile__top--image">
+            <div className="user-name"><span>{user.name}</span></div>
+            <div className="img-holder"><img src={profile} alt=""/></div>
+          </div>
         </div>
-      }
+
+        
+        
+          <div className="profile__bottom">
+            {games !== null && !gLoading ? games.map((game) => <ProfileList key={game._id} game={game} />) : null }
+          </div>
+        
+      </div>
+    }
     </Fragment>
  
     

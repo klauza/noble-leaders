@@ -1,19 +1,21 @@
 import React from 'react';
 
-const ProfileList = ({ geme }) => {
-  const {name, score } = geme; 
+const ProfileList = ({ game }) => {
+  const {name, score } = game; 
 
   return (
-    <div className="card bg-light">
-      <h3 className="text-primary text-left">
-        {'name: '}{name} 
-      </h3>
+    <div className="profile__bottom--item">
 
-      <ul className="list">
-      {'score: '}{score}
+      <div className="item-img"><img alt=""/></div>
+
+      <div className="item-name">
+        <span>{name}</span>
+      </div>
+
+      <ul className="item-score">
+        <span>Highscore: <strong>{score}</strong></span>
       </ul>
 
-  
     </div>
   )
 }
