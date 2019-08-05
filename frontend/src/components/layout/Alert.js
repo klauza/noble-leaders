@@ -6,9 +6,6 @@ const Alert = (alert) => {
   
   useEffect(() => {
 
-    // console.log(alert);
-    // console.log(alert.alert.length);
-
   }, [alert])
   return (
     alert.alert.length > 0 && alert.alert.map(alert => (

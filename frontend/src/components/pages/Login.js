@@ -7,11 +7,12 @@ import {setAlert} from '../../actions/alertActions';
 const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAlert }) => {
 
   useEffect(() => {
+    
     if(localStorage.token && localStorage.token !== 'undefined'){
       history.push('/profile');  //redirect to profile
     }
     // console.log(error);
-    if(error !== null){
+    if(error && error !== null){
       
       if(error === 'Invalid Password'){
         setAlert("Invalid Password", "danger");
@@ -20,7 +21,9 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
         if(error[0].msg){
           setAlert(error[0].msg, "danger");
           clearError();
-        }
+        } else{
+        return 
+      } 
       }
     }
     //eslint-disable-next-line
@@ -62,11 +65,11 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
         <h2 className="">Sign In</h2>
 
         <div className="input-field">
-          <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} required />
+          <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} />
         </div>
 
         <div className="input-field">
-          <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} required />
+          <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} />
         </div>
 
         <div className="input-field">

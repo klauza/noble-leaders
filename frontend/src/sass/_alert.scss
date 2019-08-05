@@ -9,14 +9,16 @@
   height: 50px;
   border: 0px solid black;
   border-radius: 5px;
-  background: rgb(255, 0, 0);
   text-align: center;
   animation: alert-animation 2500ms forwards;
+  z-index: 999;
 
   &-danger{
     color: white;
     transition: all 250ms ease;
+    background: rgb(255, 0, 0);
   }
+  
 
   span{
     width: 100%;

@@ -7,8 +7,12 @@ import { getUserGames } from '../../../actions/gameActions';
 const Snake = ({getUserGames, loadUser}) => {
 
   useEffect(() => {
-    loadUser();
-    getUserGames("snake");
+    async function snakeInit(){
+      await loadUser();
+      await getUserGames("snake");
+    }
+    snakeInit();
+   
     //eslint-disable-next-line
   }, [])
 
