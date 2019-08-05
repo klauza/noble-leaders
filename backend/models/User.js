@@ -17,6 +17,9 @@ const UserSchema = mongoose.Schema({
   highscore: {
     type: Number
   },
+  avatar: {
+    type: String
+  },
   date: {
     type: Date,
     default: Date.now

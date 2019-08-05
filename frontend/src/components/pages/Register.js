@@ -17,7 +17,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
     if(localStorage.token && localStorage.token !== 'undefined'){
       history.push('/profile');  //redirect to profile
     }
-    console.log('error is now: ',error);
+    
     if(error !== null){
 
       if(error === 'User already exists'){
@@ -57,13 +57,26 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
     } else{
       let highscore = 0;
-      userRegister({
-        name, 
-        email, 
-        password,
-        highscore
-      });
+      
+      async function fetchAvatar(){
+        const res = await fetch('https://api.thecatapi.com/v1/images/search');
+        const data = await res.json();
+        return data;
+      }
+        
+      fetchAvatar()
+        .then((data) => {
+          let avatar = data[0].url;
+          userRegister({
+            name, 
+            email, 
+            password,
+            highscore,
+            avatar
+          });
+        })
 
+        
       console.log('Register submitted');
     }
   }
@@ -76,19 +89,19 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
             register yourself</h2>
 
             <div className="input-field">
-              <input id="name" type="text" name="name" value={name} placeholder="Name" onChange={onChange} required />
+              <input id="name" type="text" name="name" value={name} placeholder="Name" onChange={onChange} />
             </div>
 
             <div className="input-field">
-              <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} required />
+              <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} />
             </div>
 
             <div className="input-field">
-              <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} required minLength="6"/>
+              <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} minLength="6"/>
             </div>
 
             <div className="input-field">
-              <input id="password2" type="password" name="password2" value={password2} placeholder="Repeat password" onChange={onChange} required />
+              <input id="password2" type="password" name="password2" value={password2} placeholder="Repeat password" onChange={onChange} />
             </div>
 
             <div className="input-field">

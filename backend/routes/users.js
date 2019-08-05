@@ -25,7 +25,7 @@ async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { name, email, password, highscore} = req.body;
+  const { name, email, password, avatar, highscore} = req.body;
 
   try{      
     let user = await User.findOne({ email: email });
@@ -43,6 +43,7 @@ async (req, res) => {
       name: name,
       email: email,
       password: password,
+      avatar: avatar,
       highscore: highscore
     })
 
