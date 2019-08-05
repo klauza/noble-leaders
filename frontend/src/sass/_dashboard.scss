@@ -1,6 +1,7 @@
 .dashboard{
   margin-top: 50px;
   margin-bottom: 50px;
+  
   .grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
@@ -26,6 +27,9 @@
       background: url("./media/games/actor-quiz-cover.jpg");
       background-size: cover;
     }
+    .image-placeholder{
+      background: black;
+    }
     .dashboard-snake-cover{
       background: yellow;
     }
@@ -39,3 +43,4 @@
     border: 1px white solid;
   }
 }
+
