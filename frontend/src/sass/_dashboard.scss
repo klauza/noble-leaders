@@ -18,7 +18,14 @@
       grid-row: 1 / 1;
       grid-column: 1 / 1;
     }
-    .grid-link{
+
+    & > div {
+      position: relative;
+      background: rgba(0,0,0,0.1);
+      box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
+    }
+
+    &-link{
       width: 100%;
       height: 100%;
       display: block;
@@ -27,9 +34,9 @@
       background: url("./media/games/actor-quiz-cover.jpg");
       background-size: cover;
     }
-    .image-placeholder{
-      background: black;
-    }
+    // .image-placeholder{
+    //   background: black;
+    // }
     .dashboard-snake-cover{
       background: yellow;
     }
@@ -38,9 +45,6 @@
     grid-row: 1 / 1;
     grid-column: 1 / 1;
   }
-  .grid > * {
-    background: rgba(0,0,0,0.1);
-    border: 1px white solid;
-  }
+ 
 }
 
