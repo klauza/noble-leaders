@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import history from '../../history';
 import {connect} from 'react-redux';
 import {userLogin, clearError} from '../../actions/loginActions';
 import {setAlert} from '../../actions/alertActions';
+import Loader from '../layout/Loader';
 
 const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAlert }) => {
 
@@ -59,26 +60,30 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
   }
 
   return (
-    <div className="container auth">
+    <Fragment>
+      {!isAuthenticated ? <Loader /> : 
+      <div className="container auth">
 
-      <form className="auth__sign-form" onSubmit={onSubmit}>
-        <h2 className="">Sign In</h2>
+        <form className="auth__sign-form" onSubmit={onSubmit}>
+          <h2 className="">Sign In</h2>
 
-        <div className="input-field">
-          <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} />
-        </div>
+          <div className="input-field">
+            <input id="email" type="text" name="email" value={email} placeholder="Email" onChange={onChange} />
+          </div>
 
-        <div className="input-field">
-          <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} />
-        </div>
+          <div className="input-field">
+            <input id="password" type="password" name="password" value={password} placeholder="Password" onChange={onChange} />
+          </div>
 
-        <div className="input-field">
-          <button className="btn-sign">Login</button>
-        </div>
+          <div className="input-field">
+            <button className="btn-sign">Login</button>
+          </div>
 
-      </form>
-        
-    </div>
+        </form>
+          
+      </div>
+      }
+    </Fragment>
   )
 }
 const mapStateToProps = state => ({

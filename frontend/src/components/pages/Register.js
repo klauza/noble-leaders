@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import history from '../../history';
 import {connect} from 'react-redux';
 import {userRegister, clearError} from '../../actions/loginActions';
 import {setAlert} from '../../actions/alertActions';
+import Loader from '../layout/Loader';
 
 const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, setAlert }) => {
 
@@ -82,7 +83,9 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
   }
 
   return (
-       <div className="container auth">
+    <Fragment>
+      {!isAuthenticated ? <Loader /> : 
+        <div className="container auth">
 
           <form className="auth__sign-form" onSubmit={onSubmit}>
             <h2 className="">Dear Dignified Sir/Lady <br/>
@@ -111,6 +114,8 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
           </form>
           
         </div>
+      }
+    </Fragment>
   )
 }
 const mapStateToProps = state => ({
