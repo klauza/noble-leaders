@@ -226,6 +226,8 @@ const UICtrl = (function(){
       document.querySelector('.local-storage-reset').style.display = "none";
       document.querySelector('.game-over').style.display = "grid";
 
+      // auto click on updt button
+      document.querySelector('.but-updt').click();
     },
 
     getDbScore: function(){

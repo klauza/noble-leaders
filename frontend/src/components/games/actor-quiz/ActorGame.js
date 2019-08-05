@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdateHighscore } from '../../../actions/loginActions';
 import { getUserGames, updateGameScore, setCurrent } from '../../../actions/gameActions';
 
@@ -9,7 +10,7 @@ import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 // import Questions from './controllers/Questions.js';
 
-const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current, gLoading }}) => {
+const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current, gLoading }}) => {
 
   
   useEffect(() => {
@@ -113,13 +114,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
       return {
         // init: function(games){
         init: function(){
-        if(isAuthenticated){
-          LevelCtrl.updateScoreFromLS(LocalStorageCtrl.getScore());
-            console.log('current storage score because you are logged: !!',LevelCtrl.getScore());
-          } else {
-            console.log('Please log in');
-          }
           loadEventListeners();
+          
         },
         refreshGame: function(){
           UICtrl.resetGame();
@@ -137,7 +133,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
               if(roundScore > entryScore){
                 loading = true; gLoading = true;
                 if(entryScore === 0){   // if it's user's very first game
-                            console.log("it's my first game!");
+                  setAlert("Congratulations! Now see your score in your Profile!", 'danger');
                   async function sumScore(){
                     let userTotalScore = await user.highscore;
                     userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
@@ -170,7 +166,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
 
                 } else {
                   // update score if higher than previous
-                            console.log("you've beaten your score!");
+                  setAlert("You have beaten your score, nice job!", 'danger');
                   async function sumScore(){
                     let userTotalScore = await user.highscore;
                     userTotalScore = await userTotalScore - entryScore;
@@ -209,7 +205,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
 
                 
               } else {
-                console.log('nothing to update, your score was lower');
+                //console.log('nothing to update, your score was lower');
+                setAlert("Unfortunately you didn't beat your score", 'danger');
                 return
               }
               
@@ -225,7 +222,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, loadUser, getUserGa
             updt();
           } else {
             // If not logged in
-            console.log('please log in to update the score');
+            //console.log('please log in to update the score');
+            setAlert('please log in to update the score', 'danger');
           }
 
           UICtrl.showExitButton();
@@ -293,4 +291,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent})(ActorGame);
+export default connect(mapStateToProps, {loadUser, setAlert, getUserGames, updateGameScore, userUpdateHighscore, setCurrent})(ActorGame);
