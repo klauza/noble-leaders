@@ -1,4 +1,4 @@
-import { CLEAR_ERROR, SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, HIGHSCORE_UPDATE, HIGHSCORE_UPDATE_ERROR, LOGIN_FAIL, LOGOUT } from './types';
+import { CLEAR_ERROR, SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, USER_UPDATE, USER_UPDATE_ERROR, LOGIN_FAIL, LOGOUT } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -84,12 +84,10 @@ export const userLogin = (user) => async dispatch => {
   }
 }
 
-export const userUpdateHighscore = (user) => async dispatch => {
-  console.log('update user highscore: ', user);
+export const userUpdate = (user) => async dispatch => {
+  
   setLoading();
 
-  // console.log('Update user Highscore of user', user);
-  
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -99,13 +97,13 @@ export const userUpdateHighscore = (user) => async dispatch => {
   try{
     const res = await axios.put(`/api/users/${user._id}`, user, config);
     dispatch({
-      type: HIGHSCORE_UPDATE,
+      type: USER_UPDATE,
       payload: res.data
     })
 
   } catch(err){
     dispatch({
-      type: HIGHSCORE_UPDATE_ERROR,
+      type: USER_UPDATE_ERROR,
       payload: err.response.msg
     })
   }

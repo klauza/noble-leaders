@@ -58,6 +58,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
     } else{
       let highscore = 0;
+      let quote = '';
       
       async function fetchAvatar(){
         const res = await fetch('https://api.thecatapi.com/v1/images/search');
@@ -73,6 +74,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
             email, 
             password,
             highscore,
+            quote,
             avatar
           });
         })
@@ -84,11 +86,11 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
   return (
     <Fragment>
-      {!isAuthenticated ? <Loader /> : 
+      {isAuthenticated ? <Loader /> : 
         <div className="container auth">
 
           <form className="auth__sign-form" onSubmit={onSubmit}>
-            <h2 className="">Dear Dignified Sir/Lady <br/>
+            <h2 className="">Dear Dignified user <br/>
             register yourself</h2>
 
             <div className="input-field">

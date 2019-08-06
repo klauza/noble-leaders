@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
-import { loadUser, userUpdateHighscore } from '../../../actions/loginActions';
+import { loadUser, userUpdate } from '../../../actions/loginActions';
 import { getUserGames, updateGameScore, setCurrent } from '../../../actions/gameActions';
 
 import LocalStorageCtrl from './controllers/LocalStorage.js';
@@ -10,7 +10,7 @@ import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 // import Questions from './controllers/Questions.js';
 
-const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdateHighscore, setCurrent, game: { games, current, gLoading }}) => {
+const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdate, setCurrent, game: { games, current, gLoading }}) => {
 
   
   useEffect(() => {
@@ -114,8 +114,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       return {
         // init: function(games){
         init: function(){
-          loadEventListeners();
-          
+            loadEventListeners();
         },
         refreshGame: function(){
           UICtrl.resetGame();
@@ -144,7 +143,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
                       highscore: userTotalScore,
                       date: new Date()
                     }
-                    await userUpdateHighscore(updUserHighscore);
+                    await userUpdate(updUserHighscore);
 
                   }
                   sumScore();
@@ -179,7 +178,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
                       highscore: userTotalScore,
                       date: new Date()
                     }
-                    await userUpdateHighscore(updUserHighscore);
+                    await userUpdate(updUserHighscore);
 
                   
                   }
@@ -238,7 +237,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
   return (
     <div className="actor-game">
       <div className="fill-background-top">
-        {isAuthenticated ? <span className="user-logged-score">your current score is: {(current !== null) ? current.score : '-'}</span> : <span className="user-not-logged-score">log in to see your score</span>}
+        {isAuthenticated ? <span className="user-logged-score">Your best highscore is: {(current !== null) ? current.score : '-'}</span> : <span className="user-not-logged-score">log in to see your score</span>}
         <span className="welcome-text">Welcome, pick an actor/actress to begin.<br/>
           Also feel free to come back later - your progress is being saved.</span>
           
@@ -291,4 +290,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, setAlert, getUserGames, updateGameScore, userUpdateHighscore, setCurrent})(ActorGame);
+export default connect(mapStateToProps, {loadUser, setAlert, getUserGames, updateGameScore, userUpdate, setCurrent})(ActorGame);

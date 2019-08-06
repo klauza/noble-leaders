@@ -1,4 +1,4 @@
-import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, HIGHSCORE_UPDATE, HIGHSCORE_UPDATE_ERROR, LOGIN_FAIL, LOGOUT, CLEAR_ERROR } from '../actions/types';
+import { SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, USER_UPDATE, USER_UPDATE_ERROR, LOGIN_FAIL, LOGOUT, CLEAR_ERROR } from '../actions/types';
 
 const initialState= {
   token: localStorage.getItem('token'),
@@ -62,14 +62,14 @@ export default(state = initialState, action) => {
         error: null
       }
 
-    case HIGHSCORE_UPDATE:
+    case USER_UPDATE:
       return{
         ...state,
         user: action.payload,
         loading: false
       }
 
-    case HIGHSCORE_UPDATE_ERROR:
+    case USER_UPDATE_ERROR:
       return{
         ...state,
         error: action.payload,
