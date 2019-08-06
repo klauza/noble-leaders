@@ -3,11 +3,12 @@ import ProfileList from './ProfileList';
 import {connect} from 'react-redux';
 import {loadUser, userUpdate} from '../../actions/loginActions';
 import { getUserGames, createTheGame } from '../../actions/gameActions';
+import {setAlert} from '../../actions/alertActions';
 import history from '../../history';
 import cup from '../../media/puchar.png';
 import Loader from '../layout/Loader';
 
-const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, getUserGames, game: { games, gLoading }}) => {
+const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, getUserGames, setAlert,  game: { games, gLoading }}) => {
 
   const [img, setImg] = useState(true);
   const [newQuote, setNewQuote] = useState('');
@@ -76,9 +77,16 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     }
     fetchQuote()
     .then((data) => {
-      setNewQuote(data.quote.body);
+        if(data.quote.body.length > 100){
+          console.log('quote is long');
+          getQuote();
+        } else { 
+          setNewQuote(data.quote.body);
+        }
     })
+
   }
+ 
 
   const updateQuote = () => {
     if(newQuote !== ''){
@@ -89,6 +97,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         date: new Date()
       }
       userUpdate(updateUserQuote);
+      setAlert("Your quote was updated", "danger");
       console.log('quote updated!');
     }
   }
@@ -122,13 +131,14 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         </div>
 
         <div className="profile__quote">
+          <h2>Choose quote that suits you the best</h2>
           <div className="profile__quote--buttons">
-            <button className="button button-random-quote" onClick={getQuote}>Get a random quote</button>
-            <button className="button button-update-quote" onClick={updateQuote}>Update quote</button>
+            <button className="button button-random-quote" onClick={getQuote}><i className="fa fa-comment"></i>Get a random quote</button>
+            <button className="button button-update-quote" onClick={updateQuote}><i className="fa fa-thumbs-up"></i>Update a quote</button>
           </div>
           <div className="profile__quote--text">
             <span className="quote">
-              {newQuote}
+              {newQuote !== "" && <strong>" </strong>}{newQuote}{newQuote !== "" && <strong> "</strong>}
             </span>
           </div>
         </div>
@@ -145,4 +155,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, userUpdate})(Profile)
+export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, userUpdate, setAlert})(Profile)

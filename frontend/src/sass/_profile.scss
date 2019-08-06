@@ -3,6 +3,7 @@
   @media(max-width: 1200px) {width: 70%; }
   @media(max-width: 768px) {width: 95%; }
   margin: 50px auto;
+  font-family: Arial, Helvetica, sans-serif;
   
 
   &__top{
@@ -22,7 +23,7 @@
       grid-template-rows: 3fr 7fr;
 
       .score-title{
-        background:#7A93AC;
+        background:rgb(140, 180, 223);
         display: grid;
         align-content: center;
         text-align: center;
@@ -30,7 +31,7 @@
         text-transform: uppercase;
       }
       .score-points{
-        background: #92BCEA;
+        background: rgb(184, 216, 250);
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         // grid-auto-rows: 100%;
@@ -113,6 +114,7 @@
     opacity:0;
     
     margin-top: 50px;
+    margin-bottom: 50px;
     &--item{
       margin: 10px 0;
       display: grid;
@@ -120,12 +122,13 @@
       grid-auto-rows: minmax(100px, 1fr);
 
       .item-img{
+        margin-right: 5px;
         background: rgb(81, 134, 0);
         
         box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
       }
       .item-name{
-        margin: 0 10px;
+        margin: 0 5px;
         display: grid;
         align-items: center;
         justify-items: center;
@@ -136,6 +139,7 @@
         }
       }
       .item-score{
+        margin-left: 5px;
         display: grid;
         align-items: center;
         text-align: left;
@@ -156,6 +160,85 @@
       }
     }
   }
+
+
+
+  &__quote{
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 3px;
+    box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
+    background: rgb(184, 216, 250);
+    h2{
+      text-align: center;
+      padding: 15px 0;
+      background: #8cb4df;
+    }
+
+    &--buttons{
+      display: grid;
+      margin-top: 15px;
+      grid-template-columns: 1fr 1fr;
+      
+      .button{
+        border: 0;
+        border-radius: 2px;
+        background: white;
+        height: 50px;
+        width: 150px;
+        box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        i{
+          display: block;
+        }
+        &:hover{
+          cursor: pointer;
+          background: rgb(240, 240, 240);
+        }
+        &:active{
+          border: none;
+          outline: none;
+          box-shadow: 0px 1px 4px -3px rgba(128, 128, 128, 0.75);
+        }
+      }
+      .button{
+        font-weight: 900;
+        font-size: 0.8rem;
+      }
+      .button-random-quote{
+        justify-self: self-end;
+        margin-right: 5px;
+        color: #8cb4df;
+        i { color: #8cb4df; }
+      }
+      .button-update-quote{
+        justify-self: self-start;
+        margin-left: 5px;
+        color: rgb(81, 134, 0);
+        i { color: rgb(81, 134, 0); }
+      }
+      .button i{
+        font-size: 1.6em;
+      }
+      
+    }
+
+    &--text{
+      margin-top: 10px;
+      text-align: center;
+      min-height: 200px;
+      padding: 0 25px;
+      display: grid;
+      align-content: center;
+      .quote{
+        font-size: 1.3em;
+      }
+      .quote strong{
+        font-size: 1.25em;
+      }
+    }
+  }
+
+
 
   .profile-top-animation{
     animation: top-anim 1s forwards;
