@@ -53,23 +53,32 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   } 
 
 
-  function loadAvatarImage(image){
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.addEventListener('load', event => resolve(img));
-      img.addEventListener('erorr', reason => reject(new Error('error')));
-      img.src = image
-    })
+  function loadAvatarImage(image1, image2){
+    return Promise.all([
+      new Promise((resolve, reject) => {
+        const img1 = new Image();
+        img1.addEventListener('load', event => resolve(img1));
+        img1.addEventListener('erorr', reason => reject(new Error('error')));
+        img1.src = image1
+      }),
+      new Promise((resolve, reject) => {
+        const img2 = new Image();
+        img2.addEventListener('load', event => resolve(img2));
+        img2.addEventListener('erorr', reason => reject(new Error('error')));
+        img2.src = image2
+      })
+    ])
   }
+
   if(user){
-    loadAvatarImage(user.avatar)
+    loadAvatarImage(user.avatar, cup)
     .then(() => setImg(false))
     .catch(reason => console.log(reason));
   }
  
   const getQuote = () => {
-    // fetch new quote
-  
+
+    // fetch a quote
     async function fetchQuote(){
       const res = await fetch('https://favqs.com/api/qotd');
       const data = await res.json();
@@ -77,8 +86,8 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     }
     fetchQuote()
     .then((data) => {
-        if(data.quote.body.length > 100){
-          console.log('quote is long');
+        if(data.quote.body.length > 125){
+          console.log('quote is too long, retrying');
           getQuote();
         } else { 
           setNewQuote(data.quote.body);
@@ -125,7 +134,6 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         </div>
         
         
-        
         <div className="profile__bottom profile-bot-animation">
           {games !== null && !gLoading ? games.map((game) => <ProfileList key={game._id} game={game} />) : null }
         </div>
@@ -147,7 +155,6 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     }
     </Fragment>
  
-    
   )
 }
 
