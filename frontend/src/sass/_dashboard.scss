@@ -34,11 +34,10 @@
       background: url("./media/games/actor-quiz-cover.jpg");
       background-size: cover;
     }
-    // .image-placeholder{
-    //   background: black;
-    // }
     .dashboard-snake-cover{
-      background: yellow;
+      border: 1px solid rgb(223, 223, 223);
+      background: url("./media/games/snake-cover.png");
+      background-size: cover;
     }
   }
   .grid > *:first-child {
