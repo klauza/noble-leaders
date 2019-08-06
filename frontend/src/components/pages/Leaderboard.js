@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 import {getAllUsers} from '../../actions/gameActions';
@@ -67,7 +68,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
             <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
               <span>{item.highscore}</span>
               <span>{item.name}</span> 
-              <span>{item.quote}</span>
+              <span>{item.quote}{isAuthenticated && item.quote === '' ? <span className="no-quote"><Link to="/profile">Click to set your quote</Link></span> : ""}</span>
             </li>
             ))
           ) 

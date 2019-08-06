@@ -34,7 +34,10 @@
         background: #e0e0e0;
       }
       span:nth-child(3){
-        font-size: 0.85rem;
+        font-size: 0.95rem;
+      }
+      .no-quote > *:hover{
+        color: rgb(255, 255, 255);
       }
     }
 
