@@ -1,10 +1,9 @@
 .alert{
   transition: all 250ms ease;
 
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  top: 7%;
+  right: 10%;
   width: 400px;
   height: 50px;
   border: 0px solid black;
@@ -12,6 +11,7 @@
   text-align: center;
   animation: alert-animation 2500ms forwards;
   z-index: 999;
+  @media(max-width: 768px){ left: 50%; transform: translateX(-50%); width: 300px;}
 
   &-danger{
     color: white;
@@ -24,6 +24,7 @@
     width: 100%;
     left: 0;
     font-size: 1.4em;
+    @media(max-width: 768px){ font-size: 1.1em;}
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -33,7 +34,7 @@
     content:'';
     display: block;
     position: absolute;
-    bottom: -15px; left: 50%; transform: translateX(-50%);
+    bottom: -15px; left: 10%; transform: translateX(-50%);
     width: 0px;
     height: 0px;
     border-left: 20px solid transparent;

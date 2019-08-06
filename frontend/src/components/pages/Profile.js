@@ -87,7 +87,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     fetchQuote()
     .then((data) => {
         if(data.quote.body.length > 125){
-          console.log('quote is too long, retrying');
+          // quote is too long, retrying
           getQuote();
         } else { 
           setNewQuote(data.quote.body);
@@ -106,8 +106,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         date: new Date()
       }
       userUpdate(updateUserQuote);
-      setAlert("Your quote was updated", "danger");
-      console.log('quote updated!');
+      setAlert("Your quote has been updated", "danger");
     }
   }
 
@@ -138,7 +137,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
           {games !== null && !gLoading ? games.map((game) => <ProfileList key={game._id} game={game} />) : null }
         </div>
 
-        <div className="profile__quote">
+        <div className="profile__quote profile-quote-animation">
           <h2>Choose quote that suits you the best</h2>
           <div className="profile__quote--buttons">
             <button className="button button-random-quote" onClick={getQuote}><i className="fa fa-comment"></i>Get a random quote</button>

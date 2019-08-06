@@ -15,6 +15,7 @@ const User = require('../models/User');
 
 router.post('/', [
   check('name', 'Please add a name').not().isEmpty(),
+  check('name', 'Name length must be less than 13 characters').isLength({ max:12 }),
   check('email', 'Please type a valid email').isEmail(),
   check('password', 'Please enter a password with 6 or more characters').isLength({ min:6 })
 ], 

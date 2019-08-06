@@ -4,6 +4,7 @@
 
   width: 50%;
   margin: 50px auto 50px;
+  @media(max-width: 1200px) {width: 70%; }
   @media(max-width: 768px) {width: 95%; }
   &__title{
     text-align: center;
@@ -11,21 +12,19 @@
   }
   &__img{
     max-width: 200px; height: 100%;  
-    margin: 0 auto;
+    margin: 0 auto 20px;
     display: block;
     img{
       width: 100%; height: 100%;
       object-fit: cover;
     }
   }
-  &__search{
-    margin: 20px auto;
-    display: block;
-  }
+ 
   .leaderboard-ul{
     width: 100%;
     margin: 0 auto;
     &__li{
+      padding: 3px 0;
       display: grid;
       align-items: center;
       grid-template-columns: minmax(auto, 100px) minmax(auto, 140px) auto ;

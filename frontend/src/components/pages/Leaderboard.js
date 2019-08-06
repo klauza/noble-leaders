@@ -53,7 +53,6 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
     <div className="leaderboard test-animation">
       <h2 className="leaderboard__title">LEADERBOARD</h2>
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
-      <input className="leaderboard__search" type="text" placeholder="search user" />
 
       <ul className="leaderboard-ul">
         <li className="leaderboard-ul__li">
