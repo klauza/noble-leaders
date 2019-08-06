@@ -1,15 +1,16 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import ProfileList from './ProfileList';
 import {connect} from 'react-redux';
-import {loadUser} from '../../actions/loginActions';
+import {loadUser, userUpdate} from '../../actions/loginActions';
 import { getUserGames, createTheGame } from '../../actions/gameActions';
 import history from '../../history';
 import cup from '../../media/puchar.png';
 import Loader from '../layout/Loader';
 
-const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, getUserGames, game: { games, gLoading }}) => {
+const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, getUserGames, game: { games, gLoading }}) => {
 
   const [img, setImg] = useState(true);
+  const [newQuote, setNewQuote] = useState('');
  
 
   useEffect(() => {
@@ -65,7 +66,32 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     .catch(reason => console.log(reason));
   }
  
+  const getQuote = () => {
+    // fetch new quote
+  
+    async function fetchQuote(){
+      const res = await fetch('https://favqs.com/api/qotd');
+      const data = await res.json();
+      return data
+    }
+    fetchQuote()
+    .then((data) => {
+      setNewQuote(data.quote.body);
+    })
+  }
 
+  const updateQuote = () => {
+    if(newQuote !== ''){
+
+      const updateUserQuote = {
+        _id: user._id,
+        quote: newQuote,
+        date: new Date()
+      }
+      userUpdate(updateUserQuote);
+      console.log('quote updated!');
+    }
+  }
 
     
   if(loading || gLoading || img){ return <Loader /> } 
@@ -91,9 +117,21 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         
         
         
-          <div className="profile__bottom profile-bot-animation">
-            {games !== null && !gLoading ? games.map((game) => <ProfileList key={game._id} game={game} />) : null }
+        <div className="profile__bottom profile-bot-animation">
+          {games !== null && !gLoading ? games.map((game) => <ProfileList key={game._id} game={game} />) : null }
+        </div>
+
+        <div className="profile__quote">
+          <div className="profile__quote--buttons">
+            <button className="button button-random-quote" onClick={getQuote}>Get a random quote</button>
+            <button className="button button-update-quote" onClick={updateQuote}>Update quote</button>
           </div>
+          <div className="profile__quote--text">
+            <span className="quote">
+              {newQuote}
+            </span>
+          </div>
+        </div>
         
       </div>
     }
@@ -107,4 +145,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames})(Profile)
+export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, userUpdate})(Profile)

@@ -27,10 +27,15 @@
     margin: 0 auto;
     &__li{
       display: grid;
-      grid-template-columns: minmax(auto, 100px) auto ;
+      align-items: center;
+      grid-template-columns: minmax(auto, 100px) minmax(auto, 140px) auto ;
+      
       list-style: none;
       &:nth-child(odd){
         background: #e0e0e0;
+      }
+      span:nth-child(3){
+        font-size: 0.85rem;
       }
     }
 

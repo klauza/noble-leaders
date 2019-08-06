@@ -59,6 +59,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
         <li className="leaderboard-ul__li">
           <span><strong>Highscore</strong></span>
           <span><strong>Name</strong></span> 
+          <span><strong>Quote</strong></span>
         </li>
 
         {users !== null ? 
@@ -67,6 +68,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
             <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
               <span>{item.highscore}</span>
               <span>{item.name}</span> 
+              <span>{item.quote}</span>
             </li>
             ))
           ) 

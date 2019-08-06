@@ -25,7 +25,7 @@ async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { name, email, password, avatar, highscore} = req.body;
+  const { name, email, password, avatar, highscore, quote} = req.body;
 
   try{      
     let user = await User.findOne({ email: email });
@@ -44,7 +44,8 @@ async (req, res) => {
       email: email,
       password: password,
       avatar: avatar,
-      highscore: highscore
+      highscore: highscore,
+      quote: quote
     })
 
     // enctrypting the password
@@ -78,12 +79,13 @@ async (req, res) => {
 
 // UPDATE USER
 router.put('/:id', auth, async (req, res) => {
-  const { name, highscore } = req.body;
+  const { name, highscore, quote } = req.body;
 
   // game object based on submitted fields
   const userFields = {};
   if(name) userFields.name = name;
   if(highscore) userFields.highscore = highscore;
+  if(quote) userFields.quote = quote;
 
   try{
     let user = await User.findById(req.params.id);  // find user by ID
