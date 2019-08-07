@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {loadUser} from '../../actions/loginActions';
+import {loadUser, userUpdate} from '../../actions/loginActions';
+import { setAlert } from '../../actions/alertActions';
 import {getAllUsers} from '../../actions/gameActions';
 import Loader from '../layout/Loader';
 
 import laurelsImg from '../../media/laurels.png';
 
-const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, loadUser, game: {users, gLoading}}) => {
+const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setAlert, loadUser, userUpdate, game: {users, gLoading}}) => {
   
   const [img, setImg] = useState(true);
 
@@ -41,7 +42,21 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
     .then(() => setImg(false))
     .catch(reason => console.log(reason));
 
+  const deleteQuote = () => {
+    let q = "smthing";
+    const updateUserQuote = {
+      _id: user._id,
+      quote: q.replace("smthing","-"),
+      date: new Date()
+    }
 
+    async function updateThenLoadUsers(){
+      await userUpdate(updateUserQuote);
+      await setAlert("Quote deleted", "danger");
+      await getAllUsers();
+    }
+    updateThenLoadUsers();
+  }
 
   if(isAuthenticated){
     if(loading || gLoading || img){ return <Loader />} 
@@ -68,7 +83,8 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, load
             <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
               <span>{item.highscore}</span>
               <span>{item.name}</span> 
-              <span>{item.quote}{isAuthenticated && item.quote === '' && user._id === item._id ? <span className="no-quote"><Link to="/profile">Click to set your quote</Link></span> : ""}</span>
+              <span>{isAuthenticated && item.quote === "-" && user._id === item._id ? <span className="no-quote"><Link to="/profile">Click to set your quote</Link></span> : item.quote}</span>
+              {isAuthenticated && user._id === item._id && item.quote !== "-" && <span className="delete-quote" onClick={deleteQuote}><i className="fa fa-times"></i></span> }
             </li>
             ))
           ) 
@@ -88,4 +104,4 @@ const mapStateToProps = state => ({
   login: state.login,   // state.login -> reducer
   game: state.game
 })
-export default connect(mapStateToProps, {getAllUsers, loadUser})(Leaderboard)
+export default connect(mapStateToProps, {getAllUsers, loadUser, userUpdate, setAlert})(Leaderboard)

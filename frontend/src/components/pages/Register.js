@@ -58,7 +58,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
     } else{
       let highscore = 0;
-      let quote = '';
+      let quote = "-";
       
       async function fetchAvatar(){
         const res = await fetch('https://api.thecatapi.com/v1/images/search');
