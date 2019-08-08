@@ -14,25 +14,53 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
     window.location.reload();
   }
 
+  const toggleNavbar = () => {
+    let storeLis = '';
+    const navMobileContainer = document.querySelector('.mobile-links-container');
+
+    // show / hide
+    if(navMobileContainer.classList.contains('show')){ 
+      navMobileContainer.classList.remove('show');
+    } 
+    else {
+      navMobileContainer.classList.add('show');
+    }
+
+    ( navMobileContainer.classList.contains('show') && (storeLis = Array.from(document.querySelectorAll('.nav-item'))) );
+
+    if(storeLis !== ''){
+      // remove not visible nav-items
+      storeLis.splice(1, 4); 
+
+      // add listeners
+      storeLis.forEach(li => li.addEventListener("click", clearEventAndCloseBurger));
+    }
+  }
+
+
+
+  const clearEventAndCloseBurger = () => {
+    document.querySelector('.mobile-links-container').classList.remove('show');   // hide <ul> on .nav-item click
+    // remove listeners
+    document.querySelectorAll('.nav-item').forEach((li)=>{li.removeEventListener('click', toggleNavbar, false)});
+    document.querySelectorAll('.nav-item').forEach((li)=>{li.removeEventListener('click', clearEventAndCloseBurger, false)});
+    // console.log('cleared and closed');
+  }
+
   const loggedInLinks = (
     <Fragment>
-      
-      
-      <li className="nav-logo">
-        <Link to='/'><div className="logo-img"><img src={logo} alt=""/></div></Link>
-      </li>
-      <li className="nav-about">
+      <li className="nav-item nav-about">
         <Link to='/about'>About</Link>
       </li>
      
-      <li className="nav-leaderboard">
+      <li className="nav-item nav-leaderboard">
         <Link to='/leaderboard'>Leaderboard</Link>
       </li>
 
-      <li className="nav-logout">
+      <li className="nav-item nav-logout">
         <a href='#!' onClick={onLogout}>Logout</a>
       </li>
-      <li className="nav-profile">
+      <li className="nav-item nav-profile">
         <Link to='/profile'><i className="fa fa-user-circle"></i></Link>
       </li>
     </Fragment>
@@ -40,20 +68,17 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
 
   const notLoggedLinks = (
     <Fragment>
-      <li className="nav-logo">
-        <Link to='/'><div className="logo-img"><img src={logo} alt=""/></div></Link>
-      </li>
-      <li className="nav-about">
+      <li className="nav-item nav-about">
         <Link to='/about'>About</Link>
       </li>
-      <li className="nav-leaderboard">
+      <li className="nav-item nav-leaderboard">
         <Link to='/leaderboard'>Leaderboard</Link>
       </li>
 
-      <li className="nav-register">
+      <li className="nav-item nav-register">
         <Link to='/register'>Register</Link>
       </li>
-      <li className="nav-login">
+      <li className="nav-item nav-login">
         <Link to='/login'>Login</Link>
       </li>
     </Fragment>
@@ -63,7 +88,18 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
     <div className="navigation-bar">
       
       <ul className="navigation-bar__ul container">
-        {isAuthenticated ? loggedInLinks : notLoggedLinks}
+        <li className="nav-item nav-logo">
+          <Link to='/'><div className="logo-img"><img src={logo} alt=""/></div></Link>
+        </li>
+        {/* tablet & pc links */}
+        {isAuthenticated ? loggedInLinks : notLoggedLinks} 
+
+        {/* mobile links */}
+        <i className="burger fa fa-align-justify" onClick={toggleNavbar}></i> 
+        <div className="mobile-links-container">           
+          {isAuthenticated ? loggedInLinks : notLoggedLinks}
+        </div>
+
       </ul>
     </div>
   )
