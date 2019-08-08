@@ -11,14 +11,15 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
   const [canvas, setCanvas] = useState(null);
   const [apples, setApples] = useState(0);
   const [block, setBlock] = useState(false);
-  const [localScore, setLocalScore] = useState(null);
 
 
   useEffect(() => {
+  
     if(localStorage.token) {
       async function snakeInit(){
         await loadUser();
         await getUserGames("snake");
+        document.querySelector('.snake-the-game-container').focus();
       }
       snakeInit();
       setCanvas(document.getElementById('canvas'));
@@ -47,7 +48,9 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
 
 
     // Game loop draw
+  
     const draw = () => {
+
       
       // console.log(state.obstacle);
       
@@ -73,22 +76,22 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
       // add crash
       if (state.snake.length === 0) {
         console.log('crash');
-        
-        if(isAuthenticated){
-
+        console.log(state.score);
+        if(isAuthenticated && state.score > 0){
+          console.log(state.score);
           
           let roundScore = parseInt(state.score, 10); 
           
 
           async function updateActorGameScore(){
             // await getUserGames("snake");
-            let entryScore = await document.querySelector('.tutajKurwa').textContent;
+            let entryScore = await document.querySelector('.highSc').textContent;
             entryScore = parseInt(entryScore, 10);
             console.log('entry: ',entryScore, 'thisRound: ',roundScore);
             
             if(roundScore > entryScore){
               if(entryScore === 0){
-                setAlert("Congratulations! Now see your score in your Profile!", 'danger');
+                // setAlert("Congratulations! Now see your score in your Profile!", 'danger');
                 async function sumScore(){
                   let userTotalScore = await user.highscore;
                   console.log('totalscore: ',userTotalScore);
@@ -102,7 +105,6 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
                     highscore: userTotalScore,
                     date: new Date()
                   }
-                  await loadUser();
                   await userUpdate(updUserHighscore);
 
                 }
@@ -124,8 +126,10 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
 
               } else {
                 // update score if higher than previous
-                setAlert("You have beaten your score, nice job!", 'danger');
+                // setAlert("You have beaten your score, nice job!", 'danger');
                 async function sumScore(){
+                  console.log('entryscore in highscore: ', entryScore);
+                  console.log('roundscore in highscore: ', roundScore);
                   let userTotalScore = await user.highscore;
                   userTotalScore = await userTotalScore - entryScore;
                   userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
@@ -159,28 +163,28 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
                 await loadUser();
                 await getUserGames("snake");
               }
+
             } else {
               //console.log('nothing to update, your score was lower');
-              setAlert("Unfortunately you didn't beat your score", 'danger');
-              return
+              // setAlert("Unfortunately you didn't beat your score", 'danger');
             }
           }
           updateActorGameScore().then(() => {
-            console.log('refresh here');
+            
             window.location.reload(true);
           });
-          
+        
 
 
        }else {
         // If not logged in
         //console.log('please log in to update the score');
-        setAlert('please log in to update the score', 'danger');
+        // setAlert('please log in to update the score', 'danger');
       }
   
 
        
-
+      
 
         
         
@@ -189,7 +193,8 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
         ctx.fillRect(0, 0, canvas.width, canvas.height)
 
         state.score = 0;  // reset score, save score
-      }
+    }
+      
       
   
     }
@@ -212,23 +217,32 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
         case 'a': case 'j': case 'ArrowLeft':  state = enqueue(state, WEST);  break
         case 's': case 'k': case 'ArrowDown':  state = enqueue(state, SOUTH); break
         case 'd': case 'l': case 'ArrowRight': state = enqueue(state, EAST);  break
+        default: return
       }
     })
 
     // Main
+
+   
     draw();
     window.requestAnimationFrame(step(0))
-    
+ 
   }
 }
 
 
-const startTheSnakeNow = () => {
-
-    if(block !== true){
-      startTheSnake();
+const startTheSnakeNow = (e) => {
+    console.log(e);
+    if(e.keyCode === 13){
+      if(block !== true){
+        document.querySelector('.snake-the-game-container').removeEventListener('onKeyDown', startTheSnakeNow, {passive: false} );
+        console.log(document.querySelector('.snake-the-game-container'));
+        startTheSnake();
+      }
+      document.querySelector('.snake-title').style.display = "none";
+      // remove event listener
+      setBlock(true);
     }
-    setBlock(true);
 }
 
 
@@ -236,11 +250,13 @@ const startTheSnakeNow = () => {
 
   return (
     <Fragment>
-      <div className="snake-the-game-container">
-        <canvas id="canvas" width="700" height="500" onClick={startTheSnakeNow}></canvas>
-        {apples}
+      <div className="snake-the-game-container" tabIndex="0" onKeyDown={startTheSnakeNow}>
+      <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span></span>}</div>
+        <span className="snake-title">Press ENTER to start</span>
+        <canvas id="canvas" width="700" height="500" ></canvas>
       </div>
-      <span className="tutajKurwa">{current && current.score}</span>
+      
+      <div className="outputScore"><span>Your highscore: <span className="highSc">{current && current.score}</span></span></div>
     </Fragment>
   )
 }
