@@ -19,22 +19,33 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
       async function snakeInit(){
         await loadUser();
         await getUserGames("snake");
-        document.querySelector('.snake-the-game-container').focus();
+        try{
+          await document.querySelector('.snake-the-game-container').focus();
+        }catch(err){
+          console.log('avoided crash');
+          return
+        }
+      
       }
       snakeInit();
+   
+       
+  
       setCanvas(document.getElementById('canvas'));
     } else {
       setCanvas(document.getElementById('canvas'));
     }
+    console.log('block from useeffect: ',block);
     //eslint-disable-next-line
-  }, []);
+  }, [block]);
 
   let ctx = null;
   
 
   
-  
+    
   function startTheSnake() {
+
 
   if(canvas){
     ctx = canvas.getContext('2d');
@@ -49,8 +60,8 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
 
     // Game loop draw
   
-    const draw = () => {
-
+    const draw = (check) => {
+      
       
       // console.log(state.obstacle);
       
@@ -90,6 +101,11 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
             console.log('entry: ',entryScore, 'thisRound: ',roundScore);
             
             if(roundScore > entryScore){
+
+              // ctx.fillStyle = 'rgb(0,0,0)'
+              // ctx.fillRect(0, 0, canvas.width, canvas.height);
+              console.log('you have new score');
+
               if(entryScore === 0){
                 // setAlert("Congratulations! Now see your score in your Profile!", 'danger');
                 async function sumScore(){
@@ -163,16 +179,13 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
                 await loadUser();
                 await getUserGames("snake");
               }
-
-            } else {
-              //console.log('nothing to update, your score was lower');
-              // setAlert("Unfortunately you didn't beat your score", 'danger');
-            }
-          }
-          updateActorGameScore().then(() => {
+             
+              
+              await window.location.reload(true);
             
-            window.location.reload(true);
-          });
+            } 
+          }
+          updateActorGameScore();
         
 
 
@@ -223,26 +236,32 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
 
     // Main
 
-   
+
+      
+        
     draw();
     window.requestAnimationFrame(step(0))
+    
+  
+ 
  
   }
 }
 
 
 const startTheSnakeNow = (e) => {
-    console.log(e);
+ 
+  if(block !== true){
     if(e.keyCode === 13){
-      if(block !== true){
         document.querySelector('.snake-the-game-container').removeEventListener('onKeyDown', startTheSnakeNow, {passive: false} );
         console.log(document.querySelector('.snake-the-game-container'));
+        setBlock(true);
         startTheSnake();
-      }
-      document.querySelector('.snake-title').style.display = "none";
-      // remove event listener
-      setBlock(true);
+        
     }
+    document.querySelector('.snake-title').style.display = "none";
+    // remove event listener
+  }
 }
 
 
@@ -251,12 +270,13 @@ const startTheSnakeNow = (e) => {
   return (
     <Fragment>
       <div className="snake-the-game-container" tabIndex="0" onKeyDown={startTheSnakeNow}>
-      <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span></span>}</div>
+      <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span>0</span>}</div>
         <span className="snake-title">Press ENTER to start</span>
         <canvas id="canvas" width="700" height="500" ></canvas>
       </div>
       
-      <div className="outputScore"><span>Your highscore: <span className="highSc">{current && current.score}</span></span></div>
+      <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{current && current.score}</span></span> : <span>Log in to see your score</span>}</div>
+      <div></div>
     </Fragment>
   )
 }
