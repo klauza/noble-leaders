@@ -101,9 +101,8 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
             console.log('entry: ',entryScore, 'thisRound: ',roundScore);
             
             if(roundScore > entryScore){
-
-              // ctx.fillStyle = 'rgb(0,0,0)'
-              // ctx.fillRect(0, 0, canvas.width, canvas.height);
+              document.querySelector('.update-score-load-screen').classList.add('cover');
+      
               console.log('you have new score');
 
               if(entryScore === 0){
@@ -257,9 +256,9 @@ const startTheSnakeNow = (e) => {
         console.log(document.querySelector('.snake-the-game-container'));
         setBlock(true);
         startTheSnake();
+        document.querySelector('.snake-title').style.display = "none";
         
     }
-    document.querySelector('.snake-title').style.display = "none";
     // remove event listener
   }
 }
@@ -270,7 +269,8 @@ const startTheSnakeNow = (e) => {
   return (
     <Fragment>
       <div className="snake-the-game-container" tabIndex="0" onKeyDown={startTheSnakeNow}>
-      <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span>0</span>}</div>
+        <div className="update-score-load-screen"></div>
+        <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span>0</span>}</div>
         <span className="snake-title">Press ENTER to start</span>
         <canvas id="canvas" width="700" height="500" ></canvas>
       </div>

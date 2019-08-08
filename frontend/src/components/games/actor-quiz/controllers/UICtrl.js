@@ -140,6 +140,7 @@ const UICtrl = (function(){
           // move the item to the top center
           function personAnimationToTop(person){
             setTimeout(function(){
+              person.children[0].querySelector('.back').style.opacity = "1";
               person.style.transition = 'transform 2s';
               person.style.transform = `translate(0, -215px)`;
               person.childNodes[1].style.animation = "image-to-top-animate 2s forwards"; // select img to animate

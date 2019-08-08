@@ -99,15 +99,12 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
         backface-visibility: visible;
       }
       .back{
+        opacity: 0;
         position: absolute; 
         backface-visibility: visible;
         transform: rotateY(180deg) translateZ(20px);
       }
-      .the-wall { // Kit Harrington gif adjust
-          object-position: -50px;}
-      .future{    // Michael J Fox gif adjust
-        filter: brightness(1.1);
-      }
+     
       
       &:hover{
         transform: scale(1.20);

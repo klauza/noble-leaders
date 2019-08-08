@@ -21,11 +21,8 @@ export const getAllUsers = () => async dispatch => {
 // Create one game
 export const createTheGame = (theGame) => async dispatch => {
   gameLoading();
-  // if(localStorage.token){
-  //   setAuthToken(localStorage.token);
-  // }
+
   
-  // console.log(theGame);
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -52,7 +49,7 @@ export const createTheGame = (theGame) => async dispatch => {
 export const getUserGames = (game) => async dispatch => {
   gameLoading();
  
-  // console.log('chosen game in string: ',game);
+
   try{
     const res = await axios.get('/api/games');
 
@@ -69,12 +66,12 @@ export const getUserGames = (game) => async dispatch => {
                 currentGame: chosen
               });
             
-              console.log('current game loaded: ',prop);
-              // console.log('current: set');
+              // load current game
+             
             }
           })  
         } else {
-          console.log('Loading all games');
+          // loading all games
           dispatch({ 
             type: GET_GAMES,
             payload: res.data,
@@ -83,11 +80,7 @@ export const getUserGames = (game) => async dispatch => {
         }
       
 
-    // dispatch({ 
-    //   type: GET_GAMES,
-    //   payload: res.data,
-    //   currentGame: chosen
-    // });
+
   } catch(err){
     dispatch({
       type: GET_GAMES_ERROR,
@@ -99,7 +92,6 @@ export const getUserGames = (game) => async dispatch => {
 export const updateGameScore = (game) => async dispatch => {
   console.log('update game score: ', game);
   gameLoading();
-  // console.log('Update Actor game Action', game);
   
   const config = {
     headers: {

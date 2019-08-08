@@ -15,7 +15,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
 
   // const [img, setImg] = useState(true);
   useEffect(() => {
-
+    // console.log(img);
 
     if(localStorage.token) {
         // 1
@@ -25,16 +25,19 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
           await getUserGames("actor-game");
         
           try{
+            App.init();
+            // await setTimeout(()=>{
+            //   setImg(false);
+              
+            // }, 1000)
             
-            await App.init();
-     
-            
+
           } catch(err){
             console.log('avoided crash');
-            return
+           
           }
           
-      
+     
         
         }
         actorGameInit();
@@ -50,19 +53,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     //eslint-disable-next-line
   }, []);
 
-  // const refreshGame = () => {
 
-  // }
-
-  // const showScore = () => {
-    
-  //   App.appUpdate();
-  // }
-
-
-
-    
-  // };
+  
 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl){
         
@@ -72,7 +64,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         const loadEventListeners = function(){
         displayDataFromAPI();
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
-        // document.querySelector('#restart').addEventListener('click', appReset);
+
       }
     
         ///////////-GAME INIT-//////////
@@ -211,13 +203,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
                 }
 
             
-                  
-                
-                
-
-                
               } else {
-                //console.log('nothing to update, your score was lower');
+                console.log('nothing to update, your score was lower');
                 setAlert("Unfortunately you didn't beat your score", 'danger');
                 return
               }
@@ -234,7 +221,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
             updt();
           } else {
             // If not logged in
-            //console.log('please log in to update the score');
+            console.log('please log in to update the score');
             setAlert('please log in to update the score', 'danger');
           }
 
@@ -245,7 +232,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       }
     })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
     
-
+    
     // if(loading || gLoading){ return <Loader /> } 
   return (
     <div className="actor-game">
@@ -266,10 +253,12 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
           </div>
         </div>
       </div>
+      {(loading || gLoading) ? <Loader /> : 
       <div className="content">
-      {/* ACTOR BLOCKS RENDER HERE */}
+        
+        {/* ACTOR BLOCKS RENDER HERE */}
       </div>
-
+    }
       <div className="progress_bar">
         <div className="progress_bar--1"><span>1</span></div>
         <div className="progress_bar--2"><span>2</span></div>

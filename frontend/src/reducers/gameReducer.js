@@ -24,14 +24,13 @@ export default(state = initialState, action) => {
       }
 
     case CREATE_THE_GAME:
-      console.log('reducer - create game: ', action.payload);
+      // console.log('reducer - create game: ', action.payload);
       return{
         ...state,
         games: [action.payload, ...state.games],
         gLoading: false
       }
     case CREATE_GAME_FAIL:
-      console.log('reducer - error create game ,', action.payload);
       return{
         ...state,
         games_error: action.payload

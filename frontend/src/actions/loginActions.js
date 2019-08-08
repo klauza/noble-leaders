@@ -35,7 +35,7 @@ export const userRegister = (user) => async dispatch => {
   try{
     const res = await axios.post('/api/users', user, config);
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-    console.log('registered');
+    
     loadUser();
 
   } catch(err){
@@ -68,7 +68,7 @@ export const userLogin = (user) => async dispatch => {
     loadUser();
 
   } catch(err){
-    // console.log(err.response.data);
+    
     if(err.response.data.errors){
       dispatch({
         type: LOGIN_FAIL,
