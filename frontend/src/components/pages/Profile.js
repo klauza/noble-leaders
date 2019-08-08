@@ -80,17 +80,23 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
 
     // fetch a quote
     async function fetchQuote(){
-      const res = await fetch('https://favqs.com/api/qotd');
-      const data = await res.json();
-      return data
+      try{
+        const res = await fetch('https://favqs.com/api/qotd');
+        const data = await res.json();
+      
+        return data
+      } catch(err){
+        const data = "Sorry feature currently not available";
+        return data
+      }
+
     }
     fetchQuote()
     .then((data) => {
-        if(data.quote.body.length > 125){
-          // quote is too long, retrying
-          getQuote();
-        } else { 
-          setNewQuote(data.quote.body);
+        {data.quote ? 
+          ( data.quote.body.length > 125 ? getQuote() : setNewQuote(data.quote.body) )
+        :
+          ( setNewQuote(data) )
         }
     })
 
