@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {userRegister, clearError} from '../../actions/loginActions';
 import {setAlert} from '../../actions/alertActions';
 import Loader from '../layout/Loader';
+import registerCallbackImg from '../../media/registerCallbackImg.jpg'
 
 const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, setAlert }) => {
 
@@ -61,14 +62,26 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
       let quote = "-";
       
       async function fetchAvatar(){
-        const res = await fetch('https://api.thecatapi.com/v1/images/search');
-        const data = await res.json();
-        return data;
+        try{
+          const res = await fetch('https://api.thecatapi.com/v1/images/search');
+          const data = await res.json();
+          return data;
+          
+        } catch(err){
+          // console.log('avatar wasnt fetched, using callback');
+          const data = registerCallbackImg;
+          return data;
+        }
       }
         
       fetchAvatar()
         .then((data) => {
-          let avatar = data[0].url;
+          let avatar;
+          try{
+            (data[0].url ? avatar = data[0].url : avatar = data)
+          }catch(err){
+          }
+         
           userRegister({
             name, 
             email, 
@@ -80,7 +93,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
         })
 
         
-      console.log('Register submitted');
+      // console.log('Register submitted');
     }
   }
 
