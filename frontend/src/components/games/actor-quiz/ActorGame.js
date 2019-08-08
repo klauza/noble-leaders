@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
@@ -8,11 +8,12 @@ import LocalStorageCtrl from './controllers/LocalStorage.js';
 import UICtrl from './controllers/UICtrl.js';
 import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
+import Loader from '../../layout/Loader';
 // import Questions from './controllers/Questions.js';
 
 const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdate, setCurrent, game: { games, current, gLoading }}) => {
 
-  
+  // const [img, setImg] = useState(true);
   useEffect(() => {
 
 
@@ -22,7 +23,18 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
          
           await loadUser();
           await getUserGames("actor-game");
-          await App.init();
+        
+          try{
+            
+            await App.init();
+     
+            
+          } catch(err){
+            console.log('avoided crash');
+            return
+          }
+          
+      
         
         }
         actorGameInit();
@@ -32,7 +44,8 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
 
       
     } else{
-      App.init();
+        App.init();
+  
     }
     //eslint-disable-next-line
   }, []);
@@ -233,7 +246,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
     
 
-
+    // if(loading || gLoading){ return <Loader /> } 
   return (
     <div className="actor-game">
       <div className="fill-background-top">
