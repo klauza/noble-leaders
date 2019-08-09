@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {userRegister, clearError} from '../../actions/loginActions';
 import {setAlert} from '../../actions/alertActions';
 import Loader from '../layout/Loader';
-import registerCallbackImg from '../../media/registerCallbackImg.jpg'
+import registerCallbackImg from '../../media/registerCallbackImg.jpg';
+
 
 const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, setAlert }) => {
 
@@ -100,7 +101,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
   return (
     <Fragment>
       {isAuthenticated ? <Loader /> : 
-        <div className="container auth">
+        <div className="container auth register">
 
           <form className="auth__sign-form" onSubmit={onSubmit}>
             <h2 className="">Dear Dignified user <br/>

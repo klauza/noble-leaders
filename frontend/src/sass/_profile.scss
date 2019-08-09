@@ -78,6 +78,7 @@
         text-align: center;
         align-content: center;
         span{
+          font-family: $ff-roboto;
           font-size: 1.6em;
         }
       }
@@ -152,6 +153,7 @@
         background: rgb(106, 177, 0);
         box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
         span{
+          font-family: $ff-roboto;
           font-size: 1.6em;
         }
       }

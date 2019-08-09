@@ -4,6 +4,17 @@
   justify-content: center;
   align-content: center;
 
+  &.register{
+    // SAMURAi
+    background: url('./media/bg-samurai.png') no-repeat;
+    background-position: 30% 47%;
+    @media(max-width: 1600px){ background-position: 15% 47%; }
+    @media(max-width: 1250px){ background-position: 0% 47%; }
+    @media(max-width: 1050px){ background-position: -35% 47%; }
+
+
+  }
+
   &__sign-form{
     min-width: 300px;
     display: block;

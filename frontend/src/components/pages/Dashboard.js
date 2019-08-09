@@ -46,7 +46,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
         <div className={`grid-item ${!img && "dashboard-actor-game-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/actor-game' className="grid-link"></Link> } </div>
         <div className={`grid-item ${!img && "dashboard-snake-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/snake' className="grid-link"></Link> } </div>
 
-        <div></div>
+        <div>REVEAL CARD GAME</div>
         <div></div>
         <div></div>
         <div></div>
