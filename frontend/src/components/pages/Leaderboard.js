@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {loadUser, userUpdate} from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
-import {getAllUsers, setCurrent} from '../../actions/gameActions';
+import {getAllUsers} from '../../actions/gameActions';
 import Loader from '../layout/Loader';
 import Users from './Users';
 import Pagination from './Pagination';
@@ -14,6 +14,8 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
   const [img, setImg] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(22);
+  const [blockade, setBlockade] = useState(false);
+
 
   useEffect(() => {
 
@@ -21,6 +23,8 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
       if(localStorage.token){
         await loadUser();
         await getAllUsers();
+
+       
 
       } else {
         getAllUsers();
@@ -33,6 +37,36 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
     //eslint-disable-next-line
   }, [isAuthenticated]);
+
+  function targetUserPage(){
+    if(blockade === false){
+      ( users &&
+        users.forEach((item, index) => {
+          console.log(item, ' - ',index)
+        if(item.name === user.name){
+          setBlockade(true);
+          goUserPage(index);
+        }
+      })
+      )
+    }
+  }
+  if(isAuthenticated){
+    targetUserPage();
+  }
+  function goUserPage(i){
+    // console.log(i);
+    
+    if(i+1 <= 22){
+      setCurrentPage(1);
+    } else 
+    if(i+1 > 22 && i+1 <= 44){
+      setCurrentPage(2);
+    } else
+    if(i+1 > 44){
+      setCurrentPage(3);
+    }
+  }
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -51,6 +85,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
     .catch(reason => console.log(reason));
 
 
+ 
 
   if(isAuthenticated){
     if(loading || gLoading || img){ return <Loader />} 
@@ -76,7 +111,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
 
       <ul className="leaderboard-ul">
-      <Pagination active={active} paginate={paginate} postsPerPage={postsPerPage} totalPosts={users && users.length} />
+      <Pagination active={active} paginate={paginate} postsPerPage={postsPerPage} totalPosts={users && users.length} currentPage={currentPage}/>
         <li className="sticky-li leaderboard-ul__li">
           <span><strong>Highscore</strong></span>
           <span><strong>Name</strong></span> 

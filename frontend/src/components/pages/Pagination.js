@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Pagination = ({ postsPerPage, totalPosts, paginate, active }) => {
+const Pagination = ({ postsPerPage, totalPosts, paginate, active, currentPage }) => {
   
   const pageNumbers = [];
-
+  
   for(let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++){
     pageNumbers.push(i);
   }
@@ -12,7 +12,8 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, active }) => {
   return (
     <div className="pagination">
       {pageNumbers.map((number, i) => (
-        <li key={number} className={`page-item ${i === 0 && 'active'}`}>
+        <li key={number} className={`page-item ${i === currentPage-1 && 'active'}`}>
+          {/* eslint-disable-next-line */}
           <a onClick={() => {paginate(number); active(number)}} href="#" className="page-link">
             {number}
           </a>
