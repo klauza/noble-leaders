@@ -5,14 +5,18 @@ import {loadUser, userUpdate} from '../../actions/loginActions';
 import { getUserGames, createTheGame } from '../../actions/gameActions';
 import {setAlert} from '../../actions/alertActions';
 import history from '../../history';
-import cup from '../../media/puchar.png';
 import Loader from '../layout/Loader';
+
+import { cup, actor, snake } from '../../media/images';
+
+
 
 const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, getUserGames, setAlert,  game: { games, gLoading }}) => {
 
   const [img, setImg] = useState(true);
   const [newQuote, setNewQuote] = useState('');
- 
+
+  const imgs = [actor, snake];
 
   useEffect(() => {
     if(localStorage.token){
@@ -34,10 +38,13 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   }, []);
 
 
+
+
   if(gLoading === false){
     if(games && games.length === 0){
+      
       createTheGame({
-        name: 'tomb-raider',
+        name: 'reveal-cards',
         score: 0
       });
       createTheGame({
@@ -82,9 +89,9 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     async function fetchQuote(){
       try{
         const res = await fetch('https://favqs.com/api/qotd');
-        const data = await res.json();
-      
+        const data = await res.json(); 
         return data
+        
       } catch(err){
         const data = "Sorry feature currently not available";
         return data
@@ -93,11 +100,11 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     }
     fetchQuote()
     .then((data) => {
-        {data.quote ? 
+        (data.quote ? 
           ( data.quote.body.length > 125 ? getQuote() : setNewQuote(data.quote.body) )
         :
           ( setNewQuote(data) )
-        }
+        )
     })
 
   }
@@ -140,7 +147,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         
         
         <div className="profile__bottom profile-bot-animation">
-          {games !== null && !gLoading ? games.map((game) => <ProfileList key={game._id} game={game} />) : null }
+          {games !== null && !gLoading ? games.map((game, i) => <ProfileList image={imgs[i]} key={game._id} game={game} />) : null }
         </div>
 
         <div className="profile__quote profile-quote-animation">
