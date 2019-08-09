@@ -17,7 +17,7 @@ app.use(express.json({ extended: false })); // body data can be accepted
 app.use('/api/imgs', express.static('api/imgs'));
 app.use('/api/gifs', express.static('api/gifs'));
 
-app.get("/actor-game", function(req, res, next) {
+app.get("/api/actor-game", function(req, res, next) {
   res.send(data);
 });
 
@@ -28,9 +28,9 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/games', require('./routes/games'));
 
 if(process.env.NODE_ENV === 'production'){
-  app.use(express.static('../frontend/build'));
+  app.use(express.static('frontend/build'));
 
-  app.use('*', (req, res) => res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html')));
+  app.use('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')));
 }
 const PORT = process.env.PORT || 5000;
 

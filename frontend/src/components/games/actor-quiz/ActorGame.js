@@ -62,7 +62,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         LevelCtrl.setLevelZero();
         
         
-        fetch('./actor-game')
+        fetch('./api/actor-game')
           .then(res => res.json())
           .then(data => {
             UICtrl.showScore();
