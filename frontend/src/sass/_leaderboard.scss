@@ -7,8 +7,10 @@
   @media(max-width: 1200px) {width: 70%; }
   @media(max-width: 768px) {width: 95%; }
   &__title{
+    letter-spacing: 7px;
     text-align: center;
     margin: 20px 0;
+    font-family: $ff-roboto;
   }
   &__img{
     max-width: 200px; height: 100%;
@@ -38,6 +40,8 @@
         width: 30px; height: 30px;
         margin: 5px 3px;
         transition: background-color 250ms ease;
+        box-shadow: 0px 3px 4px -3px rgba(0, 0, 0, 0.75);
+
         .page-link{
           text-align: center;
           color: white;
@@ -48,10 +52,10 @@
           align-items: center; justify-items: center;
         }
         &:hover{
-          background: rgb(231, 224, 20);
+          background: #eedc88;
         }
         &.active{
-          background: rgb(231, 224, 20);
+          background: #eedc88;
           transition: background-color 250ms ease;
         }
         
@@ -64,8 +68,12 @@
       display: grid;
       align-items: center;
       grid-template-columns: minmax(auto, 100px) minmax(auto, 140px) auto 20px;
-      
       list-style: none;
+
+      span{
+        margin-left: 3px;
+      }
+      
       &:nth-child(odd){
         background: rgba(184, 216, 250, 0.658);
       }
@@ -120,8 +128,9 @@
     .sticky-li{
       position: sticky;
       top: 0;
-      border-bottom: 3px solid rgb(126, 184, 136);
-      background: rgb(184, 216, 250);
+      background: #eedc88;
+      box-shadow: 0px 4px 4px -3px rgba(0, 0, 0, 0.75);
+      margin-bottom: 3px;
     }
     .selected{
       background: rgb(146, 243, 0);

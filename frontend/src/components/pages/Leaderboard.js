@@ -33,19 +33,19 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
       
     }
 
-    initLeaderBoard()
+    initLeaderBoard();
 
     //eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, []);
 
+  // returns the position (rank) of logged in user; fires once after all user got loaded
   function targetUserPage(){
     if(blockade === false){
       ( users &&
         users.forEach((item, index) => {
-          console.log(item, ' - ',index)
         if(item.name === user.name){
           setBlockade(true);
-          goUserPage(index);
+          goUserPage(index);  // passing position
         }
       })
       )
@@ -54,16 +54,17 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
   if(isAuthenticated){
     targetUserPage();
   }
+
   function goUserPage(i){
-    // console.log(i);
-    
-    if(i+1 <= 22){
+    i++;  // because users count starts from 0
+
+    if(i <= 22){
       setCurrentPage(1);
     } else 
-    if(i+1 > 22 && i+1 <= 44){
+    if(i > 22 && i <= 44){
       setCurrentPage(2);
     } else
-    if(i+1 > 44){
+    if(i > 44){
       setCurrentPage(3);
     }
   }
@@ -107,7 +108,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
   return (
     <div className="leaderboard test-animation">
-      <h2 className="leaderboard__title">LEADERBOARD</h2>
+      <h2 className="leaderboard__title"><span style={{"color":"red"}}>LEADER</span>BOARD</h2>
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
 
       <ul className="leaderboard-ul">
