@@ -1,27 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loadUser, userUpdate} from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
-import {getAllUsers} from '../../actions/gameActions';
+import {getAllUsers, setCurrent} from '../../actions/gameActions';
 import Loader from '../layout/Loader';
+import Users from './Users';
+import Pagination from './Pagination';
 
 import laurelsImg from '../../media/laurels.png';
 
 const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setAlert, loadUser, userUpdate, game: {users, gLoading}}) => {
   
   const [img, setImg] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(22);
 
   useEffect(() => {
 
     async function initLeaderBoard(){
       if(localStorage.token){
-        await getAllUsers();
         await loadUser();
+        await getAllUsers();
 
       } else {
         getAllUsers();
       }
+      
+      
     }
 
     initLeaderBoard()
@@ -29,6 +34,9 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
     //eslint-disable-next-line
   }, [isAuthenticated]);
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = (users && users.slice(indexOfFirstPost, indexOfLastPost));
 
   function loadImageAsync(image){
     return new Promise((resolve, reject) => {
@@ -42,26 +50,23 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
     .then(() => setImg(false))
     .catch(reason => console.log(reason));
 
-  const deleteQuote = () => {
-    let q = "smthing";
-    const updateUserQuote = {
-      _id: user._id,
-      quote: q.replace("smthing","-"),
-      date: new Date()
-    }
 
-    async function updateThenLoadUsers(){
-      await userUpdate(updateUserQuote);
-      await setAlert("Quote deleted", "danger");
-      await getAllUsers();
-    }
-    updateThenLoadUsers();
-  }
 
   if(isAuthenticated){
     if(loading || gLoading || img){ return <Loader />} 
   } else {
     if(gLoading || img){ return <Loader />} 
+  }
+  
+  const active = (num) => {
+    Array.from(document.querySelector('.pagination').children).forEach(page => page.classList.remove('active'));
+    const selectedP = document.querySelector(`.page-item:nth-child(${num})`);
+    selectedP.classList.add('active');
+    
+  }
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   }
 
 
@@ -71,6 +76,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
 
       <ul className="leaderboard-ul">
+      <Pagination active={active} paginate={paginate} postsPerPage={postsPerPage} totalPosts={users && users.length} />
         <li className="sticky-li leaderboard-ul__li">
           <span><strong>Highscore</strong></span>
           <span><strong>Name</strong></span> 
@@ -79,20 +85,14 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
         {users !== null ? 
           (
-            (users.map(item => 
-            <li className={`leaderboard-ul__li ${isAuthenticated && item.name === user.name && "selected"}`} key={item._id} >
-              <span>{item.highscore}</span>
-              <span>{item.name}</span> 
-              <span>{isAuthenticated && item.quote === "-" && user._id === item._id ? <span className="no-quote"><Link to="/profile">Click to set your quote</Link></span> : item.quote}</span>
-              {isAuthenticated && user._id === item._id && item.quote !== "-" && <span className="delete-quote" onClick={deleteQuote}><i className="fa fa-times"></i></span> }
-            </li>
-            ))
+            <Users getAllUsers={getAllUsers} userUpdate={userUpdate} setAlert={setAlert} user={user} isAuthenticated={isAuthenticated} users={currentPosts} />
           ) 
           : 
           (
             <p>no user in database</p>
           )
         }
+        
       </ul>
 
     </div>
