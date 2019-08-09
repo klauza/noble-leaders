@@ -11,7 +11,7 @@
     margin: 20px 0;
   }
   &__img{
-    max-width: 200px; height: 100%;  
+    max-width: 200px; height: 100%;
     margin: 0 auto 20px;
     display: block;
     img{
@@ -23,6 +23,9 @@
   .leaderboard-ul{
     width: 100%;
     margin: 0 auto;
+
+   
+
     &__li{
       padding: 3px 0;
       display: grid;
@@ -31,7 +34,7 @@
       
       list-style: none;
       &:nth-child(odd){
-        background: #e0e0e0;
+        background: rgba(184, 216, 250, 0.658);
       }
       span:nth-child(3){
         font-size: 0.95rem;
@@ -81,7 +84,12 @@
         }
       }
     }
-
+    .sticky-li{
+      position: sticky;
+      top: 0;
+      border-bottom: 3px solid rgb(126, 184, 136);
+      background: rgb(184, 216, 250);
+    }
     .selected{
       background: rgb(146, 243, 0);
       color: black;

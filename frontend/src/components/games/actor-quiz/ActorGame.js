@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
@@ -9,18 +9,15 @@ import UICtrl from './controllers/UICtrl.js';
 import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 import Loader from '../../layout/Loader';
-// import Questions from './controllers/Questions.js';
 
 const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdate, setCurrent, game: { games, current, gLoading }}) => {
 
   // const [img, setImg] = useState(true);
   useEffect(() => {
-    // console.log(img);
 
     if(localStorage.token) {
-        // 1
+    
         async function actorGameInit(){
-         
           await loadUser();
           await getUserGames("actor-game");
         
@@ -31,24 +28,15 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
               
             // }, 1000)
             
-
           } catch(err){
             console.log('avoided crash');
-           
           }
           
-     
-        
         }
         actorGameInit();
        
-        
-       
-
-      
-    } else{
+    } else {
         App.init();
-  
     }
     //eslint-disable-next-line
   }, []);
@@ -86,7 +74,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
             document.querySelectorAll('.person-block').forEach((button) => { button.addEventListener('click', personClick)}); //add listener to each block
             document.querySelector('.random-block').addEventListener('click', randomPerson);
           })
-          .catch(err => console.log(err));
+          .catch(err => {});
       }
       
     
@@ -130,8 +118,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
           if(isAuthenticated){
             let entryScore = parseInt(current.score, 10);   
             let roundScore = parseInt(LevelCtrl.getScore(), 10); 
-            console.log('entry score: ', entryScore);
-            console.log('round score: ', roundScore);
 
             async function updateActorGameScore(){
               if(roundScore > entryScore){
@@ -204,15 +190,12 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
 
             
               } else {
-                console.log('nothing to update, your score was lower');
-                setAlert("Unfortunately you didn't beat your score", 'danger');
+                setAlert("You didn't beat your highscore", 'danger');
                 return
               }
               
             }
-            console.log('loadings: ');
-            console.log('user loading: ', loading);
-            console.log('game loadings: ', gLoading);
+
 
             async function updt(){
               await updateActorGameScore();
@@ -221,7 +204,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
             updt();
           } else {
             // If not logged in
-            console.log('please log in to update the score');
             setAlert('please log in to update the score', 'danger');
           }
 
@@ -233,7 +215,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
     
     
-    // if(loading || gLoading){ return <Loader /> } 
   return (
     <div className="actor-game">
       <div className="fill-background-top">
@@ -253,12 +234,13 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
           </div>
         </div>
       </div>
-      {(loading || gLoading) ? <Loader /> : 
+
+      {isAuthenticated && (loading || gLoading) ? <Loader /> : 
       <div className="content">
-        
         {/* ACTOR BLOCKS RENDER HERE */}
       </div>
-    }
+      }
+
       <div className="progress_bar">
         <div className="progress_bar--1"><span>1</span></div>
         <div className="progress_bar--2"><span>2</span></div>

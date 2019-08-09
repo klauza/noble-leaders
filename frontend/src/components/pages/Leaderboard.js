@@ -71,7 +71,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
 
       <ul className="leaderboard-ul">
-        <li className="leaderboard-ul__li">
+        <li className="sticky-li leaderboard-ul__li">
           <span><strong>Highscore</strong></span>
           <span><strong>Name</strong></span> 
           <span><strong>Quote</strong></span>

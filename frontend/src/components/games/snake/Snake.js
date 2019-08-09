@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
+// import Loader from '../../layout/Loader';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
@@ -33,9 +34,15 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
   
       setCanvas(document.getElementById('canvas'));
     } else {
+      try{
+        document.querySelector('.snake-the-game-container').focus();
+      }catch(err){
+        console.log('avoided crash');
+        return
+      }
       setCanvas(document.getElementById('canvas'));
     }
-    console.log('block from useeffect: ',block);
+    
     //eslint-disable-next-line
   }, [block]);
 
@@ -43,9 +50,7 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
   
 
   
-    
-  function startTheSnake() {
-
+function startTheSnake() {
 
   if(canvas){
     ctx = canvas.getContext('2d');
@@ -61,9 +66,6 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
     // Game loop draw
   
     const draw = (check) => {
-      
-      
-      // console.log(state.obstacle);
       
       // clear
       ctx.fillStyle = '#232323'
@@ -86,31 +88,25 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
       
       // add crash
       if (state.snake.length === 0) {
-        console.log('crash');
-        console.log(state.score);
+        
+        console.log('crash, scored ',state.score);
         if(isAuthenticated && state.score > 0){
-          console.log(state.score);
-          
+
           let roundScore = parseInt(state.score, 10); 
           
-
           async function updateActorGameScore(){
             // await getUserGames("snake");
             let entryScore = await document.querySelector('.highSc').textContent;
             entryScore = parseInt(entryScore, 10);
-            console.log('entry: ',entryScore, 'thisRound: ',roundScore);
+            // console.log('entry: ',entryScore, 'thisRound: ',roundScore);
             
             if(roundScore > entryScore){
               document.querySelector('.update-score-load-screen').classList.add('cover');
       
-              console.log('you have new score');
-
               if(entryScore === 0){
                 // setAlert("Congratulations! Now see your score in your Profile!", 'danger');
                 async function sumScore(){
                   let userTotalScore = await user.highscore;
-                  console.log('totalscore: ',userTotalScore);
-                  console.log('roundscore: ',roundScore);
 
                   userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
 
@@ -143,12 +139,9 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
                 // update score if higher than previous
                 // setAlert("You have beaten your score, nice job!", 'danger');
                 async function sumScore(){
-                  console.log('entryscore in highscore: ', entryScore);
-                  console.log('roundscore in highscore: ', roundScore);
                   let userTotalScore = await user.highscore;
                   userTotalScore = await userTotalScore - entryScore;
                   userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-                  console.log('totalscore: ', userTotalScore);
               
                   // update user's highscore
                   const updUserHighscore = await {
@@ -187,28 +180,18 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
           updateActorGameScore();
         
 
-
-       }else {
+        }else {
         // If not logged in
-        //console.log('please log in to update the score');
-        // setAlert('please log in to update the score', 'danger');
-      }
-  
-
        
-      
-
-        
-        
+        }
+  
 
         ctx.fillStyle = 'rgb(255,0,0)'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
 
         state.score = 0;  // reset score, save score
-    }
+      }
       
-      
-  
     }
 
     // Game loop update
@@ -233,50 +216,45 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
       }
     })
 
+
     // Main
-
-
-      
-        
     draw();
     window.requestAnimationFrame(step(0))
     
-  
- 
- 
   }
 }
 
 
 const startTheSnakeNow = (e) => {
- 
   if(block !== true){
     if(e.keyCode === 13){
-        document.querySelector('.snake-the-game-container').removeEventListener('onKeyDown', startTheSnakeNow, {passive: false} );
-        console.log(document.querySelector('.snake-the-game-container'));
         setBlock(true);
         startTheSnake();
         document.querySelector('.snake-title').style.display = "none";
-        
     }
-    // remove event listener
   }
+  // remove event listener
+  document.querySelector('.snake-the-game-container').removeEventListener('onKeyDown', startTheSnakeNow, false );
 }
-
-
 
 
   return (
     <Fragment>
       <div className="snake-the-game-container" tabIndex="0" onKeyDown={startTheSnakeNow}>
+
+        {/* LOADING SCREEN */}
         <div className="update-score-load-screen"></div>
+
         <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span>0</span>}</div>
         <span className="snake-title">Press ENTER to start</span>
         <canvas id="canvas" width="700" height="500" ></canvas>
       </div>
       
       <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{current && current.score}</span></span> : <span>Log in to see your score</span>}</div>
-      <div></div>
+      <hr/>
+      <div className="snake-hint">Each red block will give you 1 point</div>
+      <div className="snake-hint">Avoid white blocks</div>
+      
     </Fragment>
   )
 }
