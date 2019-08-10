@@ -49,7 +49,11 @@ const UICtrl = (function(){
       // check if game is completed     ------------------------------ GAME COMPLETED ---------------------------------
       //eslint-disable-next-line
       if(filtered == ''){
-        alert("Congratulations, you have completed all tasks, click reset button to start over xD");
+      
+          UICtrl.winGame();
+      
+        console.log('You won! The game over!');
+       
 
       } else {
 
@@ -180,8 +184,17 @@ const UICtrl = (function(){
     winGame: function(){
       console.log('Game completed');
       UICtrl.fallingDollars();
-      document.querySelector('.local-storage-reset').style.transform = 'translateY(-600px) translateX(-50%)';
+      let totalScore = LevelCtrl.getScore();
+      document.querySelector('#game-over-points').textContent = totalScore + 'points';
+      // document.querySelector('.local-storage-reset').style.transform = 'translateY(-600px) translateX(-50%)';
+      document.querySelector('.next-question-container').style.display = "none";
       document.querySelector('.content').style.display = "none";
+      document.querySelector('.answers').style.display = "none";
+      document.querySelector('.welcome-text').style.display = "none";
+      document.querySelector('.scoreDiv').style.display = "none";
+      document.querySelector('.local-storage-reset').style.display = "none";
+      document.querySelector('.game-over').style.display = "grid";
+      document.querySelector('.but-updt').click();
     },
 
     resetGame: function(){
@@ -238,7 +251,7 @@ const UICtrl = (function(){
     fallingDollars: function(){
 
       for(let i =0; i<40; i++){
-        document.querySelector('body').style.overflow = "hidden";
+        document.querySelector('.actor-game').style.overflow = "hidden";
         let randomTime = Math.random()*6+1;
         let delay = Math.floor(Math.random()*5);
         let leftDistance = Math.random()*1600;    // 200px
