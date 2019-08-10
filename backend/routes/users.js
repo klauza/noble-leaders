@@ -15,9 +15,12 @@ const User = require('../models/User');
 
 router.post('/', [
   check('name', 'Please add a name').not().isEmpty(),
-  check('name', 'Name length must be less than 13 characters').isLength({ max:12 }),
+  check('name', 'Name length must be less than 16 characters').isLength({ max:15 }),
+  check('name', 'Your name cannot contain special chars').matches( /(?=^[a-zA-Z0-9])[a-zA-Z0-9\s]{0,}$/ ),
+  check('name', 'your name must be at least 3-word long').matches( /(?=^[a-zA-Z])[a-zA-Z0-9\s]{3,}$/ ),
   check('email', 'Please type a valid email').isEmail(),
   check('password', 'Please enter a password with 6 or more characters').isLength({ min:6 })
+  
 ], 
 async (req, res) => {
   const errors = validationResult(req);
