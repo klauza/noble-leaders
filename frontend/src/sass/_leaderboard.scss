@@ -124,6 +124,14 @@
           }
         }
       }
+
+      // hide Quote tab on mobiles
+      @media(max-width: 505px){
+        grid-template-columns: 1fr 1fr;
+        span:nth-child(3){
+          display: none;
+        }
+      }
     }
     .sticky-li{
       position: sticky;
