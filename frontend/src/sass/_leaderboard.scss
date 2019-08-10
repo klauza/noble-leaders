@@ -10,7 +10,7 @@
     letter-spacing: 7px;
     text-align: center;
     margin: 20px 0;
-    font-family: $ff-roboto;
+    font-family: $ff-boogaloo;
   }
   &__img{
     max-width: 200px; height: 100%;
@@ -64,7 +64,7 @@
    
 
     &__li{
-      padding: 3px 0;
+      padding: 6px 0;
       display: grid;
       align-items: center;
       grid-template-columns: minmax(auto, 100px) minmax(auto, 140px) auto 20px;
@@ -92,13 +92,14 @@
         position: relative;
         &::after{
           content:'Delete quote';
+          font-size: 0.85em;
           border: 0;
           border-radius: 2px;
           display: none;
           align-items: center;
           text-align: center;
           position: absolute;
-          top: -40px; left: -67px;
+          top: -40px; left: -70px;
           background: rgb(255, 0, 0);
           color: white;
           width: 90px; 
@@ -111,7 +112,7 @@
           border-top: 10px solid rgb(255, 0, 0); 
           display: none;
           position: absolute;
-          top: -10px; left: 12px; transform: translateX(-50%);
+          top: -10px; left: 9px; transform: translateX(-50%);
           width: 0px;
           height: 0px;
         }
@@ -127,8 +128,12 @@
 
       // hide Quote tab on mobiles
       @media(max-width: 505px){
+        padding: 10px 0;
         grid-template-columns: 1fr 1fr;
         span:nth-child(3){
+          display: none;
+        }
+        .delete-quote{
           display: none;
         }
       }

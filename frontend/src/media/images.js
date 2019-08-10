@@ -1,5 +1,7 @@
 export { default as actor } from './actor-icon.png'
 export { default as snake } from './snake-icon.png'
+export { default as cards } from './cards.png'
+
 export { default as cup } from './puchar.png'
 
 export {default as karta} from './games/reveal-cards/karta.png';

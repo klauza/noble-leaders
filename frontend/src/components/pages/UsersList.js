@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const Users = ({users, isAuthenticated, user, setAlert, userUpdate, getAllUsers}) => {
+const UsersList = ({users, isAuthenticated, user, setAlert, userUpdate, getAllUsers}) => {
 
 
   const deleteQuote = () => {
@@ -34,4 +34,4 @@ const Users = ({users, isAuthenticated, user, setAlert, userUpdate, getAllUsers}
   )
 }
 
-export default Users
+export default UsersList

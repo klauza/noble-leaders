@@ -4,7 +4,7 @@ import {loadUser, userUpdate} from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
 import {getAllUsers} from '../../actions/gameActions';
 import Loader from '../layout/Loader';
-import Users from './Users';
+import UsersList from './UsersList';
 import Pagination from './Pagination';
 
 import laurelsImg from '../../media/laurels.png';
@@ -108,7 +108,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
   return (
     <div className="leaderboard test-animation">
-      <h2 className="leaderboard__title"><span style={{"color":"red"}}>LEADER</span>BOARD</h2>
+      <h1 className="leaderboard__title">LEADERBOARD</h1>
       <div className="leaderboard__img"><img src={laurelsImg} alt=""/></div>
 
       <ul className="leaderboard-ul">
@@ -121,7 +121,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
         {users !== null ? 
           (
-            <Users getAllUsers={getAllUsers} userUpdate={userUpdate} setAlert={setAlert} user={user} isAuthenticated={isAuthenticated} users={currentPosts} />
+            <UsersList getAllUsers={getAllUsers} userUpdate={userUpdate} setAlert={setAlert} user={user} isAuthenticated={isAuthenticated} users={currentPosts} />
           ) 
           : 
           (

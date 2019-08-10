@@ -7,7 +7,7 @@ import {setAlert} from '../../actions/alertActions';
 import history from '../../history';
 import Loader from '../layout/Loader';
 
-import { cup, actor, snake } from '../../media/images';
+import { cup, actor, snake, cards } from '../../media/images';
 
 
 
@@ -16,7 +16,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   const [img, setImg] = useState(true);
   const [newQuote, setNewQuote] = useState('');
 
-  const imgs = [actor, snake];
+  const imgs = [actor, snake, cards];
 
   useEffect(() => {
     if(localStorage.token){

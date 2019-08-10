@@ -195,6 +195,11 @@ const UICtrl = (function(){
       document.querySelector('.local-storage-reset').style.display = "none";
       document.querySelector('.game-over').style.display = "grid";
       document.querySelector('.but-updt').click();
+     
+      LocalStorageCtrl.deletePersonFromLocalStorage();
+      LocalStorageCtrl.deleteIdFromLS();
+      LocalStorageCtrl.deleteScore();
+      
     },
 
     resetGame: function(){
@@ -202,7 +207,6 @@ const UICtrl = (function(){
       LocalStorageCtrl.deletePersonFromLocalStorage();
       LocalStorageCtrl.deleteIdFromLS();
       LocalStorageCtrl.deleteScore();
-  
       window.location.reload(true);
     },
 
@@ -242,6 +246,9 @@ const UICtrl = (function(){
 
       // auto click on updt button
       document.querySelector('.but-updt').click();
+      LocalStorageCtrl.deletePersonFromLocalStorage();
+      LocalStorageCtrl.deleteIdFromLS();
+      LocalStorageCtrl.deleteScore();
     },
 
     getDbScore: function(){
@@ -251,7 +258,6 @@ const UICtrl = (function(){
     fallingDollars: function(){
 
       for(let i =0; i<40; i++){
-        document.querySelector('.actor-game').style.overflow = "hidden";
         let randomTime = Math.random()*6+1;
         let delay = Math.floor(Math.random()*5);
         let leftDistance = Math.random()*1600;    // 200px
@@ -264,8 +270,8 @@ const UICtrl = (function(){
         dollar.style.transform = `translateX(50%) translateY(0) rotateZ(${rotate}deg)`;
         dollar.style.animation = `falling-dollar-animation ${randomTime}s infinite`;
         dollar.style.animationDelay = `${delay}s`;
-
-        document.querySelector('body').appendChild(dollar);
+        document.querySelector('.actor-game').style.overflow = "hidden";
+        document.querySelector('.actor-game').appendChild(dollar);
       }
     },
     
