@@ -41,6 +41,10 @@
       background: url("./media/games/snake-cover.png");
       background-size: cover;
     }
+    .dashboard-reveal-cards-cover{
+      background: url("./media/games/reveal-cards-cover.jpg");
+      background-size: cover;
+    }
   }
   .grid > *:first-child {
     grid-row: 1 / 1;
