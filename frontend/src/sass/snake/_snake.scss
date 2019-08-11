@@ -1,5 +1,6 @@
+
 .snake-the-game-container{
-  height:          100%;
+  height:          auto;
   margin:          0;
   padding:         0;
   background:      #868080;
@@ -8,12 +9,12 @@
   display:         flex;
   justify-content: center;
   align-items:     center;
-
   
+  font-family: $ff-boogaloo;
 
   @media(max-width: 768px){     // mobile screen size
     transform: scale(0.45);
-   
+  
   }
 
   position: relative;
@@ -23,7 +24,9 @@
     height: 100%;
   }
   .cover{
-    background: red;
+    background: linear-gradient( to right,
+    rgb(52, 118, 218),
+    rgb(209, 206, 37));
     z-index: 99;
     
     &:after{
@@ -63,10 +66,11 @@
     opacity: 0.7;
   }
 
- 
+
 }
 
 .mobile-arrows-container{
+  font-family: sans-serif;
   display: none;
   @media(max-width: 768px){
     margin-top: -50px;
@@ -104,8 +108,21 @@
 
   }
 }
-
+.outputScore:after{
+  content: '';
+  background: green;
+  height: 2px;
+  width: 10%;
+  display: block; margin: 10px auto;
+}
 .outputScore, .snake-hint{
+  position: relative;
+  opacity: 0;
+  transition: 350ms opacity ease;
+  transition-delay: 650ms;
+  font-weight: bold;
+
+  font-family: $ff-boogaloo;
   text-align: center;
-  font-size: 1.25em;
+  font-size: 1.35em;
 }

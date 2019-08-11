@@ -22,6 +22,7 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
         await getUserGames("snake");
         try{
           await document.querySelector('.snake-the-game-container').focus();
+          
         }catch(err){
           console.log('avoided crash');
           return
@@ -42,7 +43,8 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
       }
       setCanvas(document.getElementById('canvas'));
     }
-    
+    document.querySelector('.outputScore').style.opacity = "1";
+    document.querySelectorAll('.snake-hint').forEach(a => a.style.opacity = "1");
     //eslint-disable-next-line
   }, [block]);
 
@@ -283,8 +285,8 @@ const startMobile = (e) =>{
       </div>
 
       <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{current && current.score}</span></span> : <span>Log in to see your score</span>}</div>
-      <hr/>
-      <div className="snake-hint">Each red block will give you 1 point</div>
+     
+      <div className="snake-hint">Each <span style={{"color": "red"}}>red block</span> will give you 1 point</div>
       <div className="snake-hint">Avoid white blocks</div>
       
     </Fragment>

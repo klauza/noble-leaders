@@ -10,13 +10,28 @@ $ff-boogaloo: 'Boogaloo', cursive;
 
 html{
   overflow-y: scroll;
-}
-html{
   height: 100%;
 }
+
 body{
   height: 100%;
   position: relative;
+  // background: url('./media/beige-tiles.png');
+  
+  background: rgba(255, 255, 255, 0.7);
+  // overflow: hidden;
+
+  &::before{
+    content: "";
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+    background: url('./media/beige-tiles.png') repeat;
+  }
 }
 .container{
   width: 70%;

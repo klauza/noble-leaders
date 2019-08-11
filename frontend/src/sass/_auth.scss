@@ -4,15 +4,15 @@
   justify-content: center;
   align-content: center;
 
-  &.register{
+  &.login{
     // SAMURAi
-    background: url('./media/bg-samurai.png') no-repeat;
-    background-position: 30% 47%;
-    @media(max-width: 1600px){ background-position: 15% 47%; }
-    @media(max-width: 1250px){ background-position: 0% 47%; }
-    @media(max-width: 1050px){ background-position: -35% 47%; }
-
-
+    background: url('./media/book.png') no-repeat;
+    position: relative;
+    background-position: 50% 101%;
+    background-size: 300px;
+    // @media(max-width: 1600px){ background-position: 15% 47%; }
+    // @media(max-width: 1250px){ background-position: 0% 47%; }
+    // @media(max-width: 1050px){ background-position: -35% 47%; }
   }
 
   &__sign-form{
@@ -106,31 +106,55 @@
         }
       }
 
-    .btn-sign{
-      display: block;
-      margin: 0 auto 25px;
+      .btn-sign{
+        display: block;
+        position: relative;
+        margin: 0 auto 25px;
 
-      width: 80%;
-      margin: 25px auto 0;
-      padding: 10px 0;
-      color: black;
-      // background: #36b03c;
-      background: rgba(248, 248, 248, 0.75);
-      border: 1px solid black;
-      font-size: 1.15em;
-      
-      border-radius: 2px;
-      cursor: pointer;
-      letter-spacing: 2px;
-      &:hover{
-        color: #a5a5a5;
-        border: 1px solid #a5a5a5;
-      }
-      &:focus{
-        // box-shadow: 0px 3px 10px 0px rgba(163,163,163,1);
+        width: 80%;
+        margin: 25px auto 0;
+        padding: 10px 0;
+        color: black;
+        // background: #36b03c;
+        background: rgba(248, 248, 248, 0.75);
+        border: 1px solid black;
+        font-size: 1.15em;
         
+        border-radius: 2px;
+        cursor: pointer;
+        letter-spacing: 2px;
+        &:hover{
+          color: #a5a5a5;
+          border: 1px solid #a5a5a5;
+        }
+        &:focus{
+          // box-shadow: 0px 3px 10px 0px rgba(163,163,163,1);
+          
+        }
+
+        
+
+        &:hover ~ .shaking-hands{
+          display: block;
+        }
+
+      }
+      .shaking-hands{
+        position: absolute;
+        bottom: -30px; left: 50%;
+        transform: translateX(-50%);
+        width: 125px;
+        display: none;
+        img{
+          width: 100%;
+          height: 100%;
+  
+        }
       }
     }
-    }
+    
+    
   }
+
+ 
 }

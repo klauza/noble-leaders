@@ -10,6 +10,7 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
 
 .actor-game{
   background: url('./media/games/actor-game-bg.jpg');
+  position: relative;
   background-size: cover;
   min-height: calc(100vh - 50px);
   opacity: 0;
@@ -46,6 +47,8 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
   }
   .user-logged-score,
   .user-not-logged-score{
+    font-family: $ff-roboto;
+    font-size: 0.9rem;
     position: absolute;
     top: 10%; left: 50%;
     transform: translateX(-50%);

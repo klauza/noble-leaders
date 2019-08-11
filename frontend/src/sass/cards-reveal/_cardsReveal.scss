@@ -5,6 +5,7 @@
   min-height: calc(100vh - 50px);
   color: white;
   position: relative;
+  font-family: $ff-boogaloo;
   padding: 50px 0;
 
   a:link {color: #209791; text-decoration: none;}
@@ -15,6 +16,7 @@
   .score{
     margin-top: 25px;
     text-align: center;
+    font-size: 1.2rem;
   }
 
   h1{
@@ -22,7 +24,6 @@
     font-weight: 400;
     text-align: center;
     letter-spacing: 5px;
-    font-family: $ff-boogaloo;
     padding: 50px 0;
   }
   p{
@@ -58,6 +59,7 @@
     transform: rotate(-90deg);
     transition: all 0.3s ease-in-out;
     
+    box-shadow: 0px 6px 4px -3px rgba(87, 87, 87, 0.75);
 
     width: 125px;
     height: 125px;
@@ -86,6 +88,7 @@
     cursor: default;
     filter: brightness(100%);
     transition: all 0.3s ease-in-out;
+    box-shadow: 0px 6px 4px -3px rgba(87, 87, 87, 0.75);
   }
 
   .play-again{

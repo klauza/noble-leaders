@@ -62,7 +62,7 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
   return (
     <Fragment>
       {isAuthenticated ? <Loader /> : 
-      <div className="container auth">
+      <div className="container auth login">
 
         <form className="auth__sign-form" onSubmit={onSubmit}>
           <h2 className="">Sign In</h2>

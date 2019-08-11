@@ -77,6 +77,9 @@
       &:nth-child(odd){
         background: rgba(184, 216, 250, 0.658);
       }
+      &:nth-child(even){
+        background: rgba(255, 255, 255, 1);
+      }
       span:nth-child(3){
         font-size: 0.95rem;
       }

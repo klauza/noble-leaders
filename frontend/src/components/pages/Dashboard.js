@@ -59,8 +59,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
         <div></div>
         <div></div>
         <div></div>
-        <div></div>
-        <div></div>
+ 
       </div>
     </div>
   )

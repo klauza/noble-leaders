@@ -5,6 +5,7 @@ import {userRegister, clearError} from '../../actions/loginActions';
 import {setAlert} from '../../actions/alertActions';
 import Loader from '../layout/Loader';
 import registerCallbackImg from '../../media/registerCallbackImg.jpg';
+import shakingHands from '../../media/hands.png';
 
 
 const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, setAlert }) => {
@@ -101,7 +102,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
   return (
     <Fragment>
       {isAuthenticated ? <Loader /> : 
-        <div className="container auth register">
+        <div className="container auth">
 
           <form className="auth__sign-form" onSubmit={onSubmit}>
             <h2 className="">Dear Dignified user <br/>
@@ -125,9 +126,14 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
             <div className="input-field">
               <button className="btn-sign">Register</button>
+              <div className="shaking-hands">
+                <img src={shakingHands} alt=""/>
+              </div>
             </div>
 
+            
           </form>
+        
           
         </div>
       }
