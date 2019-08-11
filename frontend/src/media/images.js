@@ -4,7 +4,7 @@ export { default as cards } from './cards.png'
 
 export { default as cup } from './puchar.png'
 
-export {default as karta} from './games/reveal-cards/karta.png';
+export {default as karta} from './games/reveal-cards/coverCard.jpg';
 export {default as ciri} from './games/reveal-cards/ciri.png';
 export {default as geralt} from './games/reveal-cards/geralt.png';
 export {default as iorweth} from './games/reveal-cards/iorweth.png';

@@ -1,21 +1,29 @@
 
 .cards-game{
   font-size: 16px;
-  background-color: #747474;
-
+  background-color: #3b3737;
+  min-height: calc(100vh - 50px);
+  color: white;
+  position: relative;
+  padding: 50px 0;
 
   a:link {color: #209791; text-decoration: none;}
   a:visited {color: #209791;}
   a:active {color: #209791; }
   a:hover {color: #E9B64A; }
+  
+  .score{
+    margin-top: 25px;
+    text-align: center;
+  }
 
   h1{
     font-size: 64px;
     font-weight: 400;
     text-align: center;
     letter-spacing: 5px;
-    margin-top: 20px;
-    margin-bottom: 0px;
+    font-family: $ff-boogaloo;
+    padding: 50px 0;
   }
   p{
     text-align: center;
@@ -25,27 +33,45 @@
   }
 
   .board{
-    width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    opacity: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(100px, 125px));
+    grid-gap: 2px;
     text-align: center;
+    justify-content: center;
+
+    // mobile grid
+    @media(max-width: 540px){
+      grid-template-columns: repeat(3, minmax(100px, 125px));
+    }
+    @media(max-width: 400px){
+      grid-template-columns: repeat(2, minmax(100px, 125px));
+    }
   }
 
+
+
+
   .card{
+    opacity: 0;
+    transform-origin: bottom right;
+    transform: rotate(-90deg);
+    transition: all 0.3s ease-in-out;
+    
+
     width: 125px;
     height: 125px;
     display: inline-block;
     margin: 3px;
-    background-image: url("./media/games/reveal-cards/karta.png");
-    border: 2px solid #fdd85a;
+    background-image: url("./media/games/reveal-cards/coverCard.jpg");
+    border: 2px solid #ffffff;
     border-radius: 4px;
     cursor: pointer;
     filter: brightness(70%);
-    transition: all 0.3s ease-in-out;
   }
 
   .card:hover{
-    border: 2px solid red;
+    border: 2px solid rgb(48, 165, 233);
     filter: brightness(100%);
   }
 
@@ -54,11 +80,31 @@
     height: 125px;
     display: inline-block;
     margin: 3px;
-    background-image: url("./media/games/reveal-cards/karta.png");
+    background-image: url("./media/games/reveal-cards/coverCard.jpg");
     border: 2px solid #fdd85a;
     border-radius: 4px;
     cursor: default;
     filter: brightness(100%);
     transition: all 0.3s ease-in-out;
+  }
+
+  .play-again{
+    display: none;
+    // transform: translate(-50%, -50%);
+    margin: 15px auto 0;
+    line-height: 60px;
+    height: 60px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0px 4px 4px -3px rgba(255, 255, 255, 0.75);
+  
+    width: 160px;
+    background: rgb(98, 158, 221);
+    border: 1px solid white;
+    color: white;
+    &:hover{
+      cursor: pointer;
+    }
   }
 }

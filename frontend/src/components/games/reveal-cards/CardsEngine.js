@@ -1,73 +1,54 @@
 import React, {Fragment} from 'react';
 
-import { karta, ciri, geralt, iorweth, jaskier, triss, yen } from '../../../media/images';
-import {lotr1, lotr2, lotr3, lotr4, lotr5, lotr6, lotrCard} from '../../../media/images';
+//eslint-disable-next-line
+import { karta } from '../../../media/images';
+// import {lotr1, lotr2, lotr3, lotr4, lotr5, lotr6 } from '../../../media/images';
 
-const CardsEngine = () => {
-  // randomize deck
-  var chosenDeck = Math.floor(Math.random()*2);
-
-  // all deck cards
-  var allDecks = [
-    [ciri, ciri, geralt, geralt, iorweth, iorweth, jaskier, jaskier, triss, triss, yen, yen ],
-    [lotr1, lotr1, lotr2, lotr2, lotr3, lotr3, lotr4, lotr4, lotr5, lotr5, lotr6, lotr6] 
-  ];
-
-  var cards = allDecks[chosenDeck]
-
-
+const CardsEngine = ({cards, isAuthenticated, updateThePoints}) => {
+ 
   
+  // animations
+  document.querySelector('.board').style.opacity = "1";
+  document.querySelector('.board').style.transition = "500ms opacity ease";
 
-  console.log(chosenDeck);
-  var newMap = new Array(12); // create empty array 
-  let index = 0;
-
-  try{
-    do{
-      let randNum = Math.floor(Math.random()*cards.length); // 0 - 11, decreasing
-      newMap[index] = cards[randNum];
-      cards.splice(randNum, 1);
-
-      index++;
-    } while(cards.length > 0);
-  }catch(err){}
-
-
-
-  var c0 = document.getElementById('c0');
-  var c1 = document.getElementById('c1');
-  var c2 = document.getElementById('c2');
-  var c3 = document.getElementById('c3');
-
-  var c4 = document.getElementById('c4');
-  var c5 = document.getElementById('c5');
-  var c6 = document.getElementById('c6');
-  var c7 = document.getElementById('c7');
-
-  var c8 = document.getElementById('c8');
-  var c9 = document.getElementById('c9');
-  var c10 = document.getElementById('c10');
-  var c11 = document.getElementById('c11');
-
-
-  try{
-    c0.addEventListener('click', function(){ revealCard(0); });
-    c1.addEventListener('click', function(){ revealCard(1); });
-    c2.addEventListener('click', function(){ revealCard(2); });
-    c3.addEventListener('click', function(){ revealCard(3); });
-
-    c4.addEventListener('click', function(){ revealCard(4); });
-    c5.addEventListener('click', function(){ revealCard(5); });
-    c6.addEventListener('click', function(){ revealCard(6); });
-    c7.addEventListener('click', function(){ revealCard(7); });
-
-    c8.addEventListener('click', function(){ revealCard(8); });
-    c9.addEventListener('click', function(){ revealCard(9); });
-    c10.addEventListener('click', function(){ revealCard(10); });
-    c11.addEventListener('click', function(){ revealCard(11); });
-  } catch(err){
-
+  let delay;
+  async function asyncCardAnimation(){
+    await document.querySelectorAll('.card').forEach((card,index) => {
+      card.style.opacity = "1";
+      card.style.transitionDelay = index*75+'ms';
+      card.style.transform = "rotate(0deg)";
+  
+    }) 
+    delay = 75*document.querySelectorAll('.card').length;;
   }
+  asyncCardAnimation().then(()=>{
+    setTimeout(()=>{
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.transitionDelay = "0ms";
+      }) ;
+    }, delay)
+  })
+
+
+
+  // getting chosen cards
+  var newMap = cards;
+
+  document.getElementById('c0').addEventListener('click', function(){ revealCard(0); });
+  document.getElementById('c1').addEventListener('click', function(){ revealCard(1); });
+  document.getElementById('c2').addEventListener('click', function(){ revealCard(2); });
+  document.getElementById('c3').addEventListener('click', function(){ revealCard(3); });
+
+  document.getElementById('c4').addEventListener('click', function(){ revealCard(4); });
+  document.getElementById('c5').addEventListener('click', function(){ revealCard(5); });
+  document.getElementById('c6').addEventListener('click', function(){ revealCard(6); });
+  document.getElementById('c7').addEventListener('click', function(){ revealCard(7); });
+
+  document.getElementById('c8').addEventListener('click', function(){ revealCard(8); });
+  document.getElementById('c9').addEventListener('click', function(){ revealCard(9); });
+  document.getElementById('c10').addEventListener('click', function(){ revealCard(10); });
+  document.getElementById('c11').addEventListener('click', function(){ revealCard(11); });
+   
 
   var oneVisible = false;
   var turnCounter = 0;
@@ -83,7 +64,6 @@ function revealCard(nr) {
 
     let clickedCard = document.querySelector('#c'+nr); 
     var  opacityValue = window.getComputedStyle(clickedCard).getPropertyValue("opacity");
-    console.log(opacityValue);
 
     if(opacityValue !== 0 && lock === false){
       lock = true;
@@ -117,7 +97,7 @@ function revealCard(nr) {
         }
 
         turnCounter++;
-        document.querySelector('.score').textContent = "Turn counter: "+turnCounter;
+        document.querySelector('.score').textContent = "Attempts: "+turnCounter;
 
         oneVisible = false;
         compare = null;
@@ -131,12 +111,32 @@ function revealCard(nr) {
 }
 
 function hide2Cards(nr1, nr2){
-  document.querySelector('#c'+nr1).style.opacity = 0;
-  document.querySelector('#c'+nr2).style.opacity = 0;
+  try{
+    document.querySelector('#c'+nr1).style.opacity = 0;
+    document.querySelector('#c'+nr2).style.opacity = 0;
+  } catch(err){}
+
   pairsLeft--;
 
   if(pairsLeft === 0){
-    document.querySelector('.board').innerHTML = `<h1>You win! <br> Done in ${turnCounter} turns</h1>`
+    let finalScore;
+    //  GAME IS OVER, SENDING UPDATE FUNCTION
+    document.querySelector('.play-again').style.display ="block";
+    // make score calculations
+    if(turnCounter <= 10){
+      finalScore = 100 - turnCounter*7;
+    } else{
+      if(turnCounter>10 && turnCounter <=14){
+        finalScore = Math.floor(100 - turnCounter*6.8);
+      } else {
+        finalScore = 0;
+      }
+    }
+    document.querySelector('.score').innerHTML = `<h1>You win with a score of ${finalScore} points!</h1> <br> <h2>Done in ${turnCounter} turns.</h2>`
+    document.querySelector('.board').style.display ="none";
+    
+    updateThePoints(finalScore);
+    
   }
   lock = false;
 }
@@ -155,35 +155,7 @@ function restore2Cards(nr1, nr2){
 
   return (
       <Fragment>
-      {/* <div className="cards-game">
-        <header>
-          <h1>Gwent memory test</h1>
-          <p>Inspired by Gwent the Witcher Card Game</p>
-        </header>
-    
-        <main>
-          <article>
-            <div className="board">
-              <div className="card" id="c0"></div>
-              <div className="card" id="c1"></div>
-              <div className="card" id="c2"></div>
-              <div className="card" id="c3"></div> 
-              
-              <div className="card" id="c4"></div> 
-              <div className="card" id="c5"></div> 
-              <div className="card" id="c6"></div> 
-              <div className="card" id="c7"></div> 
-              
-              <div className="card" id="c8"></div> 
-              <div className="card" id="c9"></div> 
-              <div className="card" id="c10"></div> 
-              <div className="card" id="c11"></div> 
-              
-              <div className="score">Turn counter: 0</div>
-            </div>
-          </article>
-        </main>
-      </div> */}
+      
       </Fragment>
     
   )
