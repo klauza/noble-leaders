@@ -19,3 +19,11 @@ export {default as lotr4} from './games/reveal-cards/lotr/lotr4.jpg';
 export {default as lotr5} from './games/reveal-cards/lotr/lotr5.jpg';
 export {default as lotr6} from './games/reveal-cards/lotr/lotr6.jpg';
 export {default as lotrCard} from './games/reveal-cards/lotr/lotrCard.jpg';
+
+
+export {default as lang1} from './games/reveal-cards/langs/c-sharp.jpg';
+export {default as lang2} from './games/reveal-cards/langs/css.jpg';
+export {default as lang3} from './games/reveal-cards/langs/html.jpg';
+export {default as lang4} from './games/reveal-cards/langs/php.jpg';
+export {default as lang5} from './games/reveal-cards/langs/react.jpg';
+export {default as lang6} from './games/reveal-cards/langs/wordpress.jpg';

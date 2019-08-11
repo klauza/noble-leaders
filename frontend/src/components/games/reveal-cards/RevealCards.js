@@ -9,6 +9,7 @@ import CardsEngine from './CardsEngine';
 import Loader from '../../layout/Loader';
 import {lotr1, lotr2, lotr3, lotr4, lotr5, lotr6 } from '../../../media/images';
 import { ciri, geralt, iorweth, jaskier, triss, yen } from '../../../media/images';
+import { lang1, lang2, lang3, lang4, lang5, lang6 } from '../../../media/images';
 
 
 const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, gLoading }, setAlert, loadUser, getUserGames, updateGameScore, userUpdate}) => {
@@ -34,9 +35,10 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
 
     var allDecks = [
       [ciri, ciri, geralt, geralt, iorweth, iorweth, jaskier, jaskier, triss, triss, yen, yen ],
-      [lotr1, lotr1, lotr2, lotr2, lotr3, lotr3, lotr4, lotr4, lotr5, lotr5, lotr6, lotr6] 
+      [lotr1, lotr1, lotr2, lotr2, lotr3, lotr3, lotr4, lotr4, lotr5, lotr5, lotr6, lotr6] ,
+      [lang1, lang2, lang3, lang4, lang5, lang6, lang1, lang2, lang3, lang4, lang5, lang6] 
     ];
-    var chosenDeck = Math.floor(Math.random()*2);
+    var chosenDeck = Math.floor(Math.random()*3);
 
     var chosenCards = allDecks[chosenDeck];
 
@@ -133,7 +135,7 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
       
       <div className="cards-game">
         <header>
-          <h1>React Reveal Cards game</h1>
+          <h1 className="main-title">React Reveal Cards Game</h1>
         </header>
     
         <main>

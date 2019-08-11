@@ -11,6 +11,14 @@ const CardsEngine = ({cards, isAuthenticated, updateThePoints}) => {
   document.querySelector('.board').style.opacity = "1";
   document.querySelector('.board').style.transition = "500ms opacity ease";
 
+  document.querySelector('.main-title').style.opacity = "1";
+  document.querySelector('.main-title').style.transition = "500ms opacity ease";
+  document.querySelector('.main-title').style.transitionDelay = "1125ms";
+
+  document.querySelector('.score').style.opacity = "1";
+  document.querySelector('.score').style.transition = "500ms opacity ease";
+  document.querySelector('.score').style.transitionDelay = "1125ms";
+
   let delay;
   async function asyncCardAnimation(){
     await document.querySelectorAll('.card').forEach((card,index) => {
@@ -125,14 +133,15 @@ function hide2Cards(nr1, nr2){
     // make score calculations
     if(turnCounter <= 10){
       finalScore = 100 - turnCounter*7;
-    } else{
-      if(turnCounter>10 && turnCounter <=14){
+    } else if(turnCounter>10 && turnCounter <=14){
         finalScore = Math.floor(100 - turnCounter*6.8);
-      } else {
-        finalScore = 0;
-      }
+    } else if(turnCounter > 15){
+          finalScore = 0;
     }
-    document.querySelector('.score').innerHTML = `<h1>You win with a score of ${finalScore} points!</h1> <br> <h2>Done in ${turnCounter} turns.</h2>`
+      
+   
+    document.querySelector('.score').innerHTML = `<h1>You win with a score of ${finalScore} points!</h1> <br> <h2>Done in ${turnCounter} turns.</h2>`;
+    document.querySelector('.score').style.opacity = "1";
     document.querySelector('.board').style.display ="none";
     
     updateThePoints(finalScore);

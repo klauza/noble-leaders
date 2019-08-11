@@ -15,7 +15,7 @@ const ProfileList = ({ game, image }) => {
       </div>
 
       <ul className="item-score">
-        <span>Highscore: <strong>{score}</strong></span>
+        <span>Top score: <strong style={{"fontSize":"1.75rem"}}>{score}</strong></span>
       </ul>
 
     </div>

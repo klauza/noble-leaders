@@ -18,7 +18,7 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
         <div className="about__main--project">
           <h1>Hey, amazing stranger, thanks for coming to see my work</h1>
           <p>NOBLE-LEADERS is a minimalistic game-center project with subtle design and mechanics.</p>
-          <p>You can create an account with safe password hashing. So please do so - without it, you won't be able to see a lot of things.</p>
+          <p>You can create an account with safe password hashing - please do so, without it, you won't be able to see a lot of stuff.</p>
           <p>There are plenty of games available to play - they are not great, but give the score points as a return.</p>
           <p>After few hours of playing... ( ͡º ͜ʖ ͡º) you can check the leaderboard if you are a chief among the noble ones.</p>
         </div>
@@ -50,7 +50,7 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
           <p>version 1.0</p> 
           <p>This project is being constantly developed and maintained since idea creation on 31/07/2019.</p>
           <p>Author: Michal Klauza</p>
-          <span>Image attributions links on github</span>
+          <span>Image attributions links - see on github</span>
         </div>
 
       </div>
