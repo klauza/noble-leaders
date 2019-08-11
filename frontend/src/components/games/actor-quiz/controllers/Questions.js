@@ -217,7 +217,9 @@ const QuestionsCtrl = (function(){
           UICtrl.continueGame();     // go to next actor
 
         } else {
-          document.querySelector('.welcome-text').textContent = "Proceed to next question"; // change text before level 2 start
+          let rndCorrectText =["Correct! Proceed to next question.", "Amazing! Great answer!", "That's right answer."];
+          let rnd_i = Math.floor(Math.random()*3);
+          document.querySelector('.welcome-text').textContent = rndCorrectText[rnd_i]; // change text before level 2 start
           LevelCtrl.initText();     // go to next level
         }
       

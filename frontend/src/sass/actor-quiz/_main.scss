@@ -7,16 +7,21 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
   box-sizing: border-box;
   padding: 0; margin: 0;
 }
+
 .actor-game{
   background: url('./media/games/actor-game-bg.jpg');
   background-size: cover;
   min-height: calc(100vh - 50px);
+  opacity: 0;
 }
 
 
-.welcome-text{ display: none; }
+// .welcome-text{ display: none; }
 
 .fill-background-top{
+  
+  // transform: translateY(-200px);
+  transition: 500ms ease transform;
   text-align: center;
   width: 100%;
   height: 200px;
@@ -29,7 +34,8 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
   margin-bottom: 15px;
 
   .welcome-text{
-    position: relative;
+    opacity: 0;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -182,12 +188,14 @@ $ff-roboto: 'Roboto Condensed', sans-serif;
 }
 
 .progress_bar{
+  opacity: 0;
   position: fixed;
   top: 50%;
-  left: 0.5%;
+  left: 0.3%;
   height: 320px;
   width: 30px;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateX(-30px);
+  transform-origin: bottom center;  // !
   display: grid;
   grid-template-rows: repeat(4, 1fr);
   span{

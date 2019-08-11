@@ -32,8 +32,27 @@ const UICtrl = (function(){
       return found;
     },
 
+    entryAnimations: function(){
+
+      document.querySelector('.actor-game').style.opacity = "1";
+      document.querySelector('.actor-game').style.transition = "650ms opacity ease";
+      
+      document.querySelector('.welcome-text').style.opacity = "1";
+      document.querySelector('.welcome-text').style.transition = "500ms all ease-in-out";
+
+
+
+      // document.querySelector('.fill-background-top').style.transform = "translateY(0px)";
+      // document.querySelector('.fill-background-top').style.opacity = "1";
+      // document.querySelector('.fill-background-top').animation = "swing-bottom-bck 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both";
+    },
+
     renderPeople: function(data){
-      document.querySelector('.welcome-text').style.display = "block";  // show text
+
+
+
+
+
     
       // get actor ids data from ls to be filtered
       let idsFromLS = LocalStorageCtrl.getIdFromStorage();

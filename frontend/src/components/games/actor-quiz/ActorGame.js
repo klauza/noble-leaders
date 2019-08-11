@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
@@ -9,25 +9,36 @@ import UICtrl from './controllers/UICtrl.js';
 import PersonCtrl from './controllers/PersonCtrl.js';
 import LevelCtrl from './controllers/Level.js';
 import Loader from '../../layout/Loader';
+import backgroundImage from '../../../media/games/actor-game-bg.jpg';
+
 
 const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdate, setCurrent, game: { games, current, gLoading }}) => {
 
-  // const [img, setImg] = useState(true);
+  const [img, setImg] = useState(true);
+
   useEffect(() => {
+
+    function loadImageAsync(image){
+      return new Promise((resolve, reject) => {
+        const img1 = new Image();
+        img1.addEventListener('load', event => resolve(img1));
+        img1.addEventListener('erorr', reason => reject(new Error('error')));
+        img1.src = image
+      })
+    }
 
     if(localStorage.token) {
     
         async function actorGameInit(){
           await loadUser();
           await getUserGames("actor-game");
-        
+          
           try{
-            App.init();
-            // await setTimeout(()=>{
-            //   setImg(false);
+            await loadImageAsync(backgroundImage)
+              .then(() => setImg(false))
+              .then(()=> App.init())
+              .catch(reason => console.log(reason));
               
-            // }, 1000)
-            
           } catch(err){
             console.log('avoided crash');
           }
@@ -36,18 +47,23 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         actorGameInit();
        
     } else {
-        App.init();
+      try{
+        loadImageAsync(backgroundImage)
+          .then(() => setImg(false))
+          .then(()=> App.init())
+          .catch(reason => console.log(reason));
+      } catch(err){  }
     }
     //eslint-disable-next-line
   }, []);
 
 
+
+
   
-
+ 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl){
-        
-
-        
+      
         // Event Listeners
         const loadEventListeners = function(){
         displayDataFromAPI();
@@ -67,6 +83,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
           .then(data => {
             UICtrl.showScore();
             UICtrl.renderPeople(data);    // render actors on screen
+            UICtrl.entryAnimations();
             
           })
           .then(()=>{
@@ -83,6 +100,9 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       const personClick = function(){   
         let id = parseInt(this.id); // get the ID of chosen actor
         let person = UICtrl.getPersonById(id);  // get json person
+
+        document.querySelector('.progress_bar').style.animation = "progress-bar-animation forwards 1500ms";
+        document.querySelector('.progress_bar').style.animationDelay = "2000ms";
     
         PersonCtrl.savePerson(person);                    // save locally
         LocalStorageCtrl.setPersonToLocalStorage(person); // save to LS
@@ -215,15 +235,22 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
     
     
+
+  if(isAuthenticated){
+    if(loading || gLoading || img){ return <Loader />} 
+  } else {
+    if(img){ return <Loader />} 
+  }
+
   return (
-    <div className="actor-game">
+    <div className="actor-game whitedrop">
       <div className="fill-background-top">
         {isAuthenticated ? <span className="user-logged-score">Your best highscore is: {(current !== null) ? current.score : '-'}</span> : <span className="user-not-logged-score">log in to see your score</span>}
         <span className="welcome-text">Welcome, pick an actor/actress to begin.<br/>
           Also feel free to come back later - your progress is being saved.</span>
           
         <div className="social-icons-block">
-          <a href="https://github.com/klauza/actorDiscovery">see code: <i className="fa fa-github-square"></i></a>
+          <a href="https://github.com/klauza/actorDiscovery"><i className="fa fa-github-square"></i></a>
         </div>
       
 
@@ -235,11 +262,11 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         </div>
       </div>
 
-      {isAuthenticated && (loading || gLoading) ? <Loader /> : 
+      
       <div className="content">
         {/* ACTOR BLOCKS RENDER HERE */}
       </div>
-      }
+    
 
       <div className="progress_bar">
         <div className="progress_bar--1"><span>1</span></div>
