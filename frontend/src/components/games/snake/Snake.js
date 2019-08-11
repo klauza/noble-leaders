@@ -216,6 +216,19 @@ function startTheSnake() {
       }
     })
 
+    // key events mobile
+    let allKeys = document.querySelectorAll('.mobile-arrow');
+    allKeys.forEach((key) => {
+      key.addEventListener('click', ()=>{
+        switch(key.textContent){
+          case "U": state = enqueue(state, NORTH); break
+          case "D": state = enqueue(state, SOUTH); break
+          case "L": state = enqueue(state, WEST);  break
+          case "R": state = enqueue(state, EAST);  break
+          default: return
+        }
+      })
+    })
 
     // Main
     draw();
@@ -237,6 +250,11 @@ const startTheSnakeNow = (e) => {
   document.querySelector('.snake-the-game-container').removeEventListener('onKeyDown', startTheSnakeNow, false );
 }
 
+const startMobile = (e) =>{
+  document.querySelector('.mobile-start').style.display ="none";
+  startTheSnake();
+}
+
 
   return (
     <Fragment>
@@ -247,9 +265,23 @@ const startTheSnakeNow = (e) => {
 
         <div className="snake-current-score">{apples > 0 ? <span>{apples}</span> : <span>0</span>}</div>
         <span className="snake-title">Press ENTER to start</span>
+
+        
+        {/* mobile only */}
+        <div className="mobile-start" onClick={startMobile}>Tap to Start<br/>side screen view recommended</div>
+        
+        {/* canvas */}
         <canvas id="canvas" width="700" height="500" ></canvas>
       </div>
-      
+
+      {/* mobile only */}
+      <div className="mobile-arrows-container">
+        <div className="mobile-arrow mobile-arrows-up">U</div>
+        <div className="mobile-arrow mobile-arrows-down">D</div>
+        <div className="mobile-arrow mobile-arrows-left">L</div>
+        <div className="mobile-arrow mobile-arrows-right">R</div>
+      </div>
+
       <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{current && current.score}</span></span> : <span>Log in to see your score</span>}</div>
       <hr/>
       <div className="snake-hint">Each red block will give you 1 point</div>
