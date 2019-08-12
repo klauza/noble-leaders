@@ -31,7 +31,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     
         async function actorGameInit(){
           await loadUser();
-          await getUserGames("actor-game");
+          await getUserGames("actor-quiz");
           
           try{
             await loadImageAsync(backgroundImage)

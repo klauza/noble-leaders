@@ -37,6 +37,10 @@
       &:hover{
         background: rgb(102, 146, 110);
       }
+      &:hover a{
+        
+        color: white;
+      }
       
       &>a{
         padding: 0 10px;
@@ -92,6 +96,7 @@
         background: rgb(102, 143, 109);
         z-index: 99;
         li{
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
           grid-area: unset;
           box-shadow: 0px 4px 4px -3px rgba(0, 0, 0, 0.75);
       
@@ -105,7 +110,8 @@
             color: black;
             font-weight: 900;
             &:hover{
-              background: rgb(0, 255, 38);
+              // background: rgba(0, 255, 38, 0.486);
+              color: white;
             }
           }
           

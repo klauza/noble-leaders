@@ -27,7 +27,7 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
           <p>I'm hoping for constructive criticism from your side.</p>
           <p>Thank you!</p>
           <p>I wish you a great day!</p>
-          <p style={{"fontSize": "0.8rem", "color": "grey"}}>ps. I'm looking for a nice job{` --`}<i className="fa fa-thumbs-up"></i></p>
+          <p style={{"fontSize": "0.8rem", "color": "grey"}}> <i className="fa fa-thumbs-up"></i> Michal Klauza </p>
         </div>
       
         <div className="about__main--links">

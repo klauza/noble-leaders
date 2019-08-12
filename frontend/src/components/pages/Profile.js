@@ -52,7 +52,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         score: 0
       });
       createTheGame({
-        name: 'actor-game',
+        name: 'actor-quiz',
         score: 0
       });
 
