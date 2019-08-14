@@ -70,6 +70,7 @@
 }
 
 .mobile-arrows-container{
+  position: relative;
   font-family: sans-serif;
   display: none;
   @media(max-width: 768px){

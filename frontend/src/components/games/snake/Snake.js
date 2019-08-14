@@ -217,9 +217,9 @@ function startTheSnake() {
         default: return
       }
     })
-
+    
     // key events mobile
-    let allKeys = document.querySelectorAll('.mobile-arrow');
+    var allKeys = document.querySelectorAll('.mobile-arrow');
     allKeys.forEach((key) => {
       key.addEventListener('click', ()=>{
         switch(key.textContent){

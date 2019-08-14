@@ -56,17 +56,10 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
   }
 
   function goUserPage(i){
+    // i = user's rank
     i++;  // because users count starts from 0
 
-    if(i <= 22){
-      setCurrentPage(1);
-    } else 
-    if(i > 22 && i <= 44){
-      setCurrentPage(2);
-    } else
-    if(i > 44){
-      setCurrentPage(3);
-    }
+    setCurrentPage( Math.ceil(i / postsPerPage ) );
   }
 
   const indexOfLastPost = currentPage * postsPerPage;

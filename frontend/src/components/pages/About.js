@@ -17,7 +17,7 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
 
         <div className="about__main--project">
           <h1>Hey, amazing stranger, thanks for coming to see my work</h1>
-          <p><strong>NOBLE-LEADERS</strong> is a minimalistic <strong>fullstack</strong> project, also mobile friendly, with subtle design and mechanics.</p>
+          <p><strong>NOBLE-LEADERS</strong> is a minimalistic <strong>fullstack</strong> project with subtle design and mechanics. It's also mobile friendly.</p>
           <p>How to start? You can create an account with safe password hashing - please do so, without it, you won't be able to see a lot.</p>
           <p>There are plenty of games available to play - they give score points letting you climb on top of leaderboard.</p>
         </div>

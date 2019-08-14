@@ -135,7 +135,7 @@ function hide2Cards(nr1, nr2){
       finalScore = 100 - turnCounter*7;
     } else if(turnCounter>10 && turnCounter <=14){
         finalScore = Math.floor(100 - turnCounter*6.8);
-    } else if(turnCounter > 15){
+    } else if(turnCounter > 14){
           finalScore = 0;
     }
       

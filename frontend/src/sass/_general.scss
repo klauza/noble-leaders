@@ -9,11 +9,12 @@ $ff-boogaloo: 'Boogaloo', cursive;
 }
 
 html{
-  overflow-y: scroll;
+  // overflow-y: scroll;
   height: 100%;
 }
 
 body{
+  overflow-y: scroll;
   height: 100%;
   position: relative;
   // background: url('./media/beige-tiles.png');
