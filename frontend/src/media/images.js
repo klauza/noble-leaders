@@ -27,3 +27,7 @@ export {default as lang3} from './games/reveal-cards/langs/html.jpg';
 export {default as lang4} from './games/reveal-cards/langs/php.jpg';
 export {default as lang5} from './games/reveal-cards/langs/react.jpg';
 export {default as lang6} from './games/reveal-cards/langs/wordpress.jpg';
+
+export {default as carrousel1} from './carrousel/1.jpg';
+export {default as carrousel2} from './carrousel/2.jpg';
+export {default as carrousel3} from './carrousel/3.jpg';

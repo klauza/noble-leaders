@@ -7,8 +7,15 @@ import actorQuizCover from '../../media/games/actor-quiz-cover.jpg';
 import snakeCover from '../../media/games/snake-cover.jpg';
 import revealCardsCover from '../../media/games/reveal-cards-cover.jpg';
 import LoaderPlaceholder from '../layout/Loader';
+// import {images} from '../../media/carrousel/DashCarrouselImages';
+import {carrousel1, carrousel2, carrousel3} from '../../media/images';
+
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
+
+  const images = [carrousel1, carrousel2, carrousel3];
 
   const [img, setImg] = useState(true);
 
@@ -17,6 +24,8 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
       loadUser();
       getUserGames(null);
     }
+
+     
 
     function loadImageAsync(image1, image2, image3){
       return Promise.all([
@@ -38,17 +47,36 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
         img3.addEventListener('erorr', reason => reject(new Error('error')));
         img3.src = image3
       })
-    
+      
       ])
     }
     loadImageAsync(actorQuizCover, snakeCover, revealCardsCover)
       .then(() => setImg(false))
       .catch(reason => console.log(reason));
+
+ 
+
+
     //eslint-disable-next-line
   }, []);
 
+  
   return (
     <div className="container dashboard">
+
+      <div className="dashboard-carrousel">
+        <Carousel style={{height: "30vh"}} showStatus={false} selectedItem={0} showThumbs={false} infiniteLoop={true} interval={3000} autoPlay={true}>
+          {images.map((img, i) => {
+            return(
+            <div key={i}>
+              <img src={img}/>
+            </div>)
+          })}
+        </Carousel>
+      </div>
+      
+
+      
       <div className="grid">
         <div className={`grid-item ${!img && "dashboard-actor-game-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/actor-game' className="grid-link"></Link> } </div>
         <div className={`grid-item ${!img && "dashboard-snake-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/snake' className="grid-link"></Link> } </div>
