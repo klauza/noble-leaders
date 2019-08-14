@@ -69,7 +69,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
           {images.map((img, i) => {
             return(
             <div key={i}>
-              <img src={img}/>
+              <img src={img} alt="" />
             </div>)
           })}
         </Carousel>

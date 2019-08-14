@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm start --prefix ../frontend",
+    "client": "npm start --prefix ./frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ../frontent && npm run build ../frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix../frontend && npm run build ./frontend"
   },
   "keywords": [],
   "author": "",
