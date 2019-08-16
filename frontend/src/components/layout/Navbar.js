@@ -21,9 +21,17 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
     // show / hide
     if(navMobileContainer.classList.contains('show')){ 
       navMobileContainer.classList.remove('show');
+      navMobileContainer.classList.remove('slide');
+
+      // animate off
     } 
     else {
       navMobileContainer.classList.add('show');
+
+      // put animation
+      setTimeout(() => {
+        navMobileContainer.classList.add('slide');
+      }, 1);
     }
 
     ( navMobileContainer.classList.contains('show') && (storeLis = Array.from(document.querySelectorAll('.nav-item'))) );
@@ -40,7 +48,9 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
 
 
   const clearEventAndCloseBurger = () => {
-    document.querySelector('.mobile-links-container').classList.remove('show');   // hide <ul> on .nav-item click
+    const navMobileContainer = document.querySelector('.mobile-links-container');
+    navMobileContainer.classList.remove('show');   // hide <ul> on .nav-item click
+    navMobileContainer.classList.remove('slide'); // also remove animation class
     // remove listeners
     document.querySelectorAll('.nav-item').forEach((li)=>{li.removeEventListener('click', toggleNavbar, false)});
     document.querySelectorAll('.nav-item').forEach((li)=>{li.removeEventListener('click', clearEventAndCloseBurger, false)});

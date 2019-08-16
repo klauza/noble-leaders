@@ -84,7 +84,14 @@
       .mobile-links-container.show{
         display: grid;
       }
+      .mobile-links-container.slide{
+        transform: translateY(0px);
+        transition: transform 250ms ease;
+      }
       .mobile-links-container{
+        transform: translateY(-250px);
+        transition: transform 250ms ease;
+        
         display: none;
         width: 100%;
         height: 200px;
