@@ -1,6 +1,6 @@
 ## About
 
-Noble-leaders is a fullstack game-center project. Created on learning and progression pusposes. It's a place where a user can login, play and hit the highscore in mini-games.
+Noble-leaders is a fullstack game-center project. Created on learning and progression pusposes. It's a place where a user can create an account, play, and compete with highscore of other players.
 
 | Project includes |
 | ---------------- |
@@ -21,7 +21,7 @@ Noble-leaders is a fullstack game-center project. Created on learning and progre
 ### games
 
 
-**snake** - project created by [Christopher Okhravi](https://www.youtube.com/channel/UCbF-4yQQAWw-UnuCd2Azfzg), however I've added few features i.e obstacles, function to prevent apple from spawning on obstacles, score counter
+**snake** - project created by [Christopher Okhravi](https://www.youtube.com/channel/UCbF-4yQQAWw-UnuCd2Azfzg), however I've added few features: obstacles, a function to prevent an apple from spawning on obstacles and a score counter.
 
 ### images
 
@@ -30,7 +30,7 @@ All the images are under personal use or MIT license
 | Image | Source | License |
 | ----- | ------ | ------- |
 | background pattern | [toptal.com](https://www.toptal.com/designers/subtlepatterns/) | free, [link](https://creativecommons.org/licenses/by-sa/3.0/legalcode) |
-| any other | kisspng.com | personal use |
+| any other | [kisspng.com](https://www.kisspng.com/) | personal use |
 
 ### API
 
@@ -48,6 +48,6 @@ Get node.js from [here](https://nodejs.org/en/).
 
 To make a proper database workflow, `-default.json-` file inside /backend/config must have altered name into a valid one. Also database/localhost link needs to be provided inside.
 
-Local: run `npm run dev` in /backend dir tree. - starts local environment.
+Local: run `npm run dev` in / dir tree. - starts local environment.
 
 
