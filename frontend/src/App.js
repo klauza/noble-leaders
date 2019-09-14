@@ -21,6 +21,7 @@ import setAuthToken from './utils/setAuthToken';
 import ActorGame from './components/games/actor-quiz/ActorGame';
 import Snake from './components/games/snake/Snake';
 import RevealCards from './components/games/reveal-cards/RevealCards';
+import BuyGame from './components/pages/BuyGame';
 
 if(localStorage.token){
   setAuthToken(localStorage.token);
@@ -47,6 +48,7 @@ const App = () => {
               <Route exact path="/actor-game" component={ActorGame} />
               <Route exact path="/snake" component={Snake} />
               <Route exact path="/reveal-cards" component={RevealCards} />
+              <Route exact path="/buy-game" component={BuyGame} />
             </Switch>
             
           </div>

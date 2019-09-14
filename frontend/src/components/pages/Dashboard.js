@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import actorQuizCover from '../../media/games/actor-quiz-cover.jpg';
 import snakeCover from '../../media/games/snake-cover.jpg';
 import revealCardsCover from '../../media/games/reveal-cards-cover.jpg';
+import buyGame from '../../media/games/buyGame.jpg';
 import LoaderPlaceholder from '../layout/Loader';
 // import {images} from '../../media/carrousel/DashCarrouselImages';
 import {carrousel1, carrousel2, carrousel3} from '../../media/images';
@@ -27,7 +28,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
 
      
 
-    function loadImageAsync(image1, image2, image3){
+    function loadImageAsync(image1, image2, image3, image4){
       return Promise.all([
       new Promise((resolve, reject) => {
         const img1 = new Image();
@@ -46,11 +47,17 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
         img3.addEventListener('load', event => resolve(img3));
         img3.addEventListener('erorr', reason => reject(new Error('error')));
         img3.src = image3
+      }),
+      new Promise((resolve, reject) => {
+        const img4 = new Image();
+        img4.addEventListener('load', event => resolve(img4));
+        img4.addEventListener('erorr', reason => reject(new Error('error')));
+        img4.src = image4
       })
       
       ])
     }
-    loadImageAsync(actorQuizCover, snakeCover, revealCardsCover)
+    loadImageAsync(actorQuizCover, snakeCover, revealCardsCover, buyGame)
       .then(() => setImg(false))
       .catch(reason => console.log(reason));
 
@@ -81,8 +88,8 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
         <div className={`grid-item ${!img && "dashboard-actor-game-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/actor-game' className="grid-link"></Link> } </div>
         <div className={`grid-item ${!img && "dashboard-snake-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/snake' className="grid-link"></Link> } </div>
         <div className={`grid-item ${!img && "dashboard-reveal-cards-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/reveal-cards' className="grid-link"></Link> } </div>
+        <div className={`grid-item ${!img && "dashboard-buy-game-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/buy-game' className="grid-link"></Link> } </div>
 
-        <div></div>
         <div></div>
         <div></div>
         <div></div>

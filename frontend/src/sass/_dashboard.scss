@@ -75,6 +75,10 @@
       background: url("./media/games/reveal-cards-cover.jpg");
       background-size: cover;
     }
+    .dashboard-buy-game-cover{
+      background: url("./media/games/buyGame.jpg");
+      background-size: cover;
+    }
   }
   .grid > *:first-child {
     grid-row: 1 / 1;
