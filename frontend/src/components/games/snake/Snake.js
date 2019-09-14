@@ -257,6 +257,10 @@ const startMobile = (e) =>{
   startTheSnake();
 }
 
+const displayBtnsOnBigScreen = () => {
+  document.querySelector('.mobile-arrows-container').style.display ="grid";
+  document.querySelector('.snake-hint-button').style.display ="none";
+}
 
   return (
     <Fragment>
@@ -277,6 +281,7 @@ const startMobile = (e) =>{
       </div>
 
       {/* mobile only */}
+      
       <div className="mobile-arrows-container">
         <div className="mobile-arrow mobile-arrows-up">U</div>
         <div className="mobile-arrow mobile-arrows-down">D</div>
@@ -288,7 +293,8 @@ const startMobile = (e) =>{
      
       <div className="snake-hint">Each <span style={{"color": "red"}}>red block</span> will give you 1 point</div>
       <div className="snake-hint">Avoid white blocks</div>
-      
+      <div className="snake-hint">Use <span style={{textDecoration:"underline"}}>up, down, left, right</span> arrows to move the snake</div>
+      <button className="snake-hint snake-hint-button" onClick={displayBtnsOnBigScreen}>Click to show buttons</button>
     </Fragment>
   )
 }
