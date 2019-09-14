@@ -1,9 +1,11 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const helmet = require('helmet');
 var data = require('./api/db.json'); // your json file path
 // import './api/gifs';
 const app = express();
 const path = require('path');
+app.use(helmet());
 
 // connect to database
 connectDB();
