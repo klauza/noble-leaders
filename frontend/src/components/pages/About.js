@@ -23,7 +23,7 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
         </div>
 
         <div className="about__main--expression">
-          <p>This is an awesome project you must explore. You should know that I've put a lot of effort and time into hand-craft every corner of this page. Nevertheless in the same time I've had tons of fun - mostly with solving programming riddles and learning new stuff. At the end, I'm happy to show you my coding journey.</p>
+          <p>This is an awesome project which you have to explore. You should know that I've put a lot of effort and time into hand-craft every corner of this page. Nevertheless in the same time I've had tons of fun - mostly with solving programming riddles and learning new stuff. At the end, I'm happy to show you my coding journey.</p>
           <p>I'm hoping for constructive criticism from your side.</p>
           <p>Thank you!</p>
           <p>I wish you a great day!</p>
@@ -45,9 +45,9 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
         </div>
      
         <div className="about__main--footer">
-          <p>version 1.0</p> 
+          <p>version 1.1</p> 
           <p>Copyright: Michal Klauza</p>
-          <p>Images attributions - links on github</p>
+          <p>Image attributions - links on github</p>
         </div>
 
       </div>
