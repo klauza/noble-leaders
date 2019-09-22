@@ -8,7 +8,7 @@
     max-height: 30vh;
     border: 1px solid black;
     border-radius: 3px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     li{
       div{
         height: 100%;
@@ -20,6 +20,32 @@
         height: 100%;
       }
     }
+  }
+
+  &-headBar{
+    display: flex; align-items: flex-start;
+    width: 85%; height: 25vh; 
+    margin: 0 auto -100px;
+    border: 0; border-top-right-radius: 2px; border-top-left-radius: 2px;
+    // background: rgb(233, 233, 233);
+    background: rgba(126, 184, 136, 0.25);
+    position: relative;
+
+    div{
+      margin: 0 auto;
+      font-size: 3vw;
+      font-family: $ff-roboto; font-weight: 600;
+      @media(max-width: 768px){ 
+        font-size: 20px; 
+      }
+      text-align: center;
+      line-height: 100px;
+      i, span{
+        color: white;
+        text-shadow: 2px 2px rgba(0, 0, 0, 0.35);
+      }
+    }
+
   }
   
   .grid{

@@ -81,7 +81,10 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
           })}
         </Carousel>
       </div>
-      
+
+      <div className="dashboard-headBar">
+        <div><i className="fa fa-pied-piper-alt"></i> <span>Choose a game to  play </span></div>
+      </div>
 
       
       <div className="grid">
