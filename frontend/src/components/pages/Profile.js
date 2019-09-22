@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import ProfileList from './ProfileList';
 import {connect} from 'react-redux';
-import {loadUser, userUpdate} from '../../actions/loginActions';
+import {loadUser, userUpdate, userDelete, logout} from '../../actions/loginActions';
 import { getUserGames, createTheGame } from '../../actions/gameActions';
 import {setAlert} from '../../actions/alertActions';
 import history from '../../history';
@@ -11,7 +11,7 @@ import { cup, actor, snake, cards } from '../../media/images';
 
 
 
-const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, getUserGames, setAlert,  game: { games, gLoading }}) => {
+const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, userDelete, logout, getUserGames, setAlert,  game: { games, gLoading }}) => {
 
   const [img, setImg] = useState(true);
   const [newQuote, setNewQuote] = useState('');
@@ -123,6 +123,22 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
     }
   }
 
+  const triggerDeleteAccount = () =>{
+    if (window.confirm("are you sure?")) {
+      const deleteUserData = {
+        _id: user._id
+      }
+      userDelete(deleteUserData);
+
+
+      setTimeout(()=>{
+        logout();
+        history.push('/');
+        window.location.reload();
+      }, 500);
+    } 
+  }
+
     
   if(loading || gLoading || img){ return <Loader /> } 
 
@@ -163,6 +179,10 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
           </div>
         </div>
         
+        <div className="profile__delete">
+          <h2>Delete account?</h2>
+          <button onClick={triggerDeleteAccount}>Delete</button>
+        </div>
       </div>
     }
     </Fragment>
@@ -174,4 +194,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, userUpdate, setAlert})(Profile)
+export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, userUpdate, userDelete, logout, setAlert})(Profile)

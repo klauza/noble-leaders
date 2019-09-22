@@ -1,4 +1,4 @@
-import { CLEAR_ERROR, SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, USER_UPDATE, USER_UPDATE_ERROR, LOGIN_FAIL, LOGOUT } from './types';
+import { CLEAR_ERROR, SET_LOADING, REGISTER_SUCCESS, REGISTER_FAIL, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, USER_UPDATE, USER_UPDATE_ERROR, LOGIN_FAIL, LOGOUT, USER_DELETE, USER_DELETE_ERROR } from './types';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -107,6 +107,31 @@ export const userUpdate = (user) => async dispatch => {
       payload: err.response.msg
     })
   }
+}
+
+export const userDelete = (user) => async dispatch => {
+  setLoading();
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  try{
+    const res = await axios.delete(`/api/users/${user._id}`, user, config);
+    
+    dispatch({
+      type: USER_DELETE,
+      payload: res.data
+    })
+
+  } catch(err){
+    dispatch({
+      type: USER_DELETE_ERROR,
+      payload: err.response.msg
+    })
+  }
+
 }
 
 export const logout = () => async dispatch => {
