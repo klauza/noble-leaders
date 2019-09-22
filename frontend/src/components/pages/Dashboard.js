@@ -10,6 +10,10 @@ import buyGame from '../../media/games/buyGame.jpg';
 import LoaderPlaceholder from '../layout/Loader';
 // import {images} from '../../media/carrousel/DashCarrouselImages';
 import {carrousel1, carrousel2, carrousel3} from '../../media/images';
+import agilityIcon from '../../media/speed.svg';
+import agilityIconWhite from '../../media/speedWhite.svg';
+import wisdomIcon from '../../media/thinking.svg';
+import wisdomIconWhite from '../../media/thinkingWhite.svg';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -87,11 +91,42 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
       </div>
 
       
+
+      
       <div className="grid">
-        <div className={`grid-item ${!img && "dashboard-actor-game-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/actor-game' className="grid-link"></Link> } </div>
-        <div className={`grid-item ${!img && "dashboard-snake-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/snake' className="grid-link"></Link> } </div>
-        <div className={`grid-item ${!img && "dashboard-reveal-cards-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/reveal-cards' className="grid-link"></Link> } </div>
-        <div className={`grid-item ${!img && "dashboard-buy-game-cover"}`}> {img ? <LoaderPlaceholder /> : <Link to='/buy-game' className="grid-link"></Link> } </div>
+
+        <div className={`grid-item ${!img && "dashboard-actor-game-cover"}`}> 
+          {img ? <LoaderPlaceholder /> : <Link to='/actor-game' className="grid-link"> 
+            <div className="game-difficulty">
+              <div className="game-difficulty__wisdom"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><img src={wisdomIcon} alt=""/></div>
+              <div className="game-difficulty__dexterity"><i class="fa fa-star-half"></i><img src={agilityIcon} alt=""/></div>
+            </div>
+          </Link>}
+        </div>
+
+        
+        <div className={`grid-item ${!img && "dashboard-snake-cover"}`}>
+          {img ? <LoaderPlaceholder /> : <Link to='/snake' className="grid-link">  
+            <div className="game-difficulty">
+              <div className="game-difficulty__wisdom"><i className="fa fa-star"></i><i className="fa fa-star"></i><img src={wisdomIcon} alt=""/></div>
+              <div className="game-difficulty__dexterity"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><img src={agilityIcon} alt=""/></div>
+            </div>
+          </Link>}
+        </div>
+        
+
+        <div className={`grid-item ${!img && "dashboard-reveal-cards-cover"}`}> 
+          {img ? <LoaderPlaceholder /> : <Link to='/reveal-cards' className="grid-link">
+            <div className="game-difficulty">
+              <div className="game-difficulty__wisdom"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><img className="lightenSvg" src={wisdomIconWhite} alt=""/></div>
+              <div className="game-difficulty__dexterity"><i className="fa fa-star"></i><img src={agilityIconWhite} alt=""/></div>
+            </div>
+          </Link>} 
+        </div>
+
+        <div className={`grid-item ${!img && "dashboard-buy-game-cover"}`}> 
+          {img ? <LoaderPlaceholder /> : <Link to='/buy-game' className="grid-link"></Link> } 
+        </div>
 
         <div></div>
         <div></div>
