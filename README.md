@@ -1,6 +1,12 @@
 ## About
 
-Noble-leaders is a fullstack game-center project. Created on learning and progression pusposes. It's a place where a user can create an account, play, and compete with highscore of other players.
+Noble-leaders is a modern fullstack game center app with auth and database system. 
+<br/>
+Created on learning and progression pusposes. It's a place where a user can create an account, play to earn score in games, and compete with other players. 
+<br/>
+**The application is constantly growing.**
+<br/>
+The idea and project creator: myself
 
 | Project includes |
 | ---------------- |
@@ -18,12 +24,12 @@ Noble-leaders is a fullstack game-center project. Created on learning and progre
 
 ## Attributions:
 
-### games
+### **games**
 
 
-**snake** - project created by [Christopher Okhravi](https://www.youtube.com/channel/UCbF-4yQQAWw-UnuCd2Azfzg), however I've added few features: obstacles, a function to prevent an apple from spawning on obstacles and a score counter.
+snake - project created by [Christopher Okhravi](https://www.youtube.com/channel/UCbF-4yQQAWw-UnuCd2Azfzg), however I've added few features, like obstacles, a logic preventing spawning an apple on obstacles, a score counter.
 
-### images
+### **images**
 
 All the images are under personal use or MIT license
 
@@ -32,7 +38,7 @@ All the images are under personal use or MIT license
 | background pattern | [toptal.com](https://www.toptal.com/designers/subtlepatterns/) | free, [link](https://creativecommons.org/licenses/by-sa/3.0/legalcode) |
 | any other | [kisspng.com](https://www.kisspng.com/) | personal use |
 
-### API
+### **API**
 
 cat images: https://thecatapi.com/
 
@@ -40,14 +46,14 @@ quotes: https://favqs.com/api
 
 <br/>
 
-## Installation
+## Installation [for testing only]
 
 Get node.js from [here](https://nodejs.org/en/).
 
-`npm install` packages inside /frontend & /backend.
+`npm install` packages inside ./frontend & ./
 
-To make a proper database workflow, `-default.json-` file inside /backend/config must have altered name into a valid one. Also database/localhost link needs to be provided inside.
+To make a proper database workflow, `-default.json-` file inside /backend/config must have altered name into a valid one. Also database/localhost link to db needs to be provided inside.
 
-Local: run `npm run dev` in / dir tree. - starts local environment.
+Local: run `npm run dev` in main dir tree. - starts local environment.
 
 
