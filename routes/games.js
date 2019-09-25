@@ -8,6 +8,22 @@ const Game = require("../models/Game");
 const User = require("../models/User");
 
 
+// @route GET api/games/:userId
+// @desc  get all user's games
+// @access Private
+router.get('/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try{
+    const publicGames = await Game.find({ user: userId }).select(["name", "score"]).sort({ date: -1 });
+    res.json(publicGames);
+
+  }catch(err){
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+})
+
 // @route GET api/games
 // @desc  get all user's games
 // @access Private
