@@ -66,6 +66,10 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
       <li className="nav-item nav-leaderboard">
         <Link to='/leaderboard'>Leaderboard</Link>
       </li>
+     
+      <li className="nav-item nav-forum">
+        <Link to='/forum'>Forum</Link>
+      </li>
 
       <li className="nav-item nav-logout">
         <a href='#!' onClick={onLogout}>Logout</a>
@@ -83,6 +87,9 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
       </li>
       <li className="nav-item nav-leaderboard">
         <Link to='/leaderboard'>Leaderboard</Link>
+      </li>
+      <li className="nav-item nav-forum">
+        <Link to='/forum'>Forum</Link>
       </li>
 
       <li className="nav-item nav-register">
