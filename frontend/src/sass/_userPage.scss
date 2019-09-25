@@ -1,13 +1,43 @@
+.userPageNotExist-container,
 .userPage-container{
   position: relative;
-  width: 70%;
+  width: 50%;
   margin: 50px auto;
+  @media(max-width: 1200px) {width: 70%; }
   @media(max-width: 768px) {width: 95%; }
-
   height: 50vh; background: rgba(199, 199, 199, 0.295);
-
-  h2{
-    text-align: center;
+  h2, h3{ text-align: center; }
+  h3{ 
+    margin-top: 25px;
   }
+}
+
+.userPage{
+  &_image-container{
+    width: 150px; height: 150px;
+    margin: 0 auto;
+    img{
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+  }
+
+  &_games-container{
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    .game{
+      // border: 1px solid black;
+      display: flex; flex-direction: column;
+      img{
+        width: 75px; height: auto;
+      }
+      span{
+        text-align: center;
+      }
+    }
+  }
+
+
+  
 
 }
