@@ -3,16 +3,17 @@ import {connect} from 'react-redux';
 import {loadUser, userUpdate} from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
 import {getAllUsers} from '../../actions/gameActions';
+import { setLeaderboardPage, setBackPage } from '../../actions/miscActions';
 import Loader from '../layout/Loader';
 import UsersList from './UsersList';
 import Pagination from './Pagination';
 
 import laurelsImg from '../../media/laurels.png';
 
-const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setAlert, loadUser, userUpdate, game: {users, gLoading}}) => {
+const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setAlert, loadUser, userUpdate, game: {users, gLoading}, setLeaderboardPage, setBackPage, misc: {currPage, isBackPageSet}}) => {
   
   const [img, setImg] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(currPage);
   const [postsPerPage] = useState(22);
   const [blockade, setBlockade] = useState(false);
 
@@ -51,7 +52,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
       )
     }
   }
-  if(isAuthenticated){
+  if(isAuthenticated && !isBackPageSet){
     targetUserPage();
   }
 
@@ -60,6 +61,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
     i++;  // because users count starts from 0
 
     setCurrentPage( Math.ceil(i / postsPerPage ) );
+    setLeaderboardPage( Math.ceil(i / postsPerPage ) );
   }
 
   const indexOfLastPost = currentPage * postsPerPage;
@@ -96,6 +98,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
+    setLeaderboardPage(pageNumber);
   }
 
 
@@ -114,7 +117,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
         {users !== null ? 
           (
-            <UsersList getAllUsers={getAllUsers} userUpdate={userUpdate} setAlert={setAlert} user={user} isAuthenticated={isAuthenticated} users={currentPosts} />
+            <UsersList setBackPage={setBackPage} getAllUsers={getAllUsers} userUpdate={userUpdate} setAlert={setAlert} user={user} isAuthenticated={isAuthenticated} users={currentPosts} />
           ) 
           : 
           (
@@ -131,6 +134,7 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
 const mapStateToProps = state => ({
   login: state.login,   // state.login -> reducer
-  game: state.game
+  game: state.game,
+  misc: state.misc
 })
-export default connect(mapStateToProps, {getAllUsers, loadUser, userUpdate, setAlert})(Leaderboard)
+export default connect(mapStateToProps, {getAllUsers, loadUser, userUpdate, setAlert, setLeaderboardPage, setBackPage})(Leaderboard)

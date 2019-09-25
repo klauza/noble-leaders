@@ -1,12 +1,13 @@
 import React, {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import { setBackPage } from '../../actions/miscActions';
 import {logout} from '../../actions/loginActions';
 import history from '../../history';
 import logo from '../../media/noble-leaders-logo.png';
 
 
-const Navbar = ({ login: {isAuthenticated}, logout }) => {
+const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
 
   const onLogout = () => {
     logout();
@@ -63,8 +64,8 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
         <Link to='/about'>About</Link>
       </li>
      
-      <li className="nav-item nav-leaderboard">
-        <Link to='/leaderboard'>Leaderboard</Link>
+      <li className="nav-item nav-leaderboard" >
+        <Link to='/leaderboard' onClick={()=> setBackPage(false)}>Leaderboard</Link>
       </li>
      
       <li className="nav-item nav-forum">
@@ -86,7 +87,7 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
         <Link to='/about'>About</Link>
       </li>
       <li className="nav-item nav-leaderboard">
-        <Link to='/leaderboard'>Leaderboard</Link>
+        <Link to='/leaderboard' onClick={()=> setBackPage(false)}>Leaderboard</Link>
       </li>
       <li className="nav-item nav-forum">
         <Link to='/forum'>Forum</Link>
@@ -124,4 +125,4 @@ const Navbar = ({ login: {isAuthenticated}, logout }) => {
 const mapStateToProps = state => ({
   login: state.login
 })
-export default connect(mapStateToProps, {logout})(Navbar)
+export default connect(mapStateToProps, {logout, setBackPage})(Navbar)

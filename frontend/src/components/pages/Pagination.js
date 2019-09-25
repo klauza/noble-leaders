@@ -14,9 +14,9 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, active, currentPage })
       {pageNumbers.map((number, i) => (
         <li key={number} className={`page-item ${i === currentPage-1 && 'active'}`}>
           {/* eslint-disable-next-line */}
-          <a onClick={() => {paginate(number); active(number)}} href="#" className="page-link">
+          <button onClick={() => {paginate(number); active(number)}} className="page-link">
             {number}
-          </a>
+          </button>
         </li>
       ))}
     </div>
