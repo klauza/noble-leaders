@@ -1,0 +1,13 @@
+.userPage-container{
+  position: relative;
+  width: 70%;
+  margin: 50px auto;
+  @media(max-width: 768px) {width: 95%; }
+
+  height: 50vh; background: rgba(199, 199, 199, 0.295);
+
+  h2{
+    text-align: center;
+  }
+
+}

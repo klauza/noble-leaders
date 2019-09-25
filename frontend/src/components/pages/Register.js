@@ -83,9 +83,11 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
             (data[0].url ? avatar = data[0].url : avatar = data)
           }catch(err){
           }
-         
+
+
           userRegister({
             name, 
+            nameSlug: name.toLowerCase().replace(" ", "-"),
             email, 
             password,
             highscore,

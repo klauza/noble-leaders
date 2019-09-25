@@ -13,6 +13,7 @@ import Dashboard from './components/pages/Dashboard';
 import About from './components/pages/About';
 import Profile from './components/pages/Profile';
 import Leaderboard from './components/pages/Leaderboard';
+import UserPage from './components/pages/UserPage';
 import Forum from './components/pages/Forum';
 
 import Register from './components/pages/Register';
@@ -43,6 +44,7 @@ const App = () => {
               <Route exact path="/" component={Dashboard} />
               <Route exact path="/about" component={About} />
               <Route exact path="/leaderboard" component={Leaderboard} />
+              <Route exact path="/user/:username" component={UserPage} />
               <Route exact path="/forum" component={Forum} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/register" component={Register} />
