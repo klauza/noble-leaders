@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Loader from '../layout/Loader';
 import axios from 'axios';
 import UserLoaded from './UserLoaded';
+import UserNotExists from './UserNotExists';
 
 
 const UserPage = (props) => {
@@ -24,8 +25,6 @@ const UserPage = (props) => {
   //eslint-disable-next-line
   }, [])
 
-
-  console.log(isFetching);
   
   if(!isFetching && (user && user.length !== 0)){ // not fetchin, user exists, and user is is not empty object
     return (
@@ -33,7 +32,7 @@ const UserPage = (props) => {
     )
   } else if(!isFetching && user && user.length === 0){   // user fetched but is empty object
     return(
-      <div>user not found</div>
+      <UserNotExists />
     )
   } else{
     return(
