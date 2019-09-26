@@ -69,7 +69,7 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
       </li>
      
       <li className="nav-item nav-forum">
-        <Link to='/forum'>Forum</Link>
+        <Link to='/forum'>Forum <i className="fa fa-comments"></i></Link>
       </li>
 
       <li className="nav-item nav-logout">
@@ -90,7 +90,7 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
         <Link to='/leaderboard' onClick={()=> setBackPage(false)}>Leaderboard</Link>
       </li>
       <li className="nav-item nav-forum">
-        <Link to='/forum'>Forum</Link>
+        <Link to='/forum'>Forum <i className="fa fa-comments"></i></Link>
       </li>
 
       <li className="nav-item nav-register">
