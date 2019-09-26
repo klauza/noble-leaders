@@ -24,7 +24,7 @@ const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
     )
   } else{
     return(
-      <div>please log in; no forum is for everybody, but only logged in users can post threads</div>
+      <h3 style={{textAlign: "center", margin: "50px auto", fontWeight: "700"}}>Please log in to access forum</h3>
     )
   }
 

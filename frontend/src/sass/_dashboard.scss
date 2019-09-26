@@ -79,8 +79,8 @@
         grid-template-columns: 40px 40px;
         justify-content: space-between;
         align-items: flex-end;
-        transition: transform 250ms ease;
-        transform: translateY(350px);
+        transition: transform 250ms ease, opacity 1250ms ease;
+        transform: translateY(350px); opacity: 0;
         width: 100%; 
         height: 200px;
         position: absolute; bottom: 0; 
@@ -120,7 +120,8 @@
         filter: brightness(1.025);
 
         .game-difficulty{
-          transition: transform 250ms ease;
+          transition: transform 250ms ease, opacity 1250ms ease-out;
+          opacity: 1;
           transform: translateY(0px);
         }
       }
