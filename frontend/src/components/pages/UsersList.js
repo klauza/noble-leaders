@@ -25,7 +25,7 @@ const UsersList = ({users, isAuthenticated, user, setAlert, userUpdate, getAllUs
     {users.map(iUser => 
       <li className={`leaderboard-ul__li ${isAuthenticated && iUser.name === user.name && "selected"}`} key={iUser._id} >
         <span>{iUser.highscore}</span>
-        <span onClick={()=>setBackPage(true)}><Link to={`/user/${iUser.nameSlug}`}>{iUser.name}</Link></span> 
+        <span onClick={()=> {if(isAuthenticated) setBackPage(true)}}><Link to={`/user/${iUser.nameSlug}`}>{iUser.name}</Link></span> 
         <span>{isAuthenticated && iUser.quote === "-" && user._id === iUser._id ? <span className="no-quote"><Link to="/profile">Click to set your quote</Link></span> : iUser.quote}</span>
         {isAuthenticated && user._id === iUser._id && iUser.quote !== "-" && <span className="delete-quote" onClick={deleteQuote}><i className="fa fa-times"></i></span> }
       </li>

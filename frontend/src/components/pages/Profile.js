@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import ProfileList from './ProfileList';
+import ProfileGameList from './ProfileGameList';
 import {connect} from 'react-redux';
 import {loadUser, userUpdate, userDelete, logout} from '../../actions/loginActions';
 import { getUserGames, createTheGame } from '../../actions/gameActions';
@@ -24,7 +24,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
       async function profileInit(){
         if(localStorage.token){
           await loadUser();
-          await getUserGames(null);
+          if(!games) await getUserGames(null);
         } 
       };
 
@@ -163,7 +163,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         
         
         <div className="profile__bottom profile-bot-animation">
-          {games !== null && !gLoading ? games.map((game, i) => <ProfileList image={imgs[i]} key={game._id} game={game} />) : null }
+          {games !== null && !gLoading ? games.map((game, i) => <ProfileGameList image={imgs[i]} key={game._id} game={game} />) : null }
         </div>
 
         <div className="profile__quote profile-quote-animation">

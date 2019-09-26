@@ -7,7 +7,7 @@ import history from '../../history';
 import logo from '../../media/noble-leaders-logo.png';
 
 
-const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
+const Navbar = ({ login: {isAuthenticated}, logout, setBackPage, misc: {isBackPageSet} }) => {
 
   const onLogout = () => {
     logout();
@@ -65,7 +65,7 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
       </li>
      
       <li className="nav-item nav-leaderboard" >
-        <Link to='/leaderboard' onClick={()=> setBackPage(false)}>Leaderboard</Link>
+        <Link to='/leaderboard' onClick={()=> {if(isBackPageSet && isAuthenticated) setBackPage(false)}}>Leaderboard</Link>
       </li>
      
       <li className="nav-item nav-forum">
@@ -87,7 +87,7 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
         <Link to='/about'>About</Link>
       </li>
       <li className="nav-item nav-leaderboard">
-        <Link to='/leaderboard' onClick={()=> setBackPage(false)}>Leaderboard</Link>
+        <Link to='/leaderboard' onClick={()=> {if(isBackPageSet && isAuthenticated) setBackPage(false)}}>Leaderboard</Link>
       </li>
       <li className="nav-item nav-forum">
         <Link to='/forum'>Forum <i className="fa fa-comments"></i></Link>
@@ -123,6 +123,7 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
   )
 }
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  misc: state.misc
 })
 export default connect(mapStateToProps, {logout, setBackPage})(Navbar)

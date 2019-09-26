@@ -23,12 +23,12 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
     async function initLeaderBoard(){
       if(localStorage.token){
         await loadUser();
-        await getAllUsers();
+        if(!users) await getAllUsers();
 
        
 
       } else {
-        getAllUsers();
+        if(!users) getAllUsers();
       }
       
       
@@ -82,13 +82,17 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
 
  
-
-  if(isAuthenticated){
-    if(loading || gLoading || img){ return <Loader />} 
-  } else {
-    if(gLoading || img){ return <Loader />} 
+  // BACKUP: (was working but loader stayed visible every time)
+  // if(isAuthenticated){
+  //   if(loading || gLoading || img){ return <Loader />} 
+  // } else {
+  //   if(gLoading || img){ return <Loader />} 
+  // }
+  if(!users){
+    return <Loader />
   }
   
+
   const active = (num) => {
     Array.from(document.querySelector('.pagination').children).forEach(page => page.classList.remove('active'));
     const selectedP = document.querySelector(`.page-item:nth-child(${num})`);
