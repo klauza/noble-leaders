@@ -64,8 +64,10 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
 
   function updateThePoints(turnCounter){
     console.log(turnCounter);
-   
-    if(isAuthenticated && current !== null){
+    // && current !== null
+    if(!isAuthenticated){
+      setAlert('please log in to update the score', 'danger');
+    } else if(current){
       let entryScore = parseInt(current.score, 10);   
       let roundScore = parseInt(turnCounter, 10); 
        setLoader(true);
@@ -123,9 +125,8 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
       
       updt();
     
-    } else {
-      // If not logged in
-      setAlert('please log in to update the score', 'danger');
+    
+      
     }
     
   }
