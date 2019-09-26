@@ -27,7 +27,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
   useEffect(() => {
     if(localStorage.token) {
       loadUser();
-      getUserGames(null);
+      // getUserGames(null);
     }
 
      
@@ -99,7 +99,7 @@ const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
           {img ? <LoaderPlaceholder /> : <Link to='/actor-game' className="grid-link"> 
             <div className="game-difficulty">
               <div className="game-difficulty__wisdom"><i className="fa fa-star"></i><i className="fa fa-star"></i><i className="fa fa-star"></i><img src={wisdomIcon} alt=""/></div>
-              <div className="game-difficulty__dexterity"><i class="fa fa-star-half"></i><img src={agilityIcon} alt=""/></div>
+              <div className="game-difficulty__dexterity"><i className="fa fa-star-half"></i><img src={agilityIcon} alt=""/></div>
             </div>
           </Link>}
         </div>

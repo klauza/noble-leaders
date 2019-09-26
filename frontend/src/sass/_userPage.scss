@@ -6,6 +6,7 @@
   @media(max-width: 1200px) {width: 70%; }
   @media(max-width: 768px) {width: 95%; }
   height: 50vh; background: rgba(199, 199, 199, 0.295);
+  font-family: $ff-roboto;
   h2, h3{ text-align: center; }
   h3{ 
     margin-top: 25px;
@@ -36,8 +37,19 @@
       }
     }
   }
+}
 
+.fadein-animation{
+  animation: anim 1s forwards;
+}
 
-  
-
+@keyframes anim{
+  0%{
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

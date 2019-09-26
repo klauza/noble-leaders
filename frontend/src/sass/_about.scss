@@ -10,6 +10,8 @@
 
     &--project{
       padding: 0 3vw;
+      animation: about-animate 1s forwards;
+      opacity: 0;
       h1{
         text-align: justify;
         margin: 0 0 50px 0;
@@ -34,7 +36,9 @@
     }
 
     &--expression{
+      opacity: 0;
       padding: 0 3vw;
+      animation: about-animate 1s forwards 175ms;
       p{
         line-height: 35px;
         text-align: left;
@@ -43,6 +47,8 @@
     }
 
     &--links{
+      opacity: 0;
+      animation: about-animate 1s forwards 250ms;
       margin: 50px 0;
       display: grid;
       align-items: center;
@@ -99,5 +105,20 @@
         font-size: 10px;
       }
     }
+  }
+
+}
+
+
+
+
+@keyframes about-animate{
+  0%{
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
   }
 }

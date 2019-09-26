@@ -37,7 +37,7 @@ const UserLoaded = ({user}) => {
         {games && games.map((game, i) =>
           (
           <div className="game" key={i}>
-            <img src={gameImg[i]}/>
+            <img src={gameImg[i]} alt="" />
             <span>{game.name}</span>
             <span>{game.score}</span>
           </div>

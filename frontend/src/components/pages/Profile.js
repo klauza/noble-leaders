@@ -140,11 +140,11 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   }
 
     
-  if(loading || gLoading || img){ return <Loader /> } 
+  if(!user){ return <Loader /> } 
 
   return (
     <Fragment>
-    {games && !loading && !gLoading && games.length === 3 &&
+    {games && !img && !loading && !gLoading && games.length > 0 &&
       <div className="profile">
 
         <div className="profile__top profile-top-animation">
