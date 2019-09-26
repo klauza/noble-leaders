@@ -1,7 +1,29 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {Fragment, useState} from 'react';
+import ForumTopic from './ForumTopic';
 
 const ForumConnected = ({user}) => {
+
+  const [forumTab, setForumTab] = useState(0);
+
+  const buttons = [
+    {
+      name: "General",
+      icon: "fa fa-bullhorn"
+    },
+    {
+      name: "Games",
+      icon: "fa fa-gamepad"
+    },
+    {
+      name: "Other",
+      icon: "fa fa-chain-broken"
+    }
+  ]
+
+  const changeTopic = (i) => {
+    if(forumTab !== i){ setForumTab(i); }
+  }
+
   return (
     <div className="forum forum-container">
       <strong>Welcome to forum <i className="fa fa-comment"></i>, {user.name}</strong>
@@ -9,25 +31,14 @@ const ForumConnected = ({user}) => {
       <div className="forum__main">
 
         <div className="forum__main-topics">
-          <div>All <i className="fa fa-bullhorn"></i></div>
-          <div>Games <i className="fa fa-gamepad"></i></div>
-          <div>Anything <i className="fa fa-chain-broken"></i></div>
+          {buttons.map((btn, i) => {
+            return <button key={i} onClick={()=>changeTopic(i)}>{btn.name} <i className={btn.icon}></i></button>
+          })}
         </div>
 
-        <Link to="/forum/about-website">
-          <div className="forum__main-thread">
-            <span><i className="fa fa-linode"></i>subject: About website</span>
-            <span>added by: Admin</span>
-          </div>
-        </Link>
 
-        <div className="forum__main-thread">
-        <i className="fa fa-trophy"></i> About Leaderboard
-        </div>
+        <ForumTopic forumTab={forumTab} />
 
-        <div className="forum__main-thread">
-          Something
-        </div>
         
       </div>
     </div>

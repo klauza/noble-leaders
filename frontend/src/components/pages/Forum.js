@@ -22,7 +22,7 @@ const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
     )
   } else{
     return(
-      <div>please log in</div>
+      <div>please log in; no forum is for everybody, but only logged in users can post threads</div>
     )
   }
 
