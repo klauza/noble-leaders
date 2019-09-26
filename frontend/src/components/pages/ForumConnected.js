@@ -1,9 +1,11 @@
 import React, {Fragment, useState} from 'react';
+import { connect } from 'react-redux';
+import { setForumPage } from '../../actions/miscActions';
 import ForumTopic from './ForumTopic';
 
-const ForumConnected = ({user}) => {
+const ForumConnected = ({user, setForumPage, misc: {forumPage}}) => {
 
-  const [forumTab, setForumTab] = useState(0);
+  const [forumTab, setForumTab] = useState(forumPage);
 
   const buttons = [
     {
@@ -21,7 +23,7 @@ const ForumConnected = ({user}) => {
   ]
 
   const changeTopic = (i) => {
-    if(forumTab !== i){ setForumTab(i); }
+    if(forumTab !== i){ setForumTab(i); setForumPage(i); }
   }
 
   return (
@@ -44,5 +46,7 @@ const ForumConnected = ({user}) => {
     </div>
   )
 }
-
-export default ForumConnected
+const mapStateToProps = (state) => ({
+  misc: state.misc
+})
+export default connect(mapStateToProps, {setForumPage})(ForumConnected)

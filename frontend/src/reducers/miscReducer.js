@@ -1,8 +1,10 @@
 import { MISC_CURRENT_LBOARD_PAGE, MISC_SET_BACK_PAGE } from '../actions/types';
+import { MISC_SET_FORUM_PAGE } from '../actions/types';
 
 const initialState = {
   currPage: 1,
-  isBackPageSet: false
+  isBackPageSet: false,
+  forumPage: 0
 }
 
 export default(state = initialState, action) => {
@@ -17,6 +19,12 @@ export default(state = initialState, action) => {
       return{
         ...state,
         isBackPageSet: action.payload
+      }
+
+    case MISC_SET_FORUM_PAGE:
+      return{
+        ...state,
+        forumPage: action.payload
       }
 
     default:
