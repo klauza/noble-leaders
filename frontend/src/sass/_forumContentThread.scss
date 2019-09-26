@@ -1,9 +1,54 @@
-.forum-content-thread{
+.forum-content-wrapper{
   position: relative;
   width: 70%; height: auto;
   margin: 50px auto;
   font-family: $ff-roboto;
   @media(max-width: 768px) {width: 95%; }
+
   
-  background: lightsalmon;
+  & > button{
+    display: block;
+    padding: 10px 25px;
+    border: 1px solid black; border-radius: 2px;
+    background: lightsalmon;
+    color: black; font-weight: 700;
+    &:hover{
+      cursor: pointer;
+      background: rgb(216, 126, 90);
+    }
+  }
+
+  .forum-content-thread{
+    border: 1px solid black;
+    background: rgba(255, 255, 255, 0);
+
+    .content-article-main{
+      padding: 10px;
+    }
+    .content-article-author{
+      margin: 10px auto 10px 10px;
+    }
+  }
+
+  .forum-content-comment{
+    margin-top: 50px;
+    span{
+      display: block;
+    }
+    textarea{
+      width: 50%;
+      @media(max-width: 768px){ width: 100%; }
+    }
+
+    .comment-submit{
+      display: block;
+      padding: 6px 20px;
+      border: 1px solid grey;
+      font-size: 1.05rem;
+      &:hover{
+        cursor: pointer;
+        border: 1px solid black;
+      }
+    }
+  }
 }

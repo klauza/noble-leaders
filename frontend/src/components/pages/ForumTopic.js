@@ -53,9 +53,7 @@ const ForumTopic = ({forumTab}) => {
 
   return (
     <Fragment>
-      Topic: {forumTab} <br/>
-      Number of topics in forum: {numberOfTopics()}
-
+      
       {topics.map((topic,id) =>{
         if(topic.id === forumTab){
           return ( 
@@ -69,12 +67,15 @@ const ForumTopic = ({forumTab}) => {
 
               <div className="forum__main-thread--added-by">
                 <span>added by: <Link to={`/user/${topic.slugAddedBy}`}>{topic.addedBy}</Link></span>
+                <span>Last modified: [Date]</span>
               </div>
 
             </div>
           )
-        }
+        }else{return null}
       })}
+
+      Number of topics: {numberOfTopics()}
     </Fragment>
   )
 }
