@@ -9,8 +9,10 @@ const ForumTopic = ({forumTab}) => {
       genre: "general",
       link: `/forum/about-website`,
       icon: "fa fa-linode",
-      subject: "About website",
-      addedBy: "Admin"
+      subject: "About website & cc",
+      description: "Write few words about your expressions with this website",
+      addedBy: "Admin",
+      slugAddedBy: "admin"
     },
     {
       id: 0,
@@ -18,39 +20,58 @@ const ForumTopic = ({forumTab}) => {
       link: `/forum/leaderboard-tournament`,
       icon: "fa fa-trophy",
       subject: "Leaderboard",
-      addedBy: "Admin"
+      description: "Read how leaderboard works",
+      addedBy: "Mario Marian",
+      slugAddedBy: "mario-marian"
     },
     {
       id: 1,
       genre: "games",
-      link: `/forum/snake-general`,
-      icon: "fa fa-linode",
-      subject: "About snake",
-      addedBy: "Admin"
+      link: `/forum/snake-discussion`,
+      icon: "fa fa-gamepad",
+      subject: "Snake discussion",
+      addedBy: "Admin",
+      slugAddedBy: "admin"
     },
     {
       id: 2,
       genre: "other",
       link: `/forum/about-me`,
-      icon: "fa fa-linode",
-      subject: "Few words about me",
-      addedBy: "Admin"
+      icon: "fa fa-smile-o",
+      subject: "Few words about you",
+      addedBy: "Admin",
+      slugAddedBy: "admin"
     }
   ]
 
+  const numberOfTopics = () => {
+    let amount = 0;
+    amount = topics.length;
+
+    return amount
+  }
 
   return (
     <Fragment>
-      Topic: {forumTab}
+      Topic: {forumTab} <br/>
+      Number of topics in forum: {numberOfTopics()}
+
       {topics.map((topic,id) =>{
         if(topic.id === forumTab){
           return ( 
-            <Link key={id} to={topic.link}>
-              <div className="forum__main-thread">
-                <span><i className={topic.icon}></i>Subject: {topic.subject}</span>
-                <span>added by: {topic.addedBy}</span>
+            <div key={id} className="forum__main-thread">
+
+              <Link to={topic.link}>
+                <div className="forum__main-thread--top">
+                  <span><i className={topic.icon}></i> {topic.subject}</span>
+                </div>
+              </Link>
+
+              <div className="forum__main-thread--added-by">
+                <span>added by: <Link to={`/user/${topic.slugAddedBy}`}>{topic.addedBy}</Link></span>
               </div>
-            </Link>
+
+            </div>
           )
         }
       })}

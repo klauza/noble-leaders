@@ -1,0 +1,9 @@
+.forum-content-thread{
+  position: relative;
+  width: 70%; height: auto;
+  margin: 50px auto;
+  font-family: $ff-roboto;
+  @media(max-width: 768px) {width: 95%; }
+  
+  background: lightsalmon;
+}

@@ -2,7 +2,7 @@ import React from 'react'
 
 const ForumThread = () => {
   return (
-    <div>
+    <div className="forum-content-thread">
       A certain thread...
     </div>
   )
