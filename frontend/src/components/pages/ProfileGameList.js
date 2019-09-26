@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileList = ({ game, image }) => {
+const ProfileGameList = ({ game, image }) => {
   const {name, score } = game; 
 
 
@@ -22,4 +22,4 @@ const ProfileList = ({ game, image }) => {
   )
 }
 
-export default ProfileList
+export default ProfileGameList
