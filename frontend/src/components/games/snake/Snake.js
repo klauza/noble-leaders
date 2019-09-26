@@ -274,7 +274,7 @@ const displayBtnsOnBigScreen = () => {
 
         
         {/* mobile only */}
-        <div className="mobile-start" onClick={startMobile}>Tap to Start<br/>side screen view recommended</div>
+        <div className="mobile-start" onClick={startMobile}>Tap to Start</div>
         
         {/* canvas */}
         <canvas id="canvas" width="700" height="500" ></canvas>
@@ -283,18 +283,25 @@ const displayBtnsOnBigScreen = () => {
       {/* mobile only */}
       
       <div className="mobile-arrows-container">
-        <div className="mobile-arrow mobile-arrows-up">U</div>
-        <div className="mobile-arrow mobile-arrows-down">D</div>
-        <div className="mobile-arrow mobile-arrows-left">L</div>
-        <div className="mobile-arrow mobile-arrows-right">R</div>
+        <button className="mobile-arrow mobile-arrows-up">U</button>
+        <button className="mobile-arrow mobile-arrows-down">D</button>
+        <button className="mobile-arrow mobile-arrows-left">L</button>
+        <button className="mobile-arrow mobile-arrows-right">R</button>
       </div>
 
       <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{current && current.score}</span></span> : <span>Log in to see your score</span>}</div>
-     
-      <div className="snake-hint">Each <span style={{"color": "red"}}>red block</span> will give you 1 point</div>
-      <div className="snake-hint">Avoid white blocks</div>
-      <div className="snake-hint">Use <span style={{textDecoration:"underline"}}>up, down, left, right</span> arrows to move the snake</div>
-      <button className="snake-hint snake-hint-button" onClick={displayBtnsOnBigScreen}>Click to show buttons</button>
+      
+      <div className="about-game">
+        <h1 className="snake-hint about-game-title">About</h1>
+        <ul>
+          <li className="snake-hint">Each <span style={{"color": "red"}}>red block</span> will give you 1 point</li>
+          <li className="snake-hint">Avoid <span style={{textShadow: "#000 0px 0px 10px", color: "white"}}>white blocks</span></li>
+          <li className="snake-hint">Use <span style={{textDecoration:"underline"}}>up, down, left, right</span> arrows to move the snake</li>
+          <li className="snake-hint mobile-hide-hint">need extra help with steering?<button className="snake-hint snake-hint-button" onClick={displayBtnsOnBigScreen}>Click to show buttons</button></li>
+        </ul>
+        
+      </div>
+
     </Fragment>
   )
 }

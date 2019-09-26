@@ -118,8 +118,8 @@
 }
 .outputScore:after{
   content: '';
-  background: green;
-  height: 2px;
+  background: rgba(0, 0, 0, 0.55);
+  height: 1px;
   width: 10%;
   display: block; margin: 10px auto;
 }
@@ -128,22 +128,47 @@
   opacity: 0;
   transition: 350ms opacity ease;
   transition-delay: 650ms;
-  font-weight: bold;
+  font-weight: 700;
 
   font-family: $ff-boogaloo;
   text-align: center;
   font-size: 1.35em;
 }
-.snake-hint-button{
-  margin: 15px auto;
-  display: block;
-  height: 50px; width: auto;
-  border: 1px solid black; border-radius: 3px;
-  background: lightskyblue;
-  &:hover{
-    cursor: pointer;
+
+.about-game{
+  position: relative;
+  text-align: left;
+  // border: 1px solid black;
+  width: 50%;
+  margin: 0 auto 75px;
+  font-family: $ff-boogaloo;
+  @media(max-width: 768px){ width: 95%; margin: 0 0 75px 25px; }
+  &-title{
+    margin: 15px 0px 15px 10px;
+    font-size: 2em;
   }
-  @media(max-width: 768px){
-    display: none;
+
+  .snake-hint{
+    text-align: left;
+    // list-style: none;
+  }
+
+  .mobile-hide-hint{
+    @media(max-width: 768px){ display: none; }
+  }
+
+  .snake-hint-button{
+    margin: 5px 0px 0 7.5px;
+    display: inline-block;
+    height: 40px; width: auto;
+    border: 1px solid black; border-radius: 3px;
+    background: lightskyblue;
+    font-size: 1em;
+    &:hover{
+      cursor: pointer;
+    }
+    @media(max-width: 768px){
+      display: none;
+    }
   }
 }
