@@ -18,14 +18,14 @@ import wisdomIconWhite from '../../media/thinkingWhite.svg';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-const Dashboard = ({login: {isAuthenticated}, loadUser, getUserGames}) => {
+const Dashboard = ({login: {isAuthenticated, user}, loadUser, getUserGames}) => {
 
   const images = [carrousel1, carrousel2, carrousel3];
 
   const [img, setImg] = useState(true);
 
   useEffect(() => {
-    if(localStorage.token) {
+    if(localStorage.token && !user) {
       loadUser();
       // getUserGames(null);
     }

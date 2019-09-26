@@ -7,9 +7,11 @@ import ForumConnected from './ForumConnected';
 const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
 
   useEffect(()=>{
-    if(localStorage.token){
+    if(localStorage.token && !user){
       loadUser();
     }
+    
+  // eslint-disable-next-line
   }, [])
 
   if(!loading && isAuthenticated){

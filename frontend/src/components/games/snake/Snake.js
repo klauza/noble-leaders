@@ -18,7 +18,7 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
   
     if(localStorage.token) {
       async function snakeInit(){
-        await loadUser();
+        if(!user) await loadUser();
         await getUserGames("snake");
         try{
           await document.querySelector('.snake-the-game-container').focus();

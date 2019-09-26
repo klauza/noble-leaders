@@ -23,7 +23,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
 
       async function profileInit(){
         if(localStorage.token){
-          await loadUser();
+          if(!user) await loadUser();
           if(!games) await getUserGames(null);
         } 
       };

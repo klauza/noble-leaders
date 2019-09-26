@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import {loadUser} from '../../actions/loginActions';
 
 
-const About = ({login: {isAuthenticated}, loadUser}) => {
+const About = ({login: {isAuthenticated, user}, loadUser}) => {
   useEffect(() => {
-    if(localStorage.token) {
+    if(localStorage.token && !user) {
       loadUser();
     }
     //eslint-disable-next-line
@@ -25,7 +25,7 @@ const About = ({login: {isAuthenticated}, loadUser}) => {
 
         <div className="about__main--expression">
           <h2>Content?</h2>
-          <p>This is an awesome project which you have to explore. You should know that I've put a lot of effort and time into hand-craft every corner of this page. Nevertheless in the same time I've had tons of fun - mostly with solving programming riddles and learning new stuff. At the end, I'm happy to show you my coding journey.</p>
+          <p>This is an awesome lightweight, pixel perfect project which you have to explore. You should know that I've put a lot of effort and time into hand-craft every corner of this page. Nevertheless in the same time I've had tons of fun - mostly with solving programming riddles and learning new stuff. At the end, I'm happy to show you my coding journey.</p>
           <p>I'm hoping for constructive criticism from your side.</p>
           <p>Thank you!</p>
           <p>I wish you a great day!</p>

@@ -30,7 +30,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     if(localStorage.token) {
     
         async function actorGameInit(){
-          await loadUser();
+          if(!user) await loadUser();
           await getUserGames("actor-quiz");
           
           try{

@@ -22,7 +22,7 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
     if(localStorage.token) {
       async function revealCardsInit(){
         setLoader(false);
-        await loadUser();
+        if (!user) await loadUser();
         await getUserGames("reveal-cards");
       }
       revealCardsInit();

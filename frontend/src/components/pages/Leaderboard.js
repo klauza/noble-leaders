@@ -22,13 +22,13 @@ const Leaderboard = ({login: {user, isAuthenticated, loading}, getAllUsers, setA
 
     async function initLeaderBoard(){
       if(localStorage.token){
-        await loadUser();
+        if(!user) await loadUser();
         if(!users) await getAllUsers();
 
        
 
       } else {
-        if(!users) getAllUsers();
+        if(!users && !users) getAllUsers();
       }
       
       
