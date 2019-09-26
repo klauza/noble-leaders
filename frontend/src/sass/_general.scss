@@ -35,6 +35,8 @@ body{
     background: url('./media/beige-tiles.png') repeat;
   }
 }
+
+// ALIGNMENTS
 .container{
   width: 70%;
   margin: 0 auto;
@@ -56,6 +58,20 @@ body{
   margin-bottom: 50px;
 }
 
+// BUTTON
+.general-back-button{
+  display: block;
+  padding: 10px 25px;
+  border: 1px solid black; border-radius: 2px;
+  background: lightsalmon;
+  color: black; font-weight: 700;
+  &:hover{
+    cursor: pointer;
+    background: rgb(216, 126, 90);
+  }
+}
+
+// LOADER
 .loader{
   position: absolute;
   top: 50%;
@@ -71,5 +87,4 @@ body{
   height: 100%;
   display: block;
   background-size: cover;
-  
 }

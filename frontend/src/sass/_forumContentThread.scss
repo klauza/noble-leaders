@@ -5,19 +5,6 @@
   font-family: $ff-roboto;
   @media(max-width: 768px) {width: 95%; }
 
-  
-  & > button{
-    display: block;
-    padding: 10px 25px;
-    border: 1px solid black; border-radius: 2px;
-    background: lightsalmon;
-    color: black; font-weight: 700;
-    &:hover{
-      cursor: pointer;
-      background: rgb(216, 126, 90);
-    }
-  }
-
   .forum-content-thread{
     border: 1px solid black;
     background: rgba(255, 255, 255, 0);

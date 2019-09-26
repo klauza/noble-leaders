@@ -28,7 +28,7 @@ const UserLoaded = ({user}) => {
   if(!isFetching){
   return (
     <div className="userPage userPage-container fadein-animation">
-      <button onClick={()=>{goBackOne()}}>Back</button>
+      <button className="general-back-button" onClick={()=>{goBackOne()}}>Back</button>
       <h2>{user.name}'s profile</h2>
       <div className="userPage_image-container">
         <img src={user.avatar} alt=""/>

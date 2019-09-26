@@ -20,7 +20,7 @@ const ForumThread = (props) => {
     return (
       <div className="forum-content-wrapper">
 
-      <button onClick={()=>history.goBack()}>Back</button>
+      <button className="general-back-button" onClick={()=>history.goBack()}>Back</button>
 
         <div className="forum-content-thread">
 
