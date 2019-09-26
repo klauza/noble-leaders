@@ -110,12 +110,12 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage }) => {
           <Link to='/'><div className="logo-img"><img src={logo} alt=""/></div></Link>
         </li>
         {/* tablet & pc links */}
-        {isAuthenticated ? loggedInLinks : notLoggedLinks} 
+        {isAuthenticated || localStorage.token ? loggedInLinks : notLoggedLinks} 
 
         {/* mobile links */}
         <i className="burger fa fa-align-justify" onClick={toggleNavbar}></i> 
         <div className="mobile-links-container">           
-          {isAuthenticated ? loggedInLinks : notLoggedLinks}
+          {isAuthenticated || localStorage.token ? loggedInLinks : notLoggedLinks}
         </div>
 
       </ul>
