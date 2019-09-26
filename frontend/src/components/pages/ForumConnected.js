@@ -34,7 +34,7 @@ const ForumConnected = ({user, setForumPage, misc: {forumPage}}) => {
 
         <div className="forum__main-topics">
           {buttons.map((btn, i) => {
-            return <button key={i} onClick={()=>changeTopic(i)}>{btn.name} <i className={btn.icon}></i></button>
+            return <button className={`${i === forumTab && 'active'}`} key={i} onClick={()=>changeTopic(i)}>{btn.name} <i className={btn.icon}></i></button>
           })}
         </div>
 

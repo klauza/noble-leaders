@@ -24,6 +24,11 @@
           cursor: pointer;
           background: rgb(230, 230, 230);
         }
+        &.active{
+          font-weight: 700;
+          color: rgb(0, 163, 0);
+          background: rgb(230, 230, 230);
+        }
       }
     }
 
