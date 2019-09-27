@@ -26,6 +26,13 @@ const forumData = [
     link: "about-me",
     subject: "Few words about you",
     content: "lorem ipsum dolor sit 4"
+  },
+  {
+    author: "Admin",
+    slugAuthor: "admin",
+    link: "games-ratings",
+    subject: "See ratings given by users",
+    content: "Here are all players ratings"
   }
 ]
 

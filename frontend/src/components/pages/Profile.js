@@ -45,15 +45,21 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
       
       createTheGame({
         name: 'reveal-cards',
-        score: 0
+        score: 0,
+        rating: 0,
+        attempts: 0
       });
       createTheGame({
         name: 'snake',
-        score: 0
+        score: 0,
+        rating: 0,
+        attempts: 0
       });
       createTheGame({
         name: 'actor-quiz',
-        score: 0
+        score: 0,
+        rating: 0,
+        attempts: 0
       });
 
     } 

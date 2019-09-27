@@ -12,6 +12,12 @@ const GameSchema = mongoose.Schema({
   score: {
     type: String
   },
+  rating:{
+    type: Number
+  },
+  attempts:{
+    type: Number
+  },
   date: {
     type: Date,
     default: Date.now

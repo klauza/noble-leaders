@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-// const { check, validationResult } = require('express-validator');
 
-// const User = require('../models/User');
 const Game = require("../models/Game");
-const User = require("../models/User");
 
 
 // @route GET api/games/:userId
@@ -15,7 +12,7 @@ router.get('/:userId', async (req, res) => {
   const userId = req.params.userId;
 
   try{
-    const publicGames = await Game.find({ user: userId }).select(["name", "score"]).sort({ date: -1 });
+    const publicGames = await Game.find({ user: userId }).select(["name", "score", "rating", "attempts"]).sort({ date: -1 });
     res.json(publicGames);
 
   }catch(err){
@@ -43,22 +40,19 @@ router.get('/', auth, async (req, res) => {
 // @access Private
 router.post('/', auth, async (req, res) => {
 
-  const { name, score } = req.body;
+  const { name, score, rating, attempts } = req.body;
 
   try{
     const newGame = new Game({
       name,
       score,
+      rating,
+      attempts,
       user: req.user.id   // from auth middleware
     });
 
     const game = await newGame.save();
     res.json(game);
-
-    // update the highscore in User 
-    // current_highscore + score
-
-  
 
   } catch(err){
     console.error(err.message);
@@ -70,12 +64,14 @@ router.post('/', auth, async (req, res) => {
 // @desc  update the game
 // @access Private
 router.put('/:id', auth, async (req, res) => {
-  const { name, score } = req.body;
+  const { name, score, rating, attempts } = req.body;
 
   // game object based on submitted fields
   const gameFields = {};
   if(name) gameFields.name = name;
   if(score) gameFields.score = score;
+  if(rating) gameFields.rating = rating;
+  if(attempts) gameFields.attempts = attempts;
 
   try{
     let game = await Game.findById(req.params.id);  // find game by ID
@@ -93,7 +89,7 @@ router.put('/:id', auth, async (req, res) => {
       { $set: gameFields },
       { new: true });
     res.json(game); // send the updated game
-    
+
   } catch(err){
     console.error(err.message);
     res.status(500).send('server error');
@@ -104,7 +100,7 @@ router.put('/:id', auth, async (req, res) => {
 // @desc  get all user's games
 // @access Private
 router.delete('/:id', auth, async (req, res) => {
-  
+
   try{
     let game = await Game.findById(req.params.id);
     

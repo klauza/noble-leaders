@@ -41,6 +41,15 @@ const ForumTopic = ({forumTab}) => {
       subject: "Few words about you",
       addedBy: "Admin",
       slugAddedBy: "admin"
+    },
+    {
+      id: 1,
+      genre: "games",
+      link: `/forum/games-ratings`,
+      icon: "fa fa-gamepad",
+      subject: "See ratings given by users",
+      addedBy: "Admin",
+      slugAddedBy: "admin"
     }
   ]
 
