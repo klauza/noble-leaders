@@ -1,3 +1,4 @@
+const date = new Date().toLocaleDateString("en-GB");
 const forumData = [
   {
     author: "Admin",
@@ -11,28 +12,36 @@ const forumData = [
     slugAuthor: "mario-marian",
     link: "leaderboard-tournament",
     subject: "Leaderboard",
-    content: "lorem ipsum dolor sit 2"
+    content: "lorem ipsum dolor sit 2",
+    comments: [
+      { name: "Admin", slugName: "admin", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", edited: false, editDate: null, date: date }, 
+      { name: "Mario Marian", slugName: "mario-marian", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", edited: false, editDate: null, date: date },
+      { name: "michael", slugName: "michael", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", edited: false, editDate: null, date: date }
+    ]
   },
   {
     author: "Admin",
     slugAuthor: "admin",
     link: "snake-discussion",
     subject: "Snake discussion",
-    content: "lorem ipsum dolor sit 3"
+    content: "lorem ipsum dolor sit 3",
+    comments: []
   },
   {
     author: "Admin",
     slugAuthor: "admin",
     link: "about-me",
     subject: "Few words about you",
-    content: "lorem ipsum dolor sit 4"
+    content: "lorem ipsum dolor sit 4",
+    comments: []
   },
   {
     author: "Admin",
     slugAuthor: "admin",
     link: "games-ratings",
     subject: "See ratings given by users",
-    content: "Here are all players ratings"
+    content: "Here are all players ratings",
+    comments: []
   }
 ]
 
