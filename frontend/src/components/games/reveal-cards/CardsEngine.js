@@ -4,8 +4,8 @@ import React, {Fragment} from 'react';
 import { karta } from '../../../media/images';
 // import {lotr1, lotr2, lotr3, lotr4, lotr5, lotr6 } from '../../../media/images';
 
-const CardsEngine = ({cards, isAuthenticated, updateThePoints}) => {
- 
+const CardsEngine = ({cards, isAuthenticated, setTheRoundScore, setEntryAttempts}) => {
+  
   
   // animations
   document.querySelector('.board').style.opacity = "1";
@@ -127,6 +127,7 @@ function hide2Cards(nr1, nr2){
   pairsLeft--;
 
   if(pairsLeft === 0){
+    
     let finalScore;
     //  GAME IS OVER, SENDING UPDATE FUNCTION
     document.querySelector('.play-again').style.display ="block";
@@ -144,8 +145,9 @@ function hide2Cards(nr1, nr2){
     document.querySelector('.score').style.opacity = "1";
     document.querySelector('.board').style.display ="none";
     
-    updateThePoints(finalScore);
-    
+    setTheRoundScore(finalScore);
+ 
+
   }
   lock = false;
 }

@@ -90,7 +90,7 @@ const rndApplePos = state => {
 
 
 // Initial state
-const initialState = () => ({
+const snakeState = () => ({
   cols:  20,
   rows:  14,
   moves: [EAST],
@@ -116,4 +116,4 @@ const enqueue = (state, move) => validMove(move)(state)
   ? merge(state)({ moves: state.moves.concat([move]) })
   : state
 
-module.exports = { EAST, NORTH, SOUTH, WEST, initialState, enqueue, next }
+module.exports = { EAST, NORTH, SOUTH, WEST, snakeState, enqueue, next }

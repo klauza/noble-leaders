@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
 import { getUserGames, updateGameScore, setCurrent } from '../../../actions/gameActions';
+import UpdateThisGame from '../UpdateThisGame';
 
 import LocalStorageCtrl from './controllers/LocalStorage.js';
 import UICtrl from './controllers/UICtrl.js';
@@ -15,6 +16,9 @@ import backgroundImage from '../../../media/games/actor-game-bg.jpg';
 const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser, getUserGames, updateGameScore, userUpdate, setCurrent, game: { games, current, gLoading }}) => {
 
   const [img, setImg] = useState(true);
+  const [entryAttempts, setEntryAttempts] = useState(null);
+  const [theEntryScore, setTheEntryScore] = useState(null);
+  const [theRoundScore, setTheRoundScore] = useState(null);
 
   useEffect(() => {
 
@@ -30,8 +34,11 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     if(localStorage.token) {
     
         async function actorGameInit(){
-          if(!user) await loadUser();
-          await getUserGames("actor-quiz");
+          await loadUser();
+          if(entryAttempts === null) await getUserGames("actor-quiz");
+          if(current && current.name === "actor-quiz") await setEntryAttempts(current.attempts);
+          if(current && current.name === "actor-quiz") await setTheEntryScore(current.score);
+          // if(theRoundScore === null) await setEntryAttempts(prevState => prevState+1);
           
           try{
             await loadImageAsync(backgroundImage)
@@ -55,8 +62,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       } catch(err){  }
     }
     //eslint-disable-next-line
-  }, []);
-
+  }, [current]);
 
 
 
@@ -123,7 +129,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       }
     
 
-
       return {
         // init: function(games){
         init: function(){
@@ -136,99 +141,20 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         appUpdate: function(){
           // If logged in
           if(isAuthenticated){
-            let entryScore = parseInt(current.score, 10);   
-            let roundScore = parseInt(LevelCtrl.getScore(), 10); 
-
-            async function updateActorGameScore(){
-              if(roundScore > entryScore){
-                loading = true; gLoading = true;
-                if(entryScore === 0){   // if it's user's very first game
-                  setAlert("Congratulations! Now see your score in your Profile!", 'danger');
-                  async function sumScore(){
-                    let userTotalScore = await user.highscore;
-                    userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-
-                    // update user's highscore
-                    const updUserHighscore = await {
-                      _id: user._id,
-                      highscore: userTotalScore,
-                      date: new Date()
-                    }
-                    await userUpdate(updUserHighscore);
-
-                  }
-                  sumScore();
-
-                  try{
-                  // update current game
-                  const updScore = {
-                    _id: current._id,
-                    score: roundScore,
-                    date: new Date()
-                  }
-                  
-                  updateGameScore(updScore);
-                  }catch(err){
-                    console.log('error occured: ', err);
-                  }
-                
-                  
-
-                } else {
-                  // update score if higher than previous
-                  setAlert("You have beaten your score, nice job!", 'danger');
-                  async function sumScore(){
-                    let userTotalScore = await user.highscore;
-                    userTotalScore = await userTotalScore - entryScore;
-                    userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-
-                
-                    // update user's highscore
-                    const updUserHighscore = await {
-                      _id: user._id,
-                      highscore: userTotalScore,
-                      date: new Date()
-                    }
-                    await userUpdate(updUserHighscore);
-
-                  
-                  }
-                  sumScore();
-
-
-                  async function sumGameScore(){
-                    // update current game
-                    const updScore = await {
-                      _id: current._id,
-                      score: roundScore,
-                      date: new Date()
-                    }
-                    await updateGameScore(updScore);
-                  }
-                  await sumGameScore();
-                }
+            setEntryAttempts(prevState => prevState+1);
+            setTheRoundScore( Number(LevelCtrl.getScore()) )
+           
 
             
-              } else {
-                setAlert("You didn't beat your highscore", 'danger');
-                return
-              }
-              
-            }
 
-
-            async function updt(){
-              await updateActorGameScore();
-            }
-            
-            updt();
           } else {
             // If not logged in
             setAlert('please log in to update the score', 'danger');
           }
 
+          
+          // show exit button and update
           UICtrl.showExitButton();
-
         }
            
       }
@@ -293,6 +219,9 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       <div className="add-score"><i className="fa fa-plus"></i></div>
       <div className="scoreDiv">your score: <span className="scoreValue"></span> </div>
       <button className="local-storage-reset">Reset Game</button>
+
+
+      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"actor-quiz"} setEntryAttempts={setEntryAttempts} setTheEntryScore={setTheEntryScore} theEntryScore={theEntryScore} setTheRoundScore={setTheRoundScore} theRoundScore={theRoundScore} /> : null }
     </div>
   )
 }

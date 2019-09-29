@@ -10,7 +10,7 @@ const GameSchema = mongoose.Schema({
     type: String
   },
   score: {
-    type: String
+    type: Number
   },
   rating:{
     type: Number

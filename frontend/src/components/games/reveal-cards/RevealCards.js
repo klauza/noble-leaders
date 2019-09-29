@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
 import { getUserGames, updateGameScore } from '../../../actions/gameActions';
 import { setAlert } from '../../../actions/alertActions';
+import UpdateThisGame from '../UpdateThisGame';
 
 import CardsEngine from './CardsEngine';
 import Loader from '../../layout/Loader';
@@ -14,122 +15,57 @@ import { lang1, lang2, lang3, lang4, lang5, lang6 } from '../../../media/images'
 
 const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, gLoading }, setAlert, loadUser, getUserGames, updateGameScore, userUpdate}) => {
   
-  const [loader, setLoader] = useState(true);
   const [cards, setCards] = useState(null);
+  
+  const [entryAttempts, setEntryAttempts] = useState(null);
+  const [theEntryScore, setTheEntryScore] = useState(null);
+  const [theRoundScore, setTheRoundScore] = useState(null);
 
   useEffect(() => {
   
     if(localStorage.token) {
       async function revealCardsInit(){
-        setLoader(false);
-        if (!user) await loadUser();
-        await getUserGames("reveal-cards");
+        await loadUser();
+        if(entryAttempts === null) await getUserGames("reveal-cards");
+        if(current && current.name === "reveal-cards") await setEntryAttempts(current.attempts);
+        if(current && current.name === "reveal-cards") await setTheEntryScore(current.score);
+        if(entryAttempts !== null) await setEntryAttempts(prevState => prevState+1);
       }
       revealCardsInit();
     } else {
-      setTimeout(() => {
-        setLoader(false);
-      }, 1)
+      // not logged in
     }
     
-
-    var allDecks = [
-      [ciri, ciri, geralt, geralt, iorweth, iorweth, jaskier, jaskier, triss, triss, yen, yen ],
-      [lotr1, lotr1, lotr2, lotr2, lotr3, lotr3, lotr4, lotr4, lotr5, lotr5, lotr6, lotr6] ,
-      [lang1, lang2, lang3, lang4, lang5, lang6, lang1, lang2, lang3, lang4, lang5, lang6] 
-    ];
-    var chosenDeck = Math.floor(Math.random()*3);
-
-    var chosenCards = allDecks[chosenDeck];
-
-    var theCards = chosenCards;
-    var newMap = new Array(12); // create empty array 
-    let index = 0;
+    if(cards === null){
+      var allDecks = [
+        [ciri, ciri, geralt, geralt, iorweth, iorweth, jaskier, jaskier, triss, triss, yen, yen ],
+        [lotr1, lotr1, lotr2, lotr2, lotr3, lotr3, lotr4, lotr4, lotr5, lotr5, lotr6, lotr6] ,
+        [lang1, lang2, lang3, lang4, lang5, lang6, lang1, lang2, lang3, lang4, lang5, lang6] 
+      ];
+      var chosenDeck = Math.floor(Math.random()*3);
   
+      var chosenCards = allDecks[chosenDeck];
+  
+      var theCards = chosenCards;
+      var newMap = new Array(12); // create empty array 
+      let index = 0;
+    
+  
+      do{
+        let randNum = Math.floor(Math.random()*theCards.length); // 0 - 11, decreasing
+        newMap[index] = theCards[randNum];
+        theCards.splice(randNum, 1);
+  
+        index++;
+      } while(theCards.length > 0);
+  
+      setCards(newMap);
+    }
 
-    do{
-      let randNum = Math.floor(Math.random()*theCards.length); // 0 - 11, decreasing
-      newMap[index] = theCards[randNum];
-      theCards.splice(randNum, 1);
-
-      index++;
-    } while(theCards.length > 0);
-
-    setCards(newMap);
     
     //eslint-disable-next-line
-  }, []);
+  }, [current]);
 
-
-
-  function updateThePoints(turnCounter){
-    console.log(turnCounter);
-    // && current !== null
-    if(!isAuthenticated){
-      setAlert('please log in to update the score', 'danger');
-    } else if(current){
-      let entryScore = parseInt(current.score, 10);   
-      let roundScore = parseInt(turnCounter, 10); 
-       setLoader(true);
-       document.querySelector('.loader').style.display ="none";
-       console.log('loader is: ',loader);
-      
-      async function updateActorGameScore(){
-        if(roundScore > entryScore){
-          
-        
-            setAlert("You have beaten your score, nice job!", 'danger');
-            async function sumScore(){
-              let userTotalScore = await user.highscore;
-              userTotalScore = await userTotalScore - entryScore;
-              userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-
-          
-              // update user's highscore
-              const updUserHighscore = await {
-                _id: user._id,
-                highscore: userTotalScore,
-                date: new Date()
-              }
-              await userUpdate(updUserHighscore);
-
-            
-            }
-            sumScore();
-
-
-            async function sumGameScore(){
-              // update current game
-              const updScore = await {
-                _id: current._id,
-                score: roundScore,
-                date: new Date()
-              }
-              await updateGameScore(updScore);
-            }
-            await sumGameScore();
-         
-
-      
-        } else {
-          setAlert("You didn't beat your highscore", 'danger');
-          return
-        }
-        
-      }
-
-
-      async function updt(){
-        await updateActorGameScore();
-      }
-      
-      updt();
-    
-    
-      
-    }
-    
-  }
 
   return (
     <div>
@@ -164,8 +100,8 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
         </main>
         
       </div>
-      { loader ? <Loader /> : <CardsEngine updateThePoints={updateThePoints} isAuthenticated={isAuthenticated} cards={cards}/> }
-     
+      { (cards === null) ? <Loader /> : <CardsEngine setEntryAttempts={setEntryAttempts} setTheRoundScore={setTheRoundScore} isAuthenticated={isAuthenticated} cards={cards}/> }
+      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"reveal-cards"} setEntryAttempts={setEntryAttempts} setTheEntryScore={setTheEntryScore} theEntryScore={theEntryScore} setTheRoundScore={setTheRoundScore} theRoundScore={theRoundScore} /> : null }
       
      
     </div>

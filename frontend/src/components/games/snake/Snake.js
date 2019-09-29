@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../../actions/alertActions';
 import { loadUser, userUpdate } from '../../../actions/loginActions';
 import { getUserGames, updateGameScore } from '../../../actions/gameActions';
-import { EAST, NORTH, SOUTH, WEST, initialState, enqueue, next} from './main.js';
+import { EAST, NORTH, SOUTH, WEST, snakeState, enqueue, next} from './main.js';
+import UpdateThisGame  from '../UpdateThisGame';
 
 
 
@@ -12,41 +13,44 @@ const Snake = ({login: {isAuthenticated, user}, game: { current, games }, setAle
   const [canvas, setCanvas] = useState(null);
   const [apples, setApples] = useState(0);
   const [block, setBlock] = useState(false);
+  
+  const [entryAttempts, setEntryAttempts] = useState(null);
+  const [theEntryScore, setTheEntryScore] = useState(null);
+  const [theRoundScore, setTheRoundScore] = useState(null);
 
 
   useEffect(() => {
   
     if(localStorage.token) {
       async function snakeInit(){
-        if(!user) await loadUser();
-        await getUserGames("snake");
-        try{
-          await document.querySelector('.snake-the-game-container').focus();
-          
-        }catch(err){
-          console.log('avoided crash');
-          return
-        }
+        await loadUser();
+        if(entryAttempts === null) await getUserGames("snake");
+        if(current && current.name === "snake") await setEntryAttempts(current.attempts);
+        if(current && current.name === "snake") await setTheEntryScore(current.score);
+      
       
       }
       snakeInit();
    
-       
-  
-      setCanvas(document.getElementById('canvas'));
     } else {
-      try{
-        document.querySelector('.snake-the-game-container').focus();
-      }catch(err){
-        console.log('avoided crash');
-        return
-      }
-      setCanvas(document.getElementById('canvas'));
+      // not logged in
     }
-    document.querySelector('.outputScore').style.opacity = "1";
-    document.querySelectorAll('.snake-hint').forEach(a => a.style.opacity = "1");
+
+    try{
+      setCanvas(document.getElementById('canvas'));
+      document.querySelector('.snake-the-game-container').focus();
+      document.querySelectorAll('.snake-hint').forEach(a => a.style.opacity = "1");
+    }catch(err){
+      console.log('avoided crash');
+      return
+    }
+
+
     //eslint-disable-next-line
-  }, [block]);
+  }, [block, current]);
+
+  
+
 
   let ctx = null;
   
@@ -58,8 +62,8 @@ function startTheSnake() {
     ctx = canvas.getContext('2d');
   
     // Mutable state
-    let state = initialState()
-
+    let state = snakeState()
+    
     // Position helpers
     const x = column => Math.round(column * canvas.width / state.cols)
     const y = row => Math.round(row * canvas.height / state.rows)
@@ -90,103 +94,24 @@ function startTheSnake() {
       
       // add crash
       if (state.snake.length === 0) {
+        setTheRoundScore(state.score);
+        setEntryAttempts(prevState => prevState+1);
+
+        if(theRoundScore > theEntryScore){
+          setTheEntryScore(state.score);
+        }
         
-        console.log('crash, scored ',state.score);
+        // console.log('crash, scored ',state.score);
+        
         if(isAuthenticated && state.score > 0){
-
-          let roundScore = parseInt(state.score, 10); 
-          
-          async function updateActorGameScore(){
-            // await getUserGames("snake");
-            let entryScore = await document.querySelector('.highSc').textContent;
-            entryScore = parseInt(entryScore, 10);
-            // console.log('entry: ',entryScore, 'thisRound: ',roundScore);
-            
-            if(roundScore > entryScore){
-              document.querySelector('.update-score-load-screen').classList.add('cover');
-      
-              if(entryScore === 0){
-                // setAlert("Congratulations! Now see your score in your Profile!", 'danger');
-                async function sumScore(){
-                  let userTotalScore = await user.highscore;
-
-                  userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-
-                  // update user's highscore
-                  const updUserHighscore = await {
-                    _id: user._id,
-                    highscore: userTotalScore,
-                    date: new Date()
-                  }
-                  await userUpdate(updUserHighscore);
-
-                }
-                sumScore();
-
-                async function sumGameScore(){
-                  // update current game
-                  const updScore = await {
-                    _id: current._id,
-                    score: roundScore,
-                    date: new Date()
-                  }
-                  await updateGameScore(updScore);
-                  
-                }
-                await sumGameScore();
-                await loadUser();
-                await getUserGames("snake");
-
-              } else {
-                // update score if higher than previous
-                // setAlert("You have beaten your score, nice job!", 'danger');
-                async function sumScore(){
-                  let userTotalScore = await user.highscore;
-                  userTotalScore = await userTotalScore - entryScore;
-                  userTotalScore = await userTotalScore + roundScore;   // just increment total entryScore
-              
-                  // update user's highscore
-                  const updUserHighscore = await {
-                    _id: user._id,
-                    highscore: userTotalScore,
-                    date: new Date()
-                  }
-                  await loadUser();
-                  await userUpdate(updUserHighscore);
-
-                
-                }
-                sumScore();
-
-
-                async function sumGameScore(){
-                  // update current game
-                  const updScore = await {
-                    _id: current._id,
-                    score: roundScore,
-                    date: new Date()
-                  }
-                  await updateGameScore(updScore);
-                  
-                }
-                await sumGameScore();
-                await loadUser();
-                await getUserGames("snake");
-              }
-             
-              
-              await window.location.reload(true);
-            
-            } 
-          }
-          updateActorGameScore();
-        
+          // if score higher than previous tell user that he beated the score
+     
 
         }else {
         // If not logged in
        
         }
-  
+        
 
         ctx.fillStyle = 'rgb(255,0,0)'
         ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -261,7 +186,7 @@ const displayBtnsOnBigScreen = () => {
   document.querySelector('.mobile-arrows-container').style.display ="grid";
   document.querySelector('.snake-hint-button').style.display ="none";
 }
-
+  
   return (
     <Fragment>
       <div className="snake-the-game-container" tabIndex="0" onKeyDown={startTheSnakeNow}>
@@ -289,7 +214,9 @@ const displayBtnsOnBigScreen = () => {
         <button className="mobile-arrow mobile-arrows-right">R</button>
       </div>
 
-      <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{current && current.score}</span></span> : <span>Log in to see your score</span>}</div>
+      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"snake"} setTheEntryScore={setTheEntryScore} setEntryAttempts={setEntryAttempts} theEntryScore={theEntryScore} setTheRoundScore={setTheRoundScore} theRoundScore={theRoundScore} /> : null }
+
+      {theEntryScore && <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{theEntryScore}</span></span> : <span>Log in to see your score</span>}</div> }
       
       <div className="about-game">
         <h1 className="snake-hint about-game-title">About</h1>
