@@ -64,7 +64,7 @@ export default(state = initialState, action) => {
           game._id === action.payload._id ? action.payload : game),
         gLoading: false
       }
-
+    case GET_GAMES_DATA_ERROR:
     case UPDATE_SCORE_ERROR:
       return{
         ...state,

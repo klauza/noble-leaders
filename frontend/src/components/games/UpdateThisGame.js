@@ -1,9 +1,9 @@
-import React, {Fragment, useEffect} from 'react'
+import  { useEffect } from 'react'
 import { connect } from 'react-redux'; 
 import { updateGameScore } from '../../actions/gameActions';
 import { userUpdate } from '../../actions/loginActions';
 
-const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScore, setTheEntryScore, setEntryAttempts, theEntryScore, setTheRoundScore, theRoundScore }) => {
+const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScore, setTheEntryScore, theEntryScore, theRoundScore }) => {
 
   useEffect(()=>{
 
@@ -23,7 +23,7 @@ const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScor
       })
 
     } else{
-      console.log('RUN UPDATE')
+      
       updateGameScore({
         _id: current._id,
         attempts: theAttempts,
@@ -31,6 +31,7 @@ const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScor
       })
     }
 
+  // eslint-disable-next-line
   }, [theAttempts])
  
 

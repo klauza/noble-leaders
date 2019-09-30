@@ -64,7 +64,6 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
     //eslint-disable-next-line
   }, [current]);
 
-  console.log(entryAttempts);
   
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl){
       
@@ -222,7 +221,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       <button className="local-storage-reset">Reset Game</button>
 
 
-      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"actor-quiz"} setEntryAttempts={setEntryAttempts} setTheEntryScore={setTheEntryScore} theEntryScore={theEntryScore} setTheRoundScore={setTheRoundScore} theRoundScore={theRoundScore} /> : null }
+      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"actor-quiz"} setEntryAttempts={setEntryAttempts} setTheEntryScore={setTheEntryScore} theEntryScore={theEntryScore} theRoundScore={theRoundScore} /> : null }
     </div>
   )
 }

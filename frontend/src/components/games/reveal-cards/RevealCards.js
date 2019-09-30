@@ -101,7 +101,7 @@ const RevealCards = ({login: {loading, isAuthenticated, user}, game: { current, 
         
       </div>
       { (cards === null) ? <Loader /> : <CardsEngine setEntryAttempts={setEntryAttempts} setTheRoundScore={setTheRoundScore} isAuthenticated={isAuthenticated} cards={cards}/> }
-      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"reveal-cards"} setEntryAttempts={setEntryAttempts} setTheEntryScore={setTheEntryScore} theEntryScore={theEntryScore} setTheRoundScore={setTheRoundScore} theRoundScore={theRoundScore} /> : null }
+      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"reveal-cards"} setEntryAttempts={setEntryAttempts} setTheEntryScore={setTheEntryScore} theEntryScore={theEntryScore} theRoundScore={theRoundScore} /> : null }
       
      
     </div>

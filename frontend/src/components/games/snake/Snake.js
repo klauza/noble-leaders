@@ -214,7 +214,7 @@ const displayBtnsOnBigScreen = () => {
         <button className="mobile-arrow mobile-arrows-right">R</button>
       </div>
 
-      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"snake"} setTheEntryScore={setTheEntryScore} setEntryAttempts={setEntryAttempts} theEntryScore={theEntryScore} setTheRoundScore={setTheRoundScore} theRoundScore={theRoundScore} /> : null }
+      {current && entryAttempts !== null && theEntryScore !== null && theRoundScore !== null ? <UpdateThisGame user={user} current={current} theAttempts={entryAttempts} theGame={"snake"} setTheEntryScore={setTheEntryScore} setEntryAttempts={setEntryAttempts} theEntryScore={theEntryScore} theRoundScore={theRoundScore} /> : null }
 
       {theEntryScore && <div className="outputScore">{ isAuthenticated ? <span>Your highscore: <span className="highSc">{theEntryScore}</span></span> : <span>Log in to see your score</span>}</div> }
       

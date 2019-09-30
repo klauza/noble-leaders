@@ -1,8 +1,7 @@
-import React, {Fragment, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import {userLogin, loadUser} from '../../actions/loginActions';
 import ForumConnected from './ForumConnected';
-import history from '../../history';
 
 
 const Forum = ({login: {user, loading, isAuthenticated}, userLogin, loadUser}) => {

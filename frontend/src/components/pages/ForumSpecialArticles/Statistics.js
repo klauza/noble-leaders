@@ -1,10 +1,9 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {getGamesData} from '../../../actions/gameActions';
 
 const Statistics = ({users, getGamesData, game: {gamesData} }) => {
 
-  // const [data, setData] = useState(null);
 
   useEffect(()=>{
     async function stats(){
@@ -12,6 +11,7 @@ const Statistics = ({users, getGamesData, game: {gamesData} }) => {
     }
     stats();
 
+  // eslint-disable-next-line
   }, [])
   
   
@@ -26,13 +26,14 @@ const Statistics = ({users, getGamesData, game: {gamesData} }) => {
     gamesData.map((game) => {
       if(game.name === givenGame){
         if(game.attempts === 0) {
-          return 
+          return null
         } else{
           participated = participated + 1;
           gamesQty = gamesQty + 1;
           sumAttempts = sumAttempts + game.attempts;
         }
       }
+      return null
     })
       let average = sumAttempts/gamesQty;
       if(type === "sum") return Math.round(sumAttempts*100)/100
@@ -45,30 +46,36 @@ const Statistics = ({users, getGamesData, game: {gamesData} }) => {
       <div className="forum-statistics">
 
         <table>
-          <tr>
-            <th>Game</th>
-            <th>Total attempts</th>
-            <th>Avg per player</th>
-            <th>Players participated</th>
-          </tr>
-          <tr>
-            <td>Actor-quiz</td>
-            <td>{calculateSnakeStatistics("sum", "actor-quiz")}</td>
-            <td>{calculateSnakeStatistics("avg", "actor-quiz")}</td>
-            <td>{calculateSnakeStatistics("participated", "actor-quiz")}</td>
-          </tr>
-          <tr>
-            <td>Snake</td>
-            <td>{calculateSnakeStatistics("sum", "snake")}</td>
-            <td>{calculateSnakeStatistics("avg", "snake")}</td>
-            <td>{calculateSnakeStatistics("participated", "snake")}</td>
-          </tr>
-          <tr>
-            <td>Reveal Cards</td>
-            <td>{calculateSnakeStatistics("sum", "reveal-cards")}</td>
-            <td>{calculateSnakeStatistics("avg", "reveal-cards")}</td>
-            <td>{calculateSnakeStatistics("participated", "reveal-cards")}</td>
-          </tr>
+
+          <thead>
+            <tr>
+              <th>Game</th>
+              <th>Total attempts</th>
+              <th>Avg per player</th>
+              <th>Players participated</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Actor-quiz</td>
+              <td>{calculateSnakeStatistics("sum", "actor-quiz")}</td>
+              <td>{calculateSnakeStatistics("avg", "actor-quiz")}</td>
+              <td>{calculateSnakeStatistics("participated", "actor-quiz")}</td>
+            </tr>
+            <tr>
+              <td>Snake</td>
+              <td>{calculateSnakeStatistics("sum", "snake")}</td>
+              <td>{calculateSnakeStatistics("avg", "snake")}</td>
+              <td>{calculateSnakeStatistics("participated", "snake")}</td>
+            </tr>
+            <tr>
+              <td>Reveal Cards</td>
+              <td>{calculateSnakeStatistics("sum", "reveal-cards")}</td>
+              <td>{calculateSnakeStatistics("avg", "reveal-cards")}</td>
+              <td>{calculateSnakeStatistics("participated", "reveal-cards")}</td>
+            </tr>
+          </tbody>
         </table>
 
         <table>
