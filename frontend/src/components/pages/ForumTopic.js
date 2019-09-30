@@ -46,7 +46,7 @@ const ForumTopic = ({forumTab}) => {
       id: 1,
       genre: "games",
       link: `/forum/statistics`,
-      icon: "fa fa-gamepad",
+      icon: "fa fa-align-left",
       subject: "Statistics",
       addedBy: "Admin",
       slugAddedBy: "admin"

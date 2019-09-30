@@ -47,14 +47,20 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
           <div className="content-article-author">Added by <Link to={`/user/${article.slugAuthor}`}>{article.author}</Link></div>
         </div>
-
+        
+        
         <div className="forum-content-comment">
-          <span>Add a comment</span>
-          <textarea rows="5" placeholder="Write something..."> 
-            
-          </textarea>
-          <button className="comment-submit">Send</button>
+        {user.name === "testacc" ? (<h3>As a test account, you cannot add any comments</h3>) : 
+        ( <Fragment>
+            <span>Add a comment</span>
+            <textarea rows="5" placeholder="Write something...">  
+            </textarea>
+            <button className="comment-submit">Send</button>  
+          </Fragment>
+          )}
         </div>
+      
+
 
         <div className="forum-content-comments">
           <h2>Comments</h2>
