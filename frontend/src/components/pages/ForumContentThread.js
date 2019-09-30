@@ -62,12 +62,21 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
             return ( users.map((someone, i) => someone.nameSlug === comm.slugName ? 
             (
               <div className="comment" key={i}>
-                <div className="comment-image"><img src={someone.avatar} alt=""/></div>
-                <span>{comm.name}</span>
-                <div>{comm.content}</div>
-                <div>posted: {comm.date}</div>
-                {comm.name === user.name ? (<button>Delete post</button>) : (null)}
-                {comm.name === user.name ? (<button>Update post</button>) : (null)}
+                <Link to={`/user/${comm.slugName}`}>
+                  <div>
+                    <div className="comment-image"><img src={someone.avatar} alt=""/></div>
+                    <div className="comment-author">{comm.name}</div>
+                  </div>
+                </Link>
+
+                <div className="comment-container">
+                  <div className="comment-container__content"><p>{comm.content}</p></div>
+                  <div className="comment-container__date-posted">posted: {comm.date}</div>
+                </div>
+             
+
+                {comm.name === user.name ? (<button className="delete-button"><i className="fa fa-times"></i></button>) : (null)}
+                {comm.name === user.name ? (<button className="edit-button"><i className="fa fa-pencil"></i></button>) : (null)}
               </div>
             ) 
             : (null)) )

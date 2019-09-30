@@ -45,15 +45,81 @@
     }
 
     .comment{
+      position: relative;
+      display: grid; grid-template-columns: 100px auto;
       width: 100%;
       height: auto;
-      background: lightseagreen;
-      border: 1px solid red;
+      background: rgb(233, 233, 233);
+      border: 1px solid grey;
+      margin: 10px 0;
+      a{
+        transition: background-color ease 250ms;
+        border-right: 1px dashed grey;
+        text-decoration: none;
+        &:hover{
+          transition: background-color 250ms ease;
+          background: rgba(0, 0, 0, 0.747);
+          .comment-author{
+            transition: color 250ms ease;
+            color: white;
+          }
+          .comment-image img{
+            transition: border 250ms ease;
+            border: 1px solid white;
+          }
+        }
+      }
       &-image{
-        width: 100px; height: 100px;
+        width: 80px; height: 80px;
+        display: block; margin: 5px auto;
         img{
-          border: 1px solid green; border-radius: 50%;
+          transition: border 250ms ease-out;
+          border: 1px solid black; border-radius: 50%;
           width: 100%; height: 100%; object-fit: cover;
+        }
+      }
+      &-author{
+        transition: color 250ms ease-out;
+        padding: 5px 0;
+        font-weight: 700;
+        text-align: center;
+        color: black;
+      }
+
+      button{
+        position: absolute;
+        right: 2px;
+        border: 0;
+        width: 28px; height: 28px;
+        i{ color: white; display: block; width: 100%; line-height: 28px; font-size: 1.25rem; }
+        &:hover{
+          cursor: pointer;
+          background: white;
+          border: 1px solid black;
+          i{
+            color: black;
+          }
+        }
+      }
+      .delete-button{
+        top: 20%;
+        background: red;
+      }
+      .edit-button{
+        bottom: 20%;
+        background: green;
+      }
+
+      &-container{
+        display: grid; grid-template-rows: 1fr auto;
+        &__content{
+          p{
+            padding: 5px 35px 5px 5px;
+          }
+        }
+
+        &__date-posted{
+          justify-self: end;
         }
       }
     }
