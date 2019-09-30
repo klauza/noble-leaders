@@ -61,15 +61,15 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage, misc: {isBackPa
   const loggedInLinks = (
     <Fragment>
       <li className="nav-item nav-about">
-        <Link to='/about'>About</Link>
+        <Link to='/about'><i className="fa fa-info-circle"></i> <span>About</span></Link>
       </li>
      
       <li className="nav-item nav-leaderboard" >
-        <Link to='/leaderboard' onClick={()=> {if(isBackPageSet && isAuthenticated) setBackPage(false)}}>Leaderboard</Link>
+        <Link to='/leaderboard' onClick={()=> {if(isBackPageSet && isAuthenticated) setBackPage(false)}}><i className="fa fa-pagelines"></i> <span>Leaderboard</span></Link>
       </li>
      
       <li className="nav-item nav-forum">
-        <Link to='/forum'>Forum <i className="fa fa-comments"></i></Link>
+        <Link to='/forum'><i className="fa fa-comments"></i> <span>Forum</span></Link>
       </li>
 
       <li className="nav-item nav-logout">
@@ -84,13 +84,13 @@ const Navbar = ({ login: {isAuthenticated}, logout, setBackPage, misc: {isBackPa
   const notLoggedLinks = (
     <Fragment>
       <li className="nav-item nav-about">
-        <Link to='/about'>About</Link>
+        <Link to='/about'><i className="fa fa-info-circle"></i> <span>About</span></Link>
       </li>
       <li className="nav-item nav-leaderboard">
-        <Link to='/leaderboard' onClick={()=> {if(isBackPageSet && isAuthenticated) setBackPage(false)}}>Leaderboard</Link>
+        <Link to='/leaderboard' onClick={()=> {if(isBackPageSet && isAuthenticated) setBackPage(false)}}><i className="fa fa-pagelines"></i> <span>Leaderboard</span></Link>
       </li>
       <li className="nav-item nav-forum">
-        <Link to='/forum'>Forum <i className="fa fa-comments"></i></Link>
+        <Link to='/forum'><i className="fa fa-comments"></i> <span>Forum</span></Link>
       </li>
 
       <li className="nav-item nav-register">

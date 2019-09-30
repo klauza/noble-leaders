@@ -31,20 +31,29 @@
     &>li{
       text-align: center;
       height: 50px;
-      line-height: 50px;
       list-style: none;
       width: auto;
       &:hover{
         background: rgb(102, 146, 110);
       }
       &:hover a{
-        
         color: white;
       }
       
       &>a{
-        padding: 0 10px;
+        padding: 0px 10px;
         display: block;
+        i, span{
+          display: block;
+          line-height: 25px;
+        }
+        span{
+          margin-top: -7px;
+          padding-bottom: 7px;
+        }
+        i{
+          font-size: 1rem;
+        }
       }
 
       &>*{
@@ -66,11 +75,14 @@
     }
     .nav-logout, .nav-register{
       grid-area: profile;
+      line-height: 50px;
     }
     .nav-profile, .nav-login{
       grid-area: logout;
+      line-height: 50px;
     }
     .nav-profile i{
+      line-height: 50px;
       font-size: 1.25em;
     }
     .mobile-links-container{
