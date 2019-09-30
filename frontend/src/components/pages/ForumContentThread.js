@@ -1,14 +1,14 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
-import { loadUser } from '../../actions/loginActions';
+import { userLogin, loadUser } from '../../actions/loginActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 import forumData from './ForumContentThreadData'; // data
 import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
-const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, loadUser}) => {
+const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser}) => {
   const [article, setArticle] = useState(null);
   const articleName = props.match.params.thread;
  
@@ -29,7 +29,13 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
   // eslint-disable-next-line
   }, [])
  
-
+  const logInOnTestacc = async () => {
+    await userLogin({
+      email: "testacc@test.acc",
+      password: "testacc"
+    })
+    await window.location.reload(true);
+  }
 
   if(isAuthenticated && article !== null && users !== null){
     return (
@@ -38,6 +44,8 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
       <button className="general-back-button" onClick={()=>history.goBack()}>Back</button>
 
         <div className="forum-content-thread">
+
+          <h2 className="content-article-subject">{article.subject}</h2>
 
           <div className="content-article-main">{article.content}</div>
 
@@ -53,7 +61,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
         {user.name === "testacc" ? (<h3>As a test account, you cannot add any comments</h3>) : 
         ( <Fragment>
             <span>Add a comment</span>
-            <textarea rows="5" placeholder="Write something...">  
+            <textarea rows="5" placeholder="It's going to work soon...">  
             </textarea>
             <button className="comment-submit">Send</button>  
           </Fragment>
@@ -92,9 +100,18 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
       </div>
     )
 
-  } else {
+  } else if(localStorage.token){
     return(
       <Loader />
+    )
+  } else {
+    return(
+      <div className="not-logged-div">
+        <h3>Please log in to access a forum</h3>
+        <button onClick={()=>logInOnTestacc()}><span>Log in as </span><span>Test Account</span></button>
+      </div>
+    
+   
     )
   }
 
@@ -104,4 +121,4 @@ props: ownProps,
 game: state.game,
 login: state.login
 })
-export default connect(mapStateToProps, { getAllUsers, loadUser })(ForumThread)
+export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser })(ForumThread)
