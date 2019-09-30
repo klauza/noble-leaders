@@ -1,3 +1,43 @@
+.not-logged-div{
+  position: relative;
+  h3{
+    text-align: center;
+    margin: 50px auto;
+    font-weight: 700;
+  }
+  button{
+    display: block;
+    margin: 0 auto;
+    border: 1px solid black; border-radius: 3px;
+    width: auto;
+    height: 40px;
+    padding: 10px;
+    box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
+    transition: box-shadow 200ms ease;
+    background: rgb(0, 0, 0);
+    span:nth-child(1){
+      transition: color 200ms ease;
+      color: white;
+    }
+    span:nth-child(2){
+      transition: color 200ms ease;
+      color: rgb(151, 151, 151);
+    }
+    &:hover{
+      transition: box-shadow 200ms ease;
+      cursor: pointer;
+      box-shadow: 0px 0px 3px 0px rgba(95, 95, 95, 0.95);
+      span:nth-child(1){
+        transition: color 200ms ease;
+        color: rgb(151, 151, 151);
+      }
+      span:nth-child(2){
+        transition: color 200ms ease;
+        color: white;
+      }
+    }
+  }
+}
 .forum{
   &-container{
     position: relative;

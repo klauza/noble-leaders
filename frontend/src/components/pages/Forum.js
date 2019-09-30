@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {loadUser} from '../../actions/loginActions';
+import {userLogin, loadUser} from '../../actions/loginActions';
 import ForumConnected from './ForumConnected';
+import history from '../../history';
 
 
-const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
+const Forum = ({login: {user, loading, isAuthenticated}, userLogin, loadUser}) => {
 
   useEffect(()=>{
     if(localStorage.token && !user){
@@ -12,9 +13,17 @@ const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
     }
     
   // eslint-disable-next-line
-  }, [])
+  }, [user])
 
-  if(!loading && isAuthenticated){
+  const logInOnTestacc = async () => {
+    await userLogin({
+      email: "testacc@test.acc",
+      password: "testacc"
+    })
+    await window.location.reload(true);
+  }
+
+  if(!loading && user && isAuthenticated){
     return (
       <ForumConnected user={user} />
     )
@@ -24,7 +33,10 @@ const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
     )
   } else{
     return(
-      <h3 style={{textAlign: "center", margin: "50px auto", fontWeight: "700"}}>Please log in to access forum</h3>
+      <div className="not-logged-div">
+        <h3>Please log in to access a forum</h3>
+        <button onClick={()=>logInOnTestacc()}><span>Log in as </span><span>Test Account</span></button>
+      </div>
     )
   }
 
@@ -33,4 +45,4 @@ const Forum = ({login: {user, loading, isAuthenticated}, loadUser}) => {
 const mapStateToProps = state => ({
   login: state.login
 })
-export default connect(mapStateToProps, {loadUser})(Forum)
+export default connect(mapStateToProps, {userLogin, loadUser})(Forum)

@@ -20,7 +20,7 @@ const About = ({login: {isAuthenticated, user}, loadUser}) => {
           <h2>Tech</h2>
           <p><strong>NOBLE-<span style={{color: "red"}}>LEADERS</span></strong> is a minimalistic <strong>fullstack</strong> project with subtle design and mechanics. It's also mobile friendly.</p>
           <p>How to start? You can create an account and that's it! Without making one, you won't be able to see the full potential of the page.</p>
-          <p>If you for some reason don't want to create an account, you can use a test one: Login: testacc Pwd: testacc</p>
+          <p>If you for some reason don't want to create an account, you can use a test one: Login: testacc@test.acc Pwd: testacc</p>
           <p>There are plenty of games available to play which give score points letting you climb on top of the leaderboard.</p>
         </div>
 
