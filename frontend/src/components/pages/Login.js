@@ -46,7 +46,7 @@ const Login = ({ login: {error, isAuthenticated}, userLogin, clearError, setAler
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('Login submit');
+    // console.log('Login submit');
     if(email === '' || password === ''){
       setAlert("Inputs cant be empty", "danger");
     } else {

@@ -25,17 +25,17 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
     if(error !== null){
 
       if(error === 'User already exists'){
-        console.log('user already exists');
+        // console.log('user already exists');
         setAlert("User already exists", "danger");
         clearError();
       } else 
         if (error === 'Email already exists'){
-          console.log('Email already exists');
+          // console.log('Email already exists');
           setAlert("Email already exists", "danger");
           clearError();
       } else 
       if(error[0].msg){
-        console.log(error[0].msg);
+        // console.log(error[0].msg);
         setAlert(error[0].msg, "danger");
         clearError();
       } 

@@ -39,7 +39,7 @@ export const userRegister = (user) => async dispatch => {
     loadUser();
 
   } catch(err){
-    console.log(err.response);
+    // console.log(err.response);
     if(err.response.data.errors){
       dispatch({
         type: REGISTER_FAIL,
