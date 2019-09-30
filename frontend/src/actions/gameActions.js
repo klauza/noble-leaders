@@ -1,7 +1,18 @@
-import { CREATE_THE_GAME, CREATE_GAME_FAIL, SET_GAME_LOADING, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, SET_CURRENT, CLEAR_CURRENT } from './types';
+import { CREATE_THE_GAME, CREATE_GAME_FAIL, SET_GAME_LOADING, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, SET_CURRENT, CLEAR_CURRENT, GET_GAMES_DATA, GET_GAMES_DATA_ERROR } from './types';
 import axios from 'axios';
 
 
+// Get all games - score, attempts, rating (public)
+export const getGamesData = () => async dispatch => {
+  try{
+    const res = await axios.get('/api/games/all');
+    dispatch({ type: GET_GAMES_DATA, payload: res.data });
+
+  } catch(err){
+    console.log('error: ',err);
+    dispatch({ type: GET_GAMES_DATA_ERROR})
+  }
+}
 
 // Get all users, sorted descending by highscore
 export const getAllUsers = () => async dispatch => {

@@ -5,6 +5,20 @@ const auth = require('../middleware/auth');
 const Game = require("../models/Game");
 
 
+// @route GET api/games/all
+// @desc  get all games for statistics
+// @access Public
+router.get('/all', async (req, res) => {
+  try{
+    const games = await Game.find().select(["name", "attempts", "rating"]);
+    res.json(games);
+
+  } catch(err){
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+})
+
 // @route GET api/games/:userId
 // @desc  get all user's games
 // @access Private
@@ -96,8 +110,8 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-// @route GET api/games
-// @desc  get all user's games
+// @route DELETE api/games/:id
+// @desc  delete user's game
 // @access Private
 router.delete('/:id', auth, async (req, res) => {
 

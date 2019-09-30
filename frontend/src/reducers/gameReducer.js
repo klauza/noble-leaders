@@ -1,4 +1,4 @@
-import { SET_GAME_LOADING, CREATE_THE_GAME, CREATE_GAME_FAIL, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, CLEAR_ERRORS, SET_CURRENT, CLEAR_CURRENT } from '../actions/types';
+import { SET_GAME_LOADING, CREATE_THE_GAME, CREATE_GAME_FAIL, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, CLEAR_ERRORS, SET_CURRENT, CLEAR_CURRENT, GET_GAMES_DATA, GET_GAMES_DATA_ERROR } from '../actions/types';
 
 const initialState = {
   users: null, 
@@ -6,11 +6,19 @@ const initialState = {
   games: null,
   games_error: null,
   current: null,
-  gLoading: true
+  gLoading: true,
+  gamesData: null
 };
 
 export default(state = initialState, action) => {
   switch(action.type){
+
+    case GET_GAMES_DATA:
+      return{
+        ...state,
+        gamesData: action.payload
+      }
+
     case GET_ALL_USERS:
       return{
         ...state,
