@@ -2,13 +2,14 @@ import React, {Fragment, useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
 import { userLogin, loadUser } from '../../actions/loginActions';
+import { setAlert } from '../../actions/alertActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 import forumData from './ForumContentThreadData'; // data
 import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
-const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser}) => {
+const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert}) => {
   const [article, setArticle] = useState(null);
   const articleName = props.match.params.thread;
  
@@ -35,6 +36,13 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
       password: "testacc"
     })
     await window.location.reload(true);
+  }
+
+  const runDelete = () => {
+    setAlert("This feature doesn't work yet", "danger");
+  }
+  const runEdit = () => {
+    setAlert("This feature doesn't work yet", "danger");
   }
 
   if(isAuthenticated && article !== null && users !== null){
@@ -89,8 +97,8 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
                 </div>
              
 
-                {comm.name === user.name ? (<button className="delete-button"><i className="fa fa-times"></i></button>) : (null)}
-                {comm.name === user.name ? (<button className="edit-button"><i className="fa fa-pencil"></i></button>) : (null)}
+                {comm.name === user.name ? (<button className="delete-button" onClick={runDelete}><i className="fa fa-times"></i></button>) : (null)}
+                {comm.name === user.name ? (<button className="edit-button" onClick={runEdit}><i className="fa fa-pencil"></i></button>) : (null)}
               </div>
             ) 
             : (null)) )
@@ -121,4 +129,4 @@ props: ownProps,
 game: state.game,
 login: state.login
 })
-export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser })(ForumThread)
+export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert })(ForumThread)
