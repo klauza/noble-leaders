@@ -38,10 +38,12 @@ const forumData = [
   {
     author: "Admin",
     slugAuthor: "admin",
-    link: "games-ratings",
-    subject: "See ratings given by users",
+    link: "statistics",
+    subject: "Statistics",
     content: "Here are all players ratings",
-    comments: []
+    comments: [],
+    specialArticle: true,
+    specialArticleContent: ["a", "b"]
   }
 ]
 

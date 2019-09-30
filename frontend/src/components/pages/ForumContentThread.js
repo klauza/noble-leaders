@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
 import { loadUser } from '../../actions/loginActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 import forumData from './ForumContentThreadData'; // data
+import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
 const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, loadUser}) => {
@@ -29,6 +30,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
   }, [])
  
 
+
   if(isAuthenticated && article !== null && users !== null){
     return (
       <div className="forum-content-wrapper">
@@ -38,6 +40,10 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
         <div className="forum-content-thread">
 
           <div className="content-article-main">{article.content}</div>
+
+          {article.specialArticle ? (
+            <Statistics users={users} />
+          ) : (null)}
 
           <div className="content-article-author">Added by <Link to={`/user/${article.slugAuthor}`}>{article.author}</Link></div>
         </div>
