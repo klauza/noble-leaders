@@ -36,20 +36,20 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         async function actorGameInit(){
           await loadUser();
           if(entryAttempts === null) await getUserGames("actor-quiz");
-          if(current && current.name === "actor-quiz") await setEntryAttempts(current.attempts);
+          if(current && current.name === "actor-quiz" && entryAttempts === null) await setEntryAttempts(prevState => current.attempts + 1);
           if(current && current.name === "actor-quiz") await setTheEntryScore(current.score);
-          // if(theRoundScore === null) await setEntryAttempts(prevState => prevState+1);
-          
+       
           try{
+            
             await loadImageAsync(backgroundImage)
               .then(() => setImg(false))
-              .then(()=> App.init())
+              .then(() => App.init())
               .catch(reason => console.log(reason));
-              
+           
           } catch(err){
             console.log('avoided crash');
           }
-          
+     
         }
         actorGameInit();
        
@@ -57,22 +57,23 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
       try{
         loadImageAsync(backgroundImage)
           .then(() => setImg(false))
-          .then(()=> App.init())
+          .then(()=> App.init() )
           .catch(reason => console.log(reason));
       } catch(err){  }
     }
     //eslint-disable-next-line
   }, [current]);
 
-
-
+  console.log(entryAttempts);
   
- 
     const App = (function(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl){
       
         // Event Listeners
         const loadEventListeners = function(){
-        displayDataFromAPI();
+          
+          // console.log(entryAttempts);
+          displayDataFromAPI();
+         
         document.querySelector('.local-storage-reset').addEventListener('click', UICtrl.resetGame); // reset the whole game
 
       }
@@ -141,7 +142,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
         appUpdate: function(){
           // If logged in
           if(isAuthenticated){
-            setEntryAttempts(prevState => prevState+1);
+            // setEntryAttempts(prevState => prevState+1);
             setTheRoundScore( Number(LevelCtrl.getScore()) )
            
 
@@ -159,7 +160,7 @@ const ActorGame = ({login: {isAuthenticated, user, loading}, setAlert, loadUser,
            
       }
     })(UICtrl, PersonCtrl, LevelCtrl, LocalStorageCtrl);
-    
+
     
 
   if(isAuthenticated){
