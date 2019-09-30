@@ -131,17 +131,24 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
 
   const triggerDeleteAccount = () =>{
     if (window.confirm("are you sure?")) {
-      const deleteUserData = {
-        _id: user._id
+      if(user.name === "testacc"){
+        setAlert("You cannot delete a test account", "danger");
+      } else{
+        const deleteUserData = {
+          _id: user._id
+        }
+        // add cover-overlay
+        // delete games
+        userDelete(deleteUserData);   // delete user
+  
+  
+        setTimeout(()=>{
+          logout();
+          history.push('/');
+          window.location.reload();
+        }, 500);
       }
-      userDelete(deleteUserData);
 
-
-      setTimeout(()=>{
-        logout();
-        history.push('/');
-        window.location.reload();
-      }, 500);
     } 
   }
 
@@ -169,6 +176,16 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         
         
         <div className="profile__bottom profile-bot-animation">
+
+          <div className="profile__bottom--item firstEmpty">
+            <div></div>
+            <div className="item-name">game</div>
+            <div className="item-score">
+              <div className="item-score__highscore">top score</div>
+              <div className="item-score__attempts">attempts</div>
+            </div>
+          </div>
+
           {games !== null && !gLoading ? games.map((game, i) => <ProfileGameList image={imgs[i]} key={game._id} game={game} />) : null }
         </div>
 

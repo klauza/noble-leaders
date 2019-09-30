@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProfileGameList = ({ game, image }) => {
-  const {name, score } = game; 
+  const {name, score, attempts } = game; 
 
 
 
@@ -14,9 +14,14 @@ const ProfileGameList = ({ game, image }) => {
         <span>{name}</span>
       </div>
 
-      <ul className="item-score">
-        <span>Top score: <strong style={{"fontSize":"1.75rem"}}>{score}</strong></span>
-      </ul>
+      <div className="item-score">
+        <div className="item-score__highscore">
+          <span>{score}</span>
+        </div>
+        <div className="item-score__attempts">
+          <span>{attempts}</span>
+        </div>
+      </div>
 
     </div>
   )
