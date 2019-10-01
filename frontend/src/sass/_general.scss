@@ -9,19 +9,15 @@ $ff-boogaloo: 'Boogaloo', cursive;
 }
 
 html{
-  // overflow-y: scroll;
+  position: relative;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body{
-  overflow-y: scroll;
   height: 100%;
-  position: relative;
-  // background: url('./media/beige-tiles.png');
-  
   background: rgba(255, 255, 255, 0.7);
-  // overflow: hidden;
 
   &::before{
     content: "";
@@ -33,6 +29,9 @@ body{
     height: 100%;
     opacity: 0.35;
     background: url('./media/beige-tiles.png') repeat;
+  }
+  &>*{
+    overflow-x: hidden;
   }
 }
 
