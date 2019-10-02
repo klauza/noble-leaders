@@ -1,5 +1,6 @@
 .not-logged-div{
   position: relative;
+  min-height: calc(100vh - 50px);
   h3{
     text-align: center;
     margin: 50px auto;
