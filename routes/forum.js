@@ -9,11 +9,11 @@ const ForumTopic = require("../models/ForumTopic");
 // @route POST api/forum
 // @desc  post a forum topic
 // @access Private
-router.post('/', auth, [
+router.post('/', [auth, [
   check('subject', 'Please add a subject').not().isEmpty(),
   check('description', 'Please add a description').not().isEmpty(),
   check('content', 'Please add a content').not().isEmpty()
-], 
+]], 
 async (req, res) => {
   const errors = validationResult(req);
 
@@ -40,7 +40,8 @@ async (req, res) => {
       icon: icon,
       content: content
     })
-    await topic.save();
+    const newtop = await topic.save();
+    res.json(newtop);
 
   }catch(err){
     console.error(err.message);

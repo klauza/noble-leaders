@@ -91,8 +91,21 @@
         background-color: rgb(184, 216, 250);
         color: black;
         span{
+          display: block;
           line-height: 100%;
+        }
+        .subject{
           font-size: 2em;
+          @media(max-width: 500px){ font-size: 8vw; }
+          i{
+            width: 30px;
+          }
+        }
+        .desc{
+          font-size: 0.8em;
+          margin-top: 5px;
+          margin-left: 50px;
+          @media(max-width: 500px){ margin-left: 5px; }
         }
         &:hover{
           transition: color 175ms ease, background-color 250ms ease;
@@ -100,6 +113,8 @@
           color: black;
         }
       }
+
+   
   
       &--added-by{
         padding: 5px;

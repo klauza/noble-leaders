@@ -44,7 +44,8 @@ const ForumTopicSchema = mongoose.Schema({
   },
   
   edited: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
 
   date: {

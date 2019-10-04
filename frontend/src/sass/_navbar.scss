@@ -3,6 +3,7 @@
   width: 100%;
   background: rgb(126, 184, 136);
   position: relative;
+  overflow: hidden;
 
   &__ul{
     display: grid;

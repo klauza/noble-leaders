@@ -30,6 +30,7 @@ const ForumTopic = ({forumTab}) => {
       link: `/forum/snake-discussion`,
       icon: "fa fa-gamepad",
       subject: "Snake discussion",
+      description: "start a conversation about snake game",
       addedBy: "Admin",
       slugAddedBy: "admin"
     },
@@ -70,7 +71,8 @@ const ForumTopic = ({forumTab}) => {
 
               <Link to={topic.link}>
                 <div className="forum__main-thread--top">
-                  <span><i className={topic.icon}></i> {topic.subject}</span>
+                  <span className="subject"><i className={topic.icon}></i> {topic.subject}</span>
+                  <span className="desc">{topic.description}</span>
                 </div>
               </Link>
 
