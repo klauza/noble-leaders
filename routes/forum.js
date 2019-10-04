@@ -66,8 +66,8 @@ router.get('/', async (req, res) => {
 
 
 // 3
-// @route GET api/forum/:id
-// @desc  get a certain forum topic
+// @route GET api/forum/:forumLink
+// @desc  get a certain forum topic by link
 // @access Public
 
 router.get('/:forumLink', async (req, res) => {
@@ -76,6 +76,42 @@ router.get('/:forumLink', async (req, res) => {
   try{
     const findTopic = await ForumTopic.find({ link: forumLink });
     res.json(findTopic);
+
+  }catch(err){
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+})
+
+// 4 
+// @route PUT api/forum/:id
+// @desc  update a certain forum topic by id
+// @access Private
+router.put('/:id', auth, async (req, res) => {
+  const { subject, description, icon, content } = req.body;
+  let date = new Date();
+  let edited = true;
+
+  //submitted attrs by user
+  const updateFields = {};
+  if(subject) updateFields.subject = subject;
+  if(description) updateFields.description = description;
+  if(icon) updateFields.icon = icon;
+  if(content) updateFields.content = content;
+  updateFields.date = date
+  updateFields.edited = edited
+
+  try{
+    let topic = await ForumTopic.findById(req.params.id);  // find topic by ID
+    if(!topic) return res.status(404).json({ msg: 'Topic ID not found' });
+
+    // process the update
+    topic = await ForumTopic.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateFields },
+      { new: true }
+    );
+    res.json(topic); // send the updated game
 
   }catch(err){
     console.error(err.message);

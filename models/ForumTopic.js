@@ -43,6 +43,10 @@ const ForumTopicSchema = mongoose.Schema({
     required: true
   },
   
+  edited: {
+    type: Boolean
+  },
+
   date: {
     type: Date,
     default: Date.now
