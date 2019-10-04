@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 // for authenticated users only
 const ForumCommentSchema = mongoose.Schema({
   topic: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'forumTopic'
+    type: String
   },
 
   author: {
