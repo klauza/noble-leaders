@@ -1,14 +1,17 @@
 export const SET_LOADING = 'SET_LOADING';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 
+// register
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const CREATE_THE_GAME = 'CREATE_THE_GAME';
 export const CREATE_GAME_FAIL = 'CREATE_GAME_FAIL';
 
+// login
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 
+// auth
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGOUT = 'LOGOUT';
@@ -41,4 +44,16 @@ export const MISC_SET_FORUM_PAGE = "MISC_SET_FORUM_PAGE";
 
 export const GET_GAMES_DATA = "GET_GAMES_DATA";
 export const GET_GAMES_DATA_ERROR = "GET_GAMES_DATA_ERROR";
+
+//forum
+export const CREATE_TOPIC = "CREATE_TOPIC";
+export const GET_TOPIC = "GET_TOPIC";
+export const GET_ALL_TOPICS = "GET_ALL_TOPICS";
+export const UPDATE_TOPIC = "UPDATE_TOPIC";
+
+export const CREATE_COMMENT = "CREATE_COMMENT";
+export const GET_TOPIC_COMMENTS = "GET_TOPIC_COMMENTS";
+
+export const TOPIC_ERROR = "TOPIC_ERROR";
+
 
