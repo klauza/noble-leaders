@@ -1,4 +1,4 @@
-import { CREATE_THE_GAME, CREATE_GAME_FAIL, SET_GAME_LOADING, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, SET_CURRENT, CLEAR_CURRENT, GET_GAMES_DATA, GET_GAMES_DATA_ERROR } from './types';
+import {  DELETE_GAME_ERROR, CREATE_THE_GAME, CREATE_GAME_FAIL, SET_GAME_LOADING, GET_GAMES, GET_GAMES_ERROR, UPDATE_SCORE, UPDATE_SCORE_ERROR, GET_ALL_USERS, GET_USERS_ERROR, SET_CURRENT, CLEAR_CURRENT, GET_GAMES_DATA, GET_GAMES_DATA_ERROR } from './types';
 import axios from 'axios';
 
 
@@ -119,6 +119,25 @@ export const updateGameScore = (game) => async dispatch => {
   } catch(err){
     dispatch({
       type: UPDATE_SCORE_ERROR,
+      payload: err.response.msg
+    })
+  }
+}
+
+export const deleteGame = (game) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  try{
+    await axios.delete(`/api/games/${game._id}`, game, config);
+
+
+  } catch(err){
+    dispatch({
+      type: DELETE_GAME_ERROR,
       payload: err.response.msg
     })
   }

@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import ProfileGameList from './ProfileGameList';
 import {connect} from 'react-redux';
 import {loadUser, userUpdate, userDelete, logout} from '../../actions/loginActions';
-import { getUserGames, createTheGame } from '../../actions/gameActions';
+import { getUserGames, createTheGame, deleteGame } from '../../actions/gameActions';
 import {setAlert} from '../../actions/alertActions';
 import history from '../../history';
 import Loader from '../layout/Loader';
@@ -11,7 +11,7 @@ import { cup, actor, snake, cards } from '../../media/images';
 
 
 
-const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, userDelete, logout, getUserGames, setAlert,  game: { games, gLoading }}) => {
+const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGame, userUpdate, userDelete, logout, getUserGames, deleteGame, setAlert,  game: { games, gLoading }}) => {
 
   const [img, setImg] = useState(true);
   const [newQuote, setNewQuote] = useState('');
@@ -38,7 +38,7 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   }, []);
 
 
-
+  console.log(games);
 
   if(gLoading === false){
     if(games && games.length === 0){
@@ -143,13 +143,16 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         // add cover-overlay
         // delete games
         userDelete(deleteUserData);   // delete user
+        deleteGame(games[2]);
+        deleteGame(games[1]);
+        deleteGame(games[0]);
   
   
         setTimeout(()=>{
           logout();
           history.push('/');
           window.location.reload();
-        }, 500);
+        }, 1000);
       }
 
     } 
@@ -220,4 +223,4 @@ const mapStateToProps = state => ({
   login: state.login,
   game: state.game
 })
-export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, userUpdate, userDelete, logout, setAlert})(Profile)
+export default connect(mapStateToProps, {loadUser, createTheGame, getUserGames, deleteGame, userUpdate, userDelete, logout, setAlert})(Profile)

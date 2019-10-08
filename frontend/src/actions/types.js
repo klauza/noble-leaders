@@ -27,6 +27,7 @@ export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_USERS_ERROR = 'GET_USERS_ERROR';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const SET_GAME_LOADING = 'SET_GAME_LOADING';
+export const DELETE_GAME_ERROR = "DELETE_GAME_ERROR";
 
 export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
@@ -55,5 +56,6 @@ export const CREATE_COMMENT = "CREATE_COMMENT";
 export const GET_TOPIC_COMMENTS = "GET_TOPIC_COMMENTS";
 
 export const TOPIC_ERROR = "TOPIC_ERROR";
+
 
 
