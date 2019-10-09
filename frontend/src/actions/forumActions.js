@@ -1,6 +1,10 @@
-import { CREATE_TOPIC, GET_TOPIC, GET_ALL_TOPICS, UPDATE_TOPIC, TOPIC_ERROR, SET_LOADING } from './types';
+import { CREATE_TOPIC, GET_TOPIC, GET_ALL_TOPICS, UPDATE_TOPIC, TOPIC_ERROR, SET_LOADING, CLEAR_FORUM_ERROR } from './types';
 import { CREATE_COMMENT, GET_TOPIC_COMMENTS } from './types';
 import axios from 'axios';
+
+export const clearTopicError = () => async dispatch => {
+  dispatch({ type: CLEAR_FORUM_ERROR })
+}
 
 export const createTopic = (topic) => async dispatch => {
   const config = {
@@ -8,11 +12,10 @@ export const createTopic = (topic) => async dispatch => {
       'Content-Type': 'application/json'
     }
   }
-  
-  try{
-    const res = await axios.post(`/api/forum`, topic, config);
+  console.log(topic);
 
-    console.log(res);
+  try{
+    const res = await axios.post('/api/forum', topic, config);
 
     dispatch({
       type: CREATE_TOPIC,
@@ -20,9 +23,10 @@ export const createTopic = (topic) => async dispatch => {
     })
     
   }catch(err){
+    // console.log(err.response);
     dispatch({
       type: TOPIC_ERROR,
-      payload: err.response.data.errors
+      payload: err.response.data.msg
     })
   }
 
@@ -65,15 +69,11 @@ export const getATopic = (topicLink) => async dispatch => {
 }
 
 export const setForumLoading = () => async dispatch => {
-  try{
-    dispatch({
-      type: SET_LOADING,
-      payload: true
-    })
-  }catch(err){
-    dispatch({
-      type: TOPIC_ERROR,
-      payload: null
-    })
-  }
+
+  dispatch({
+    type: SET_LOADING,
+    payload: true
+  })
+  
+
 }

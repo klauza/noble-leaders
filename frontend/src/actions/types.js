@@ -56,6 +56,7 @@ export const CREATE_COMMENT = "CREATE_COMMENT";
 export const GET_TOPIC_COMMENTS = "GET_TOPIC_COMMENTS";
 
 export const TOPIC_ERROR = "TOPIC_ERROR";
+export const CLEAR_FORUM_ERROR = "CLEAR_FORUM_ERROR";
 
 
 
