@@ -1,4 +1,11 @@
 .about{
+  h1{
+    animation: about-animate 1s forwards;
+    text-align: center;
+    font-family: $ff-boogaloo;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+  }
   font-family: $ff-roboto;
   width: 50%;
   margin: 50px auto 100px;
@@ -9,86 +16,54 @@
    
 
     &--project{
+      margin-top: 35px;
       padding: 0 3vw;
       animation: about-animate 1s forwards;
       opacity: 0;
-      h1{
-        text-align: justify;
-        margin: 0 0 50px 0;
-        @media(max-width: 768px){ text-align: center;}
-      }
+
       p{
         line-height: 25px;
         text-align: left;
         margin: 10px 0;
       }
-      
-      &::after{
-        content: '';
-        display: block;
-        width: 25px; height: 5px;
-        margin: 50px 0 50px 15px;
-        @media(max-width: 768px){ margin: 50px auto; }
-        background: rgb(126, 184, 136);
-        border: 0; border-radius: 3px;
-      }
+
     
     }
 
-    &--expression{
+    &--content{
+      margin-top: 35px;
       opacity: 0;
       padding: 0 3vw;
       animation: about-animate 1s forwards 175ms;
       p{
-        line-height: 35px;
+        line-height: 25px;
         text-align: left;
         margin: 10px 0;
       }
     }
 
-    &--links{
+    &--author{
+      margin-top: 35px;
       opacity: 0;
       animation: about-animate 1s forwards 250ms;
       margin: 50px 0;
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      grid-template-columns: 1fr 1fr;
-
-      .git-container, .linked-container{
-
-        width: auto; 
-        height: auto;
-
-        display: grid;
-        justify-items: center;
-
-        a{
-          width: 100%; height: 100%;
-          display: grid;
-          justify-items: center;
-          text-decoration: none;
-          position: relative;
-
-        
-        }
-        a i{
-          color: black;
-          font-size: 2.25em;
-          transition: color 600ms ease;
-          display: block;
-        }
-        
-        
-        &:hover{
-          a i{
-            color: rgb(110, 110, 110);
-            transition: color 600ms ease;
-          }
-        }
-       
-       
+      display: block;
+      padding: 0 3vw;
+      p{
+        line-height: 25px;
+        text-align: left;
+        margin: 10px 0;
       }
+      div{
+        margin-top: 15px;
+        font-weight: 700;
+        a{
+          text-decoration: none;
+          color: black;
+          font-size: 1.45em;
+        }
+      }
+
     }
 
 
