@@ -2,9 +2,10 @@ import React, { useEffect, Fragment, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { setForumPage } from '../../actions/miscActions';
 import { createTopic } from '../../actions/forumActions';
+import { setAlert } from '../../actions/alertActions';
 import ForumTopic from './ForumTopic';
 
-const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTopic}) => {
+const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTopic, setAlert}) => {
 
   const subjectInput = useRef();
   const textareaInput = useRef();
@@ -67,6 +68,7 @@ const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTo
         content: textArea
       }
     );
+    setAlert('New topic created', 'positive');
     closeModalCreator(); // close modal
     
   }
@@ -133,4 +135,4 @@ const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTo
 const mapStateToProps = (state) => ({
   misc: state.misc
 })
-export default connect(mapStateToProps, {setForumPage, createTopic})(ForumConnected)
+export default connect(mapStateToProps, {setForumPage, createTopic, setAlert})(ForumConnected)

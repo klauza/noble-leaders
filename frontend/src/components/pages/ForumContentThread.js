@@ -3,27 +3,35 @@ import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
 import { userLogin, loadUser } from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
-import { getATopic } from '../../actions/forumActions';
+import { getATopic, getTopicComments, createTopicComment, clearTopicError } from '../../actions/forumActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
-import forumData from './ForumContentThreadData'; // data
+// import forumData from './ForumContentThreadData'; // data
 import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
-const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, forum: {current, loading}}) => {
+const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, clearTopicError, createTopicComment, getTopicComments, forum: {error, current, loading, comments}}) => {
 
   const articleName = props.match.params.thread;
- 
+  const [comm, setComm] = useState('');
+
   useEffect(()=>{ 
     if(localStorage.token){
-      
+
+      if(error !== null){
+        setAlert(error[0].msg, "danger");
+        clearTopicError();
+      }
 
       async function initThread(){
-        getATopic(articleName);
-        // setArticle( forumData.filter(article => article.link === articleName)[0] )   // fetch given article
-        // setArticle( current );   // fetch given article
         await loadUser();
         await getAllUsers();
+        if(!current) await getATopic(articleName);
+        // setArticle( forumData.filter(article => article.link === articleName)[0] )   // fetch given article
+        // setArticle( current );   // fetch given article
+      
+        if(current) await getTopicComments(current._id);
+     
       }
       
   
@@ -31,9 +39,8 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     }
 
   // eslint-disable-next-line
-  }, [])
-
- 
+  }, [ current, error])
+  // console.log(current._id);
   const logInOnTestacc = async () => {
     await userLogin({
       email: "testacc@test.acc",
@@ -49,6 +56,20 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     setAlert("This feature doesn't work yet", "danger");
   }
 
+  const setCommText = (e) => {
+    setComm(e.target.value);
+  }
+  
+  const createComment = () => {
+    let submitComment = {
+      content: comm,
+      author: user.name,
+      slugAuthor: user.nameSlug
+    }
+    createTopicComment(current._id, submitComment);
+    // console.log('send comm: ', submitComment);
+  }
+  
 
   if(isAuthenticated && current !== null && users !== null && !loading){
     return (
@@ -74,9 +95,9 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
         {user.name === "testacc" ? (<h3>As a test account, you cannot add any comments</h3>) : 
         ( <Fragment>
             <span>Add a comment</span>
-            <textarea rows="5" placeholder="It's going to work soon...">  
+            <textarea onChange={(e)=>setCommText(e)} rows="5" placeholder="It's going to work soon...">  
             </textarea>
-            <button className="comment-submit">Send</button>  
+            <button onClick={createComment} className="comment-submit">Send</button>  
           </Fragment>
           )}
         </div>
@@ -85,14 +106,14 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
         <div className="forum-content-comments">
           <h2>Comments</h2>
-          {current.comments && current.comments.map((comm,id)=>{
-            return ( users.map((someone, i) => someone.nameSlug === comm.slugName ? 
+          {comments && comments.map((comm,id)=>{
+            return ( users.map((someone, i) => someone.nameSlug === comm.slugAuthor ? 
             (
-              <div className="comment" key={i}>
-                <Link to={`/user/${comm.slugName}`}>
+              <div style={{animationDelay: `${id*250}ms`}} className="comment comment-animation" key={i}>
+                <Link to={`/user/${comm.Author}`}>
                   <div>
                     <div className="comment-image"><img src={someone.avatar} alt=""/></div>
-                    <div className="comment-author">{comm.name}</div>
+                    <div className="comment-author">{comm.author}</div>
                   </div>
                 </Link>
 
@@ -102,8 +123,8 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
                 </div>
              
 
-                {comm.name === user.name ? (<button className="delete-button" onClick={runDelete}><i className="fa fa-times"></i></button>) : (null)}
-                {comm.name === user.name ? (<button className="edit-button" onClick={runEdit}><i className="fa fa-pencil"></i></button>) : (null)}
+                {comm.author === user.name ? (<button className="delete-button" onClick={runDelete}><i className="fa fa-times"></i></button>) : (null)}
+                {comm.author === user.name ? (<button className="edit-button" onClick={runEdit}><i className="fa fa-pencil"></i></button>) : (null)}
               </div>
             ) 
             : (null)) )
@@ -135,4 +156,4 @@ game: state.game,
 login: state.login,
 forum: state.forum
 })
-export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic })(ForumThread)
+export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic, getTopicComments, createTopicComment, clearTopicError })(ForumThread)
