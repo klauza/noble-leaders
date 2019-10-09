@@ -128,14 +128,14 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
         date: new Date()
       }
       userUpdate(updateUserQuote);
-      setAlert("Your quote has been updated", "danger");
+      setAlert("Your quote has been updated", "positive");
     }
   }
 
   const triggerDeleteAccount = () =>{
     if (window.confirm("are you sure?")) {
       if(user.name === "testacc"){
-        setAlert("You cannot delete a test account", "danger");
+        setAlert("You cannot delete a test account", "warning");
       } else{
         const deleteUserData = {
           _id: user._id

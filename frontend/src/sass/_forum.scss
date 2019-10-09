@@ -41,6 +41,7 @@
 }
 
 .forum__topic-creator{
+  font-family: $ff-roboto;
   position: absolute;
   display: none;
   opacity: 0;
@@ -53,25 +54,45 @@
     position: relative;
     transform: translateY(100px);
     animation: animate-forum-creator 500ms forwards;
-    background: orange;
-    border: 1px solid red;
+    background: rgb(192, 187, 187);
+    border: 1px solid rgb(0, 0, 0); border-radius: 2px;
     max-width: 600px;
     width: auto;
     height: auto;
     margin: 100px auto;
     text-align: center;
+    form{
+      margin: 25px 0;
+
+      .choose-icon{
+        i{
+          margin-right: 15px;
+        }
+      }
+    }
 
     &-exit{   // exit button
+      border: 1px solid black; border-radius: 50%;
+      background: white;
+      transition: background-color 300ms ease;
       width: 30px; height: 30px;
       position: absolute;
       top: -15px; right: -15px;
+      @media(max-width: 768px){
+        top: -1px; right: -1px;
+        border-radius: 0;
+      }
       &:hover{
+        transition: background-color 300ms ease;
+        background: red;
         cursor: pointer;
       }
     }
    input[type=text]{
      display: block;
-     margin: 0 auto;
+     margin: 25px auto;
+     height: 30px;
+     border: 1px solid white;
    }
     textarea{
       max-width: 100%;
@@ -80,10 +101,11 @@
       display: block;
       margin: 25px auto;
       border: 1px solid black;
-      background: burlywood;
+      background: rgb(255, 255, 255);
       width: 80px; height: 40px;
       box-shadow: 0 2px 2px 0 black;
       &:hover{
+        background: rgb(207, 207, 207);
         cursor: pointer;
       }
     }

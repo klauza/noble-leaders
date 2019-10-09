@@ -87,7 +87,7 @@ const Register = ({ login: {error, isAuthenticated}, userRegister, clearError, s
 
           userRegister({
             name, 
-            nameSlug: name.toLowerCase().replace(" ", "-"),
+            nameSlug: name.toLowerCase().replace(/\s+/g, "-"),
             email, 
             password,
             highscore,

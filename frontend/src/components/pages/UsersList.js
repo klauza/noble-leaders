@@ -14,7 +14,7 @@ const UsersList = ({users, isAuthenticated, user, setAlert, userUpdate, getAllUs
 
     async function updateThenLoadUsers(){
       await userUpdate(updateUserQuote);
-      await setAlert("Quote deleted", "danger");
+      await setAlert("Quote deleted", "warning");
       await getAllUsers();
     }
     updateThenLoadUsers();

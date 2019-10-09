@@ -78,20 +78,24 @@ const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTo
         <div className="forum__topic-creator-container">
           <button className="forum__topic-creator-container-exit" onClick={closeModalCreator}><i className="fa fa-times"></i></button>
           <form onSubmit={(e)=>submitNewTopic(e)}>
+
             <div>
-              Topic genre: <label htmlFor={buttons[forumTab].name}>{buttons[forumTab].name}<input name="genre" id={buttons[forumTab].name} checked disabled type="checkbox"/></label>
+              Topic genre: <label htmlFor={buttons[forumTab].name}>{buttons[forumTab].name}<input name="genre" id={buttons[forumTab].name} checked disabled hidden type="checkbox"/></label>
             </div>
 
-            <input ref={subjectInput} placeholder="subject" autoComplete="off" required type="text"/> {/* Subject */}
-            <div>Icon of topic 
+            <input ref={subjectInput} placeholder="Title" autoComplete="off" required type="text"/> {/* Subject */}
+            
+            <div className="choose-icon">
+              <p>Choose an icon</p>
               <label htmlFor="icon">
                 <input onClick={()=> setIcon("fa fa-star")} defaultChecked type="radio" name="icon" id="icon-1" /> <i className="fa fa-star"></i>
                 <input onClick={()=> setIcon("fa fa-headphones")} type="radio" name="icon" id="icon-2" /> <i className="fa fa-headphones"></i>
                 <input onClick={()=> setIcon("fa fa-comments-o")} type="radio" name="icon" id="icon-3" /> <i className="fa fa-comments-o"></i>
               </label>
             </div>
-            <input ref={descriptionInput} placeholder="description" autoComplete="off" type="text" />
-            <textarea ref={textareaInput} cols="30" rows="10" required></textarea> {/* content */}
+
+            <input ref={descriptionInput} placeholder="Description" required autoComplete="off" type="text" />
+            <textarea ref={textareaInput} cols="65" rows="10" required></textarea> {/* content */}
             <input type="submit" />
           </form>
         </div>
