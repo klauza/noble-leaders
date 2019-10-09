@@ -1,26 +1,33 @@
 ## About
 
-Noble-leaders is a modern fullstack game center app with auth and database system. 
-<br/>
-Created on learning and progression pusposes. It's a place where a user can create an account, play to earn score in games, and compete with other players. 
-<br/>
-**The application is constantly growing.**
-<br/>
-The idea and project creator: myself
+Noble-leaders is a modern fullstack game center app with many features: <br/>
+- auth system
+- forum
+- user dashboard
+- ranking system
+- games
+- animations
 
-| Project includes |
+<br/>
+Created on learning and progression pusposes.
+<br/>
+
+**The application is constantly growing.**
+
+
+
+| Project technologies |
 | ---------------- |
 | React - hooks |
 | Redux |
-| Express.js |
+| node.js/Express.js |
 | MongoDB |
-| Authentication |
 
 <br/>
-
+preview image: <br/>
 <img src="https://user-images.githubusercontent.com/43997053/62858615-af42aa00-bcf2-11e9-9027-c938e0ab29b4.jpg" width="450">
 
-<br/>
+<br/><br/>
 
 ## Attributions:
 
