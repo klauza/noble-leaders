@@ -10,7 +10,8 @@ const Alert = (alert) => {
   return (
     alert.alert.length > 0 && alert.alert.map(alert => (
       <div key={alert.id} className={`alert alert-${alert.type}`}>
-        <span>{alert.msg}</span>
+        <span className="alert-icon">{(alert.type==="danger" || alert.type==="warning") ? (<i className="fa fa-times"></i>) : (<i className="fa fa-check"></i>)}</span>
+        <span className="alert-msg">{alert.msg}</span>
 
       </div>
     ))

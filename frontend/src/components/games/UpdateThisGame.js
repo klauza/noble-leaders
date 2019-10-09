@@ -2,8 +2,9 @@ import  { useEffect } from 'react'
 import { connect } from 'react-redux'; 
 import { updateGameScore } from '../../actions/gameActions';
 import { userUpdate } from '../../actions/loginActions';
+import { setAlert } from '../../actions/alertActions';
 
-const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScore, setTheEntryScore, theEntryScore, theRoundScore }) => {
+const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScore, setTheEntryScore, theEntryScore, theRoundScore, setAlert }) => {
 
   useEffect(()=>{
 
@@ -21,7 +22,7 @@ const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScor
           highscore: user.highscore+(theRoundScore-theEntryScore),
           date: new Date()
       })
-
+      setAlert("You have beaten your score!", "positive");
     } else{
       
       updateGameScore({
@@ -41,4 +42,4 @@ const UpdateThisGame = ({ user, current, theAttempts, userUpdate, updateGameScor
 }
 
 
-export default connect(null, { userUpdate, updateGameScore })(UpdateThisGame)
+export default connect(null, { userUpdate, updateGameScore, setAlert })(UpdateThisGame)
