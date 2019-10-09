@@ -1,18 +1,27 @@
 import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import {userLogin, loadUser} from '../../actions/loginActions';
+import { setAlert } from '../../actions/alertActions';
+import { populateTopics, clearTopicError } from '../../actions/forumActions';
 import ForumConnected from './ForumConnected';
 
 
-const Forum = ({login: {user, loading, isAuthenticated}, userLogin, loadUser}) => {
+const Forum = ({login: {user, isAuthenticated}, userLogin, populateTopics, loadUser, clearTopicError, setAlert, forum: {topics, loading, error}}) => {
 
   useEffect(()=>{
-    if(localStorage.token && !user){
+    if(localStorage.token){
       loadUser();
+      populateTopics();
+
+      if(error !== null){
+        setAlert(error, "danger");
+        clearTopicError();
+      }
     }
     
   // eslint-disable-next-line
-  }, [user])
+  }, [loading, error]);
+
 
   const logInOnTestacc = async () => {
     await userLogin({
@@ -21,10 +30,9 @@ const Forum = ({login: {user, loading, isAuthenticated}, userLogin, loadUser}) =
     })
     await window.location.reload(true);
   }
-
-  if(!loading && user && isAuthenticated){
+  if(!loading && isAuthenticated && topics){
     return (
-      <ForumConnected user={user} />
+      <ForumConnected user={user} topics={topics} />
     )
   } else if(localStorage.token){
     return(
@@ -42,6 +50,7 @@ const Forum = ({login: {user, loading, isAuthenticated}, userLogin, loadUser}) =
 }
 
 const mapStateToProps = state => ({
-  login: state.login
+  login: state.login,
+  forum: state.forum
 })
-export default connect(mapStateToProps, {userLogin, loadUser})(Forum)
+export default connect(mapStateToProps, {userLogin, loadUser, populateTopics, clearTopicError, setAlert})(Forum)

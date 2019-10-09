@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
 import { userLogin, loadUser } from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
+import { getATopic } from '../../actions/forumActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 import forumData from './ForumContentThreadData'; // data
 import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
-const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert}) => {
-  const [article, setArticle] = useState(null);
+const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, forum: {current, loading}}) => {
+
   const articleName = props.match.params.thread;
  
   useEffect(()=>{ 
@@ -18,9 +19,11 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
       
 
       async function initThread(){
-        setArticle( forumData.filter(article => article.link === articleName)[0] )   // fetch given article
-        if(!user) await loadUser();
-        if(!users) await getAllUsers();
+        getATopic(articleName);
+        // setArticle( forumData.filter(article => article.link === articleName)[0] )   // fetch given article
+        // setArticle( current );   // fetch given article
+        await loadUser();
+        await getAllUsers();
       }
       
   
@@ -29,6 +32,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
   // eslint-disable-next-line
   }, [])
+
  
   const logInOnTestacc = async () => {
     await userLogin({
@@ -45,7 +49,8 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     setAlert("This feature doesn't work yet", "danger");
   }
 
-  if(isAuthenticated && article !== null && users !== null){
+
+  if(isAuthenticated && current !== null && users !== null && !loading){
     return (
       <div className="forum-content-wrapper">
 
@@ -53,15 +58,15 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
         <div className="forum-content-thread">
 
-          <h2 className="content-article-subject">{article.subject}</h2>
+          <h2 className="content-article-subject">{current.subject}</h2>
 
-          <div className="content-article-main">{article.content}</div>
+          <div className="content-article-main">{current.content}</div>
 
-          {article.specialArticle ? (
+          {current.specialArticle ? (
             <Statistics users={users} />
           ) : (null)}
 
-          <div className="content-article-author">Added by <Link to={`/user/${article.slugAuthor}`}>{article.author}</Link></div>
+          <div className="content-article-author">Added by <Link to={`/user/${current.slugAuthor}`}>{current.author}</Link></div>
         </div>
         
         
@@ -80,7 +85,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
         <div className="forum-content-comments">
           <h2>Comments</h2>
-          {article.comments && article.comments.map((comm,id)=>{
+          {current.comments && current.comments.map((comm,id)=>{
             return ( users.map((someone, i) => someone.nameSlug === comm.slugName ? 
             (
               <div className="comment" key={i}>
@@ -127,6 +132,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 const mapStateToProps = (state, ownProps) => ({
 props: ownProps,
 game: state.game,
-login: state.login
+login: state.login,
+forum: state.forum
 })
-export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert })(ForumThread)
+export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic })(ForumThread)

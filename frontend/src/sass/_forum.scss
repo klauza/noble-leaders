@@ -39,6 +39,71 @@
     }
   }
 }
+
+.forum__topic-creator{
+  position: absolute;
+  display: none;
+  opacity: 0;
+
+  top: 50px; left: 0;
+  background: rgba(211, 211, 211, 0.75);
+  width: 100%; height: calc(100% - 50px);
+  z-index: 99;
+  &-container{
+    position: relative;
+    transform: translateY(100px);
+    animation: animate-forum-creator 500ms forwards;
+    background: orange;
+    border: 1px solid red;
+    max-width: 600px;
+    width: auto;
+    height: auto;
+    margin: 100px auto;
+    text-align: center;
+
+    &-exit{   // exit button
+      width: 30px; height: 30px;
+      position: absolute;
+      top: -15px; right: -15px;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+   input[type=text]{
+     display: block;
+     margin: 0 auto;
+   }
+    textarea{
+      max-width: 100%;
+    }
+    input[type=submit]{
+      display: block;
+      margin: 25px auto;
+      border: 1px solid black;
+      background: burlywood;
+      width: 80px; height: 40px;
+      box-shadow: 0 2px 2px 0 black;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+  
+  &.animated{
+    animation: creator-animate-in 500ms forwards;
+    @keyframes creator-animate-in{
+      0%{ opacity: 0; }
+      100%{ opacity: 1; }
+    }
+  }
+
+  @keyframes animate-forum-creator{
+    100%{
+      transform: translateY(0);
+    }
+  }
+}
+
 .forum{
   &-container{
     position: relative;
@@ -46,6 +111,7 @@
     @media(max-width: 768px) {width: 95%; }
     margin: 50px auto;
     font-family: $ff-roboto;
+
   }
 
   &__main{
@@ -71,6 +137,40 @@
         }
       }
     }
+
+    &-new_topic{
+      position: relative;
+      margin-top: 20px;
+      display: block;
+      background: rgb(32, 177, 32);
+      width: 110px; height: 81px;
+      border: 1px solid black; border-radius: 3px;
+      box-shadow: 0px 4px 4px -3px rgba(128, 128, 128, 0.75);
+      transition: box-shadow 170ms ease;
+      text-transform: uppercase;
+      color: white;
+      font-size: 20px;
+      font-family: $ff-roboto;
+      overflow: hidden;
+      i{
+        position: absolute; bottom: 5px; right: 5px;
+        font-size: 1.3em;
+        color: white;
+        transition: transform 250ms ease;
+        transform: translateX(50px) rotateZ(90deg);
+      }
+      &:hover{
+        outline-offset: 5px;
+        box-shadow: 0px 5px 3px -4px rgba(0,0,0,0.75);
+        cursor: pointer;
+        i{
+          transition: transform 250ms ease;
+          transform: translateX(0) rotateZ(0);
+        }
+      }
+    }
+
+
 
     &-thread{
       display: grid; grid-template-columns: 1fr;
