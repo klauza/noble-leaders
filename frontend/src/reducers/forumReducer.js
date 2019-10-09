@@ -5,7 +5,8 @@ const initialState = {
   topics: [],
   current: null,
   loading: true,
-  error: null
+  error: null,
+  comments: null
 }
 
 export default(state = initialState, action) => {
@@ -21,6 +22,7 @@ export default(state = initialState, action) => {
         ...state,
         loading: false,
         current: null,
+        comments: [],
         topics: action.payload
       }
       
@@ -45,6 +47,18 @@ export default(state = initialState, action) => {
       return{
         ...state,
         error: null
+      }
+
+      // comments
+    case CREATE_COMMENT:
+      return{
+        ...state,
+        comments: [action.payload, ...state.comments]
+      }
+    case GET_TOPIC_COMMENTS:
+      return{
+        ...state,
+        comments: action.payload
       }
     default:
       return state

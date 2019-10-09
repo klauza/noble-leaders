@@ -74,6 +74,41 @@ export const setForumLoading = () => async dispatch => {
     type: SET_LOADING,
     payload: true
   })
-  
+}
 
+// COMMENTS
+
+export const createTopicComment = (id, comm) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try{
+    const res = await axios.post(`/api/comments/${id}`, comm, config);
+
+    dispatch({
+      type: CREATE_COMMENT,
+      payload: res.data
+    })
+  }catch(err){
+    dispatch({
+      type: TOPIC_ERROR,
+      payload: err.response.data.errors
+    })
+  }
+}
+export const getTopicComments = (id) => async dispatch => {
+
+  try{
+    const res = await axios.get(`/api/comments/${id}`);
+
+    dispatch({
+      type: GET_TOPIC_COMMENTS,
+      payload: res.data
+    })
+
+  }catch(err){
+    console.log(err);
+  }
 }
