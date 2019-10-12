@@ -59,8 +59,9 @@
     max-width: 600px;
     width: auto;
     height: auto;
-    margin: 100px auto;
+    margin: 100px auto; padding: 0 25px;
     text-align: center;
+    box-shadow: 0 2px 3px -2px black;
     form{
       margin: 25px 0;
 

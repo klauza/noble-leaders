@@ -1,6 +1,6 @@
 ## About
 
-Noble-leaders is a modern fullstack game center app with many features: <br/>
+Noble-leaders is a modern fullstack game center app with features such as: <br/>
 - auth system
 - forum
 - user dashboard

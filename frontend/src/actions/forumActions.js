@@ -12,7 +12,6 @@ export const createTopic = (topic) => async dispatch => {
       'Content-Type': 'application/json'
     }
   }
-  console.log(topic);
 
   try{
     const res = await axios.post('/api/forum', topic, config);
@@ -112,7 +111,6 @@ export const getTopicComments = (id) => async dispatch => {
     })
 
   }catch(err){
-    console.log(err);
   }
 }
 

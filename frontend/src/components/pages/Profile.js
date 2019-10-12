@@ -38,7 +38,6 @@ const Profile = ({login: {isAuthenticated, user, loading}, loadUser, createTheGa
   }, []);
 
 
-  console.log(games);
 
   if(gLoading === false){
     if(games && games.length === 0){

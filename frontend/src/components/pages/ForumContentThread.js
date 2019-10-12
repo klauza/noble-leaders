@@ -110,7 +110,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
   }
 
 
-  // VARIOUS
+  // CREATE COMMENT
   const setCommText = (e) => {
     setComm(e.target.value);
   }
@@ -123,6 +123,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     createTopicComment(current._id, submitComment);
     setComm("");
     commentDiv.current.value = "";
+
   }
 
   
@@ -175,7 +176,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
           {comments && comments.map((comm,id)=>{
             return ( users.map((someone, i) => someone.nameSlug === comm.slugAuthor ? 
             (
-              <div style={{animationDelay: `${id*250}ms`}} className="comment comment-animation" key={i}>
+              <div style={{animationDelay: `${id*125}ms`}} className="comment comment-animation" key={i}>
                 <Link to={`/user/${comm.slugAuthor}`}>
                   <div>
                     <div className="comment-image"><img src={someone.avatar} alt=""/></div>
@@ -187,11 +188,9 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
                 <div className="comment-container">
                   <div className={`comment-container__content edit-${comm._id}`}>{comm.content}</div>
-                  {comm.edited === true ? (
-                    <div className="comment-container__date-posted">edited: {comm.date.replace(/T.*/i,'')}</div>
-                  ) : (
-                    <div className="comment-container__date-posted">posted: {comm.date.replace(/T.*/i,'')}</div>
-                  )}
+                  
+                    <div className="comment-container__date-posted">{comm.edited === true ? ("edited:"):("posted:")} {comm.date.replace(/T.*/i,'')}</div>
+            
                 </div>
              
 
