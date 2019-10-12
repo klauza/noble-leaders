@@ -45,17 +45,16 @@
       }
       &>button:hover{
         cursor: pointer;
-        background: black;
-        color: white;
-        border: 1px solid white; 
+ 
       }
     }
-    .btn-edit-confirm i{
-      color: green;
+    .btn-edit-confirm{
+      &:hover{ border: 1px solid white; background: green; color: white; }
     }
     .btn-edit-cancel{
       margin-left: 2px;
       i{ color: red; }
+      &:hover{ border: 1px solid red; }
     }
 
     .content-article-author{
@@ -145,6 +144,9 @@
         font-weight: 700;
         text-align: center;
         color: black;
+        &-span{
+          font-size: 0.75em;
+        }
       }
 
       button{
@@ -165,18 +167,56 @@
       .delete-button{
         top: 20%;
         background: red;
+        opacity: 0;
+        animation: just-opacity 500ms forwards 250ms;
+        outline: none;
+        &::before{
+          content: "Delete comment";
+          font-family: $ff-roboto; font-weight: 700;
+          position: absolute; top: -7.5px; right: 50px;
+          opacity: 0;
+          width: 110px; height: 40px; line-height: 40px;
+          background: rgb(255, 0, 0); border: 1px solid black; border-radius: 4px;
+          display: none;
+          color: rgb(255, 255, 255);
+          z-index: 99;
+        }
+        &:hover::before{
+          display: block;
+          opacity: 1;
+        } 
       }
       .edit-button{
         bottom: 20%;
         background: green;
+        opacity: 0;
+        animation: just-opacity 500ms forwards 250ms;
+      }
+      .confirm-comment-changes{
+        bottom: 20%;
+        display: none;
+        background: green;
+        opacity: 0;
+        animation: just-opacity 500ms forwards 250ms;
+
+      }
+      .decline-comment-changes{
+        bottom: 20%; right: 32px;
+        display: none;
+        background: red;
+        opacity: 0;
+        animation: just-opacity 500ms forwards 250ms;
+      }
+      @keyframes just-opacity{
+        0%{opacity: 0;}
+        100%{opacity: 1;}
       }
 
       &-container{
         display: grid; grid-template-rows: 1fr auto;
         &__content{
-          p{
-            padding: 5px 35px 5px 5px;
-          }
+          padding: 5px 35px 5px 5px;
+         
         }
 
         &__date-posted{

@@ -3,19 +3,20 @@ import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
 import { userLogin, loadUser } from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
-import { getATopic, getTopicComments, updateTopic, createTopicComment, clearTopicError } from '../../actions/forumActions';
+import { getATopic, getTopicComments, updateTopic, createTopicComment, updateComment, deleteComment, clearTopicError } from '../../actions/forumActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 // import forumData from './ForumContentThreadData'; // data
 import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
-const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, updateTopic, clearTopicError, createTopicComment, getTopicComments, forum: {error, current, loading, comments}}) => {
+const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, updateTopic, clearTopicError, createTopicComment, getTopicComments, updateComment, deleteComment, forum: {error, current, loading, comments}}) => {
 
   const articleName = props.match.params.thread;
   const [comm, setComm] = useState('');
   const topicDiv = useRef();
   const topicEditbtns = useRef();
+  const commentDiv = useRef();
 
   useEffect(()=>{ 
     if(localStorage.token){
@@ -41,7 +42,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     }
 
   // eslint-disable-next-line
-  }, [ current, error])
+  }, [ current, error ])
   // console.log(current._id);
   const logInOnTestacc = async () => {
     await userLogin({
@@ -51,12 +52,12 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     await window.location.reload(true);
   }
 
+  // THREAD EDITING
   const runEditTopic = () => {
     topicDiv.current.contentEditable="true";
     topicDiv.current.style.border="1px solid black";
     topicEditbtns.current.style.display="block";
-    // show accept 
-    // show decline
+    topicDiv.current.focus();
   }
   const editTopicCancel = () => {
     topicEditbtns.current.style.display="none"; 
@@ -75,17 +76,44 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     });
   }
 
-  const runDelete = () => {
-    setAlert("This feature doesn't work yet", "danger");
+  // COMMENT EDITING
+  const runCommentDelete = (comm) => {
+    deleteComment(comm);
+    setAlert("Comment has been deleted", "danger");
   }
-  const runEdit = () => {
-    setAlert("This feature doesn't work yet", "danger");
+  const runCommentEdit = (id) => {
+    let commDiv = document.querySelector(`.edit-${id}`); // select comment content
+    commDiv.contentEditable="true";
+    commDiv.focus();
+    commDiv.parentElement.parentElement.querySelectorAll('.edit-button, .delete-button').forEach(b=> b.style.display="none"); // hide 'edit' btn of this comment
+    commDiv.parentElement.parentElement.querySelectorAll('.confirm-comment-changes, .decline-comment-changes').forEach(b => b.style.display="block"); 
+  }
+  const declineCommChanges = (id, commContent) =>{
+    let commDiv = document.querySelector(`.edit-${id}`);
+    commDiv.contentEditable="false";
+    commDiv.innerHTML=commContent;
+    commDiv.parentElement.parentElement.querySelectorAll('.confirm-comment-changes, .decline-comment-changes').forEach(b => b.style.display="none");
+    commDiv.parentElement.parentElement.querySelectorAll('.edit-button, .delete-button').forEach(b=> b.style.display="block"); 
+  }
+  const confirmCommChanges = (id) =>{
+    let commDiv = document.querySelector(`.edit-${id}`);
+
+    updateComment({
+      _id: id,
+      content: commDiv.textContent
+    });
+    commDiv.contentEditable="false";
+    commDiv.parentElement.parentElement.querySelectorAll('.confirm-comment-changes, .decline-comment-changes').forEach(b => b.style.display="none");
+    commDiv.parentElement.parentElement.querySelectorAll('.edit-button, .delete-button').forEach(b=> b.style.display="block"); 
+
+    setAlert("Comment edited", "positive");
   }
 
+
+  // VARIOUS
   const setCommText = (e) => {
     setComm(e.target.value);
   }
-  
   const createComment = () => {
     let submitComment = {
       content: comm,
@@ -93,8 +121,10 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
       slugAuthor: user.nameSlug
     }
     createTopicComment(current._id, submitComment);
-    // console.log('send comm: ', submitComment);
+    setComm("");
+    commentDiv.current.value = "";
   }
+
   
 
   if(isAuthenticated && current !== null && users !== null && !loading){
@@ -108,12 +138,14 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
           <h2 className="content-article-subject">{current.subject}</h2>
 
           <div className="content-article-main" ref={topicDiv}>{current.content}</div>
-          {current.slugAddedBy === user.nameSlug ? <button className="content-article-edit" onClick={runEditTopic}><i className="fa fa-pencil"></i></button> : null}
           {current.slugAddedBy === user.nameSlug ? (
-          <div className="btns-edit" ref={topicEditbtns}>
-            <button className="btn-edit-confirm" onClick={editTopicConfirm}>Confirm <i className="fa fa-check"></i></button>
-            <button className="btn-edit-cancel" onClick={editTopicCancel}>Cancel <i className="fa fa-times"></i></button>
-          </div>
+          <Fragment>
+            <button className="content-article-edit" onClick={runEditTopic}><i className="fa fa-pencil"></i></button>
+            <div className="btns-edit" ref={topicEditbtns}>
+              <button className="btn-edit-confirm" onClick={editTopicConfirm}>Confirm <i className="fa fa-check"></i></button>
+              <button className="btn-edit-cancel" onClick={editTopicCancel}>Cancel <i className="fa fa-times"></i></button>
+            </div>
+          </Fragment>
           ) : (null)}
 
 
@@ -129,7 +161,7 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
         {user.name === "testacc" ? (<h3>As a test account, you cannot add any comments</h3>) : 
         ( <Fragment>
             <span>Add a comment</span>
-            <textarea onChange={(e)=>setCommText(e)} rows="5" placeholder="It's going to work soon...">  
+            <textarea ref={commentDiv} onChange={(e)=>setCommText(e)} rows="5" placeholder="Write a comment...">  
             </textarea>
             <button onClick={createComment} className="comment-submit">Send</button>  
           </Fragment>
@@ -144,21 +176,34 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
             return ( users.map((someone, i) => someone.nameSlug === comm.slugAuthor ? 
             (
               <div style={{animationDelay: `${id*250}ms`}} className="comment comment-animation" key={i}>
-                <Link to={`/user/${comm.Author}`}>
+                <Link to={`/user/${comm.slugAuthor}`}>
                   <div>
                     <div className="comment-image"><img src={someone.avatar} alt=""/></div>
-                    <div className="comment-author">{comm.author}</div>
+                    <div className="comment-author">{comm.author} 
+                      {comm.author === user.name ? (<span className="comment-author-span"> (you)</span>):(null)}
+                    </div>
                   </div>
                 </Link>
 
                 <div className="comment-container">
-                  <div className="comment-container__content"><p>{comm.content}</p></div>
-                  <div className="comment-container__date-posted">posted: {comm.date}</div>
+                  <div className={`comment-container__content edit-${comm._id}`}>{comm.content}</div>
+                  {comm.edited === true ? (
+                    <div className="comment-container__date-posted">edited: {comm.date.replace(/T.*/i,'')}</div>
+                  ) : (
+                    <div className="comment-container__date-posted">posted: {comm.date.replace(/T.*/i,'')}</div>
+                  )}
                 </div>
              
 
-                {comm.author === user.name ? (<button className="delete-button" onClick={runDelete}><i className="fa fa-times"></i></button>) : (null)}
-                {comm.author === user.name ? (<button className="edit-button" onClick={runEdit}><i className="fa fa-pencil"></i></button>) : (null)}
+                {comm.author === user.name ? (
+                  <Fragment>
+                    <button className="delete-button" onClick={()=>runCommentDelete(comm)}><i className="fa fa-times"></i></button>
+                    <button className="edit-button" onClick={()=>runCommentEdit(comm._id)}><i className="fa fa-pencil"></i></button>
+                    <button className="confirm-comment-changes" onClick={()=>confirmCommChanges(comm._id)}><i className="fa fa-check"></i></button>
+                    <button className="decline-comment-changes" onClick={()=>declineCommChanges(comm._id, comm.content)}><i className="fa fa-times"></i></button>
+                  </Fragment>
+                  ): (null)}
+
               </div>
             ) 
             : (null)) )
@@ -184,10 +229,11 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
   }
 
 }
+
 const mapStateToProps = (state, ownProps) => ({
-props: ownProps,
-game: state.game,
-login: state.login,
-forum: state.forum
+  props: ownProps,
+  game: state.game,
+  login: state.login,
+  forum: state.forum
 })
-export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic, updateTopic, getTopicComments, createTopicComment, clearTopicError })(ForumThread)
+export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic, updateTopic, getTopicComments, createTopicComment, updateComment, deleteComment, clearTopicError })(ForumThread)
