@@ -1,5 +1,5 @@
 import { CREATE_TOPIC, GET_TOPIC, GET_ALL_TOPICS, UPDATE_TOPIC, TOPIC_ERROR, SET_LOADING, CLEAR_FORUM_ERROR } from './types';
-import { CREATE_COMMENT, GET_TOPIC_COMMENTS } from './types';
+import { CREATE_COMMENT, GET_TOPIC_COMMENTS, UPDATE_COMMENT, DELETE_COMMENT } from './types';
 import axios from 'axios';
 
 export const clearTopicError = () => async dispatch => {
@@ -101,6 +101,20 @@ export const setForumLoading = () => async dispatch => {
 }
 
 // COMMENTS
+export const getTopicComments = (id) => async dispatch => {
+
+  try{
+    const res = await axios.get(`/api/comments/${id}`);
+
+    dispatch({
+      type: GET_TOPIC_COMMENTS,
+      payload: res.data
+    })
+
+  }catch(err){
+    console.log(err);
+  }
+}
 
 export const createTopicComment = (id, comm) => async dispatch => {
   const config = {
@@ -122,17 +136,46 @@ export const createTopicComment = (id, comm) => async dispatch => {
     })
   }
 }
-export const getTopicComments = (id) => async dispatch => {
+
+export const updateComment = (comment) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
 
   try{
-    const res = await axios.get(`/api/comments/${id}`);
-
+    const res = await axios.put(`/api/comments/${comment._id}`, comment, config);
     dispatch({
-      type: GET_TOPIC_COMMENTS,
+      type: UPDATE_COMMENT,
       payload: res.data
     })
 
-  }catch(err){
-    console.log(err);
+  } catch(err){
+    dispatch({
+      type: TOPIC_ERROR,
+      payload: err.response.msg
+    })
+  }
+}
+
+export const deleteComment = (comment) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  
+  try{
+    await axios.delete(`/api/comments/${comment._id}`, comment, config);
+    dispatch({
+      type: DELETE_COMMENT,
+      payload: comment
+    })
+  } catch(err){
+    // dispatch({
+    //   type: TOPIC_ERROR,
+    //   payload: err.response.data.msg
+    // })
   }
 }
