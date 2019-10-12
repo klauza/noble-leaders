@@ -1,19 +1,21 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState, useRef} from 'react';
 import { connect } from 'react-redux';
 import { getAllUsers } from '../../actions/gameActions';
 import { userLogin, loadUser } from '../../actions/loginActions';
 import { setAlert } from '../../actions/alertActions';
-import { getATopic, getTopicComments, createTopicComment, clearTopicError } from '../../actions/forumActions';
+import { getATopic, getTopicComments, updateTopic, createTopicComment, clearTopicError } from '../../actions/forumActions';
 import { Link } from 'react-router-dom';
 import history from '../../history';
 // import forumData from './ForumContentThreadData'; // data
 import Statistics from './ForumSpecialArticles/Statistics';  // special forum thread
 import Loader from '../layout/Loader';
 
-const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, clearTopicError, createTopicComment, getTopicComments, forum: {error, current, loading, comments}}) => {
+const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getAllUsers, userLogin, loadUser, setAlert, getATopic, updateTopic, clearTopicError, createTopicComment, getTopicComments, forum: {error, current, loading, comments}}) => {
 
   const articleName = props.match.params.thread;
   const [comm, setComm] = useState('');
+  const topicDiv = useRef();
+  const topicEditbtns = useRef();
 
   useEffect(()=>{ 
     if(localStorage.token){
@@ -49,6 +51,30 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
     await window.location.reload(true);
   }
 
+  const runEditTopic = () => {
+    topicDiv.current.contentEditable="true";
+    topicDiv.current.style.border="1px solid black";
+    topicEditbtns.current.style.display="block";
+    // show accept 
+    // show decline
+  }
+  const editTopicCancel = () => {
+    topicEditbtns.current.style.display="none"; 
+    topicDiv.current.style.border="0";
+    topicDiv.current.contentEditable="false";
+    topicDiv.current.textContent = current.content;
+  }
+  const editTopicConfirm = () => {
+    topicEditbtns.current.style.display="none"; 
+    topicDiv.current.style.border="0";
+    topicDiv.current.contentEditable="false";
+    let newContent = topicDiv.current.textContent;
+    updateTopic({
+      _id: current._id,
+      content: newContent
+    });
+  }
+
   const runDelete = () => {
     setAlert("This feature doesn't work yet", "danger");
   }
@@ -81,8 +107,12 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
           <h2 className="content-article-subject">{current.subject}</h2>
 
-          <div className="content-article-main">{current.content}</div>
-          {current.slugAddedBy === user.nameSlug ? <button className="content-article-edit"><i className="fa fa-pencil"></i></button> : null}
+          <div className="content-article-main" ref={topicDiv}>{current.content}</div>
+          {current.slugAddedBy === user.nameSlug ? <button className="content-article-edit" onClick={runEditTopic}><i className="fa fa-pencil"></i></button> : null}
+          <div className="btns-edit" ref={topicEditbtns}>
+            <button className="btn-edit-confirm" onClick={editTopicConfirm}>Confirm <i className="fa fa-check"></i></button>
+            <button className="btn-edit-cancel" onClick={editTopicCancel}>Cancel <i className="fa fa-times"></i></button>
+          </div>
 
           {current.specialArticle ? (
             <Statistics users={users} />
@@ -157,4 +187,4 @@ game: state.game,
 login: state.login,
 forum: state.forum
 })
-export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic, getTopicComments, createTopicComment, clearTopicError })(ForumThread)
+export default connect(mapStateToProps, { getAllUsers, userLogin, loadUser, setAlert, getATopic, updateTopic, getTopicComments, createTopicComment, clearTopicError })(ForumThread)

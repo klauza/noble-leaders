@@ -16,6 +16,7 @@
     }
     .content-article-main{
       padding: 10px;
+      margin-right: 40px;
     }
     .content-article-edit{
       position: absolute;
@@ -32,6 +33,31 @@
         }
       }
     }
+    .btns-edit{
+      width: 150px;
+      margin: 5px auto 0;
+      display: none;
+      &>button{
+        background: white;
+        color: black;
+        border: 1px solid black;
+        padding: 5px;
+      }
+      &>button:hover{
+        cursor: pointer;
+        background: black;
+        color: white;
+        border: 1px solid white; 
+      }
+    }
+    .btn-edit-confirm i{
+      color: green;
+    }
+    .btn-edit-cancel{
+      margin-left: 2px;
+      i{ color: red; }
+    }
+
     .content-article-author{
       margin: 10px auto 10px 10px;
     }
