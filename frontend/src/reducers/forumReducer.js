@@ -1,5 +1,5 @@
 import { CREATE_TOPIC, GET_TOPIC, GET_ALL_TOPICS, SET_LOADING, UPDATE_TOPIC, TOPIC_ERROR, CLEAR_FORUM_ERROR } from '../actions/types';
-import { CREATE_COMMENT, GET_TOPIC_COMMENTS } from '../actions/types';
+import { CREATE_COMMENT, GET_TOPIC_COMMENTS, UPDATE_COMMENT, DELETE_COMMENT } from '../actions/types';
 
 const initialState = {
   topics: [],
@@ -61,6 +61,16 @@ export default(state = initialState, action) => {
         ...state,
         comments: [action.payload, ...state.comments]
       }
+    case UPDATE_COMMENT:
+      return{
+        ...state,
+        comments: state.comments.map((com) => com._id === action.payload._id ? action.payload : com),
+      }
+    case DELETE_COMMENT: 
+    return{
+      ...state,
+      comments: state.comments.filter(comm => comm._id !== action.payload._id )
+    }
     case GET_TOPIC_COMMENTS:
       return{
         ...state,
