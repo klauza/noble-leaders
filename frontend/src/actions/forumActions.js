@@ -32,6 +32,30 @@ export const createTopic = (topic) => async dispatch => {
 
 }
 
+export const updateTopic = (topic) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  try{
+    const res = await axios.put(`/api/forum/${topic._id}`, topic, config);
+    dispatch({
+      type: UPDATE_TOPIC,
+      payload: res.data
+    })
+
+  } catch(err){
+    dispatch({
+      type: TOPIC_ERROR,
+      payload: err.response.msg
+    })
+  }
+}
+
+
+
 export const populateTopics = () => async dispatch => {
   try{
     const res = await axios.get('/api/forum');

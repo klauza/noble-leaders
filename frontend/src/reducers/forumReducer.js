@@ -17,6 +17,12 @@ export default(state = initialState, action) => {
         topics: [action.payload, ...state.topics]
       }
 
+    case UPDATE_TOPIC:
+      return{
+        ...state,
+        current: action.payload
+      }
+
     case GET_ALL_TOPICS:
       return{
         ...state,
