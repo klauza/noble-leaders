@@ -8,6 +8,7 @@
   .forum-content-thread{
     border: 1px solid black;
     background: rgba(255, 255, 255, 0);
+    position: relative;
 
     .content-article-subject{
       text-align: center;
@@ -15,6 +16,21 @@
     }
     .content-article-main{
       padding: 10px;
+    }
+    .content-article-edit{
+      position: absolute;
+      top: 50%; right: 5px;  transform: translateY(-50%);
+      border: 1px solid black;
+      width: 28px; height: 28px;
+      i{ color: black; display: block; width: 100%; line-height: 28px; font-size: 1.25rem; }
+      &:hover{
+        cursor: pointer;
+        background: white;
+        border: 1px solid black;
+        i{
+          color: black;
+        }
+      }
     }
     .content-article-author{
       margin: 10px auto 10px 10px;

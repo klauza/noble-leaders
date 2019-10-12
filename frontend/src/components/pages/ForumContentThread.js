@@ -82,12 +82,13 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
           <h2 className="content-article-subject">{current.subject}</h2>
 
           <div className="content-article-main">{current.content}</div>
+          {current.slugAddedBy === user.nameSlug ? <button className="content-article-edit"><i className="fa fa-pencil"></i></button> : null}
 
           {current.specialArticle ? (
             <Statistics users={users} />
           ) : (null)}
 
-          <div className="content-article-author">Added by <Link to={`/user/${current.slugAuthor}`}>{current.author}</Link></div>
+          <div className="content-article-author">Added by <Link to={`/user/${current.slugAddedBy}`}>{current.addedBy}</Link></div>
         </div>
         
         
