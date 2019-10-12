@@ -109,10 +109,13 @@ const ForumThread = ({props, login: {user, isAuthenticated}, game: {users}, getA
 
           <div className="content-article-main" ref={topicDiv}>{current.content}</div>
           {current.slugAddedBy === user.nameSlug ? <button className="content-article-edit" onClick={runEditTopic}><i className="fa fa-pencil"></i></button> : null}
+          {current.slugAddedBy === user.nameSlug ? (
           <div className="btns-edit" ref={topicEditbtns}>
             <button className="btn-edit-confirm" onClick={editTopicConfirm}>Confirm <i className="fa fa-check"></i></button>
             <button className="btn-edit-cancel" onClick={editTopicCancel}>Cancel <i className="fa fa-times"></i></button>
           </div>
+          ) : (null)}
+
 
           {current.specialArticle ? (
             <Statistics users={users} />
