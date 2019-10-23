@@ -40,14 +40,17 @@ const forumData = [
     ]
   },
   {
-    author: "Admin",
+    author: "admin",
     slugAuthor: "admin",
     link: "statistics",
+    icon: "fa fa-star",
     subject: "Statistics",
+    description: "app statistics",
     content: "Here are all players ratings",
     comments: [],
     specialArticle: true,
-    specialArticleContent: ["a", "b"]
+    specialArticleContent: ["a", "b"],
+    createdAt: "2019-10-23"
   }
 ]
 

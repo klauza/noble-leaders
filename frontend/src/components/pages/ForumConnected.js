@@ -31,6 +31,10 @@ const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTo
     {
       name: "Other",
       icon: "fa fa-chain-broken"
+    },
+    {
+      name: "Special",
+      icon: "fa fa-chain-broken"
     }
   ]
 
@@ -116,7 +120,7 @@ const ForumConnected = ({user, setForumPage, misc: {forumPage}, topics, createTo
             })}
           </div>
 
-          <button className="forum__main-new_topic" onClick={createTopicModal}>Add new topic <i className="fa fa-plus"></i></button>
+          {forumTab !== 3 && <button className="forum__main-new_topic" onClick={createTopicModal}>Add new topic <i className="fa fa-plus"></i></button>}
 
           <ForumTopic buttons={buttons} forumTab={forumTab} topics={topics} />
 

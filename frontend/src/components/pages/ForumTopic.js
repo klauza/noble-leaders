@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import {Link} from 'react-router-dom';
+import forumData from './ForumContentThreadData';
 
 const ForumTopic = ({topics, forumTab, buttons}) => {
-  // console.log(topics);
+  
 
-
+  console.log(forumTab);
 
   
   if(topics && topics.length){
@@ -12,6 +13,7 @@ const ForumTopic = ({topics, forumTab, buttons}) => {
   return (
     <Fragment>
       
+      {/* Loading normal articles from db*/}
       {topics.map((topic,id) =>{
         if(topic.genre === buttons[forumTab].name){
           return ( 
@@ -34,7 +36,30 @@ const ForumTopic = ({topics, forumTab, buttons}) => {
         }else{return null}
       })}
 
-      Number of topics: {topics.length}
+      {/* Loading special articles from frontend*/}
+      {forumTab === 3 && (
+        forumData.map((forumThread, id) => 
+          forumThread.specialArticle === true && (
+            <div key={id} className="forum__main-thread">
+
+              <Link to={`/forum/special/${forumThread.link}`}>
+                <div className="forum__main-thread--top">
+                  <span className="subject"><i className={forumThread.icon}></i> {forumThread.subject}</span>
+                  <span className="desc">{forumThread.description}</span>
+                </div>
+              </Link>
+
+              <div className="forum__main-thread--added-by">
+                <span>added by: <Link to={`/user/${forumThread.slugAuthor}`}>{forumThread.author}</Link></span>
+                <span>Last modified: {forumThread.createdAt} </span>
+              </div>
+
+            </div>
+          )
+        )
+      )}
+
+      Number of public topics: {topics.length}
     </Fragment>
   )
 } else{

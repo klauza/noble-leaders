@@ -16,6 +16,7 @@ import Leaderboard from './components/pages/Leaderboard';
 import UserPage from './components/pages/UserPage';
 import Forum from './components/pages/Forum';
 import ForumContentThread from './components/pages/ForumContentThread';
+import ForumSpecialContentThread from './components/pages/ForumSpecialContentThread';
 
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
@@ -48,6 +49,7 @@ const App = () => {
               <Route exact path="/user/:username" component={UserPage} />
               <Route exact path="/forum" component={Forum} />
               <Route exact path="/forum/:thread" component={ForumContentThread} />
+              <Route exact path="/forum/special/:thread" component={ForumSpecialContentThread} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
