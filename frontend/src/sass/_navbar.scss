@@ -88,6 +88,7 @@
       font-size: 1.25em;
     }
     .mobile-links-container{
+      position: fixed;
       display: none;
     }
     // ul
@@ -114,7 +115,6 @@
         height: auto;
         grid-template-columns: 1fr;
         grid-auto-rows: 50px;
-        position: absolute;
         top: 50px;
         left: 0;
         background: rgb(102, 143, 109);
