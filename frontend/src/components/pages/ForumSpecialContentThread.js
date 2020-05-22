@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import history from '../../history';
 import { connect } from 'react-redux';
 import { loadUser } from '../../actions/loginActions';
@@ -21,6 +21,7 @@ const ForumSpecialContentThread = ({props, login: {isAuthenticated}, loadUser}) 
       // get a topic
       setCurrentTopic(forumData.filter(topicName => topicName.link === articleName));
     }
+    //eslint-disable-next-line
   }, [isAuthenticated])
 
   console.log(isAuthenticated);
