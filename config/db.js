@@ -9,8 +9,9 @@ const connectDB = () => {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false, 
-    reconnectTries : Number.MAX_VALUE,
-    autoReconnect : true
+    // reconnectTries : Number.MAX_VALUE,
+    // autoReconnect : true,
+    useUnifiedTopology: true
   })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => {
